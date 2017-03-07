@@ -1,9 +1,9 @@
 #ifndef PLD_COMP_TYPEPARAMETRE_H
 #define PLD_COMP_TYPEPARAMETRE_H
 
-#include "Type.h"
+#include "Structure.h"
 
-class TypeParametre : public Type {
+class StructCond : public Structure {
 
 public:
 
