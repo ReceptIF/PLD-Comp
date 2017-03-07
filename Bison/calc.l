@@ -9,12 +9,63 @@ nValue :    ^(\d+)/g    OU /^([0-9]+)
 cValue :    ^'(.{1})’/g
 comment :    \/\*(.|[\r\n])*?\*\/
 incl :        ^(#.+>)
+
 %%
+
 [ \n\t]      { /* ignore */ }
-{entier}     { yylval.ival = atoi(yytext); return ENTIER; }
+
+{name}     { return NAME; }
+{nValue}     { return NVALUE; }
+{cValue}     { return CVALUE; }
+{comment}     { /* ignore */ }
+{incl}     { return INCL; }
+
+"="          { return EGAL; }
 "+"          { return PLUS; }
-"-"          { return MOINS; }
-"/"          { return DIV; }
 "*"          { return MULT; }
-"("          { return OPEN; }
-")"          { return CLOSE; }
+"/"          { return DIV; }
+"-"          { return MOINS; }
+"&"          { return AND; }
+"&&"         { return DAND; }
+"|"          { return OR; }
+"||"         { return DOR; }
+"=="         { return DEGAL; }
+"<="         { return INFEQ; }
+">="         { return SUPEQ; }
+"!="         { return DIFF; }
+"%"          { return MOD; }
+"^"          { return XOR; }
+"+="         { return PLUSEQ; }
+"*="         { return MULTEQ; }
+"/="         { return DIVEQ; }
+"-="         { return MOINSEQ; }
+"++"         { return DPLUS; }
+"--"         { return DMOINS; }
+"!"          { return NOT; }
+"%="         { return MODEQ; }
+">>"         { return DSUP; }
+"<<"         { return DINF; }
+"<"          { return INF; }
+">"          { return SUP; }
+"&="         { return ANDEQ; }
+"|="         { return OREQ; }
+"if"         { return IF; }
+"else"       { return ELSE; }
+"while"      { return WHILE; }
+"for"        { return FOR; }
+"char"       { return CHAR; }
+"int32_t"    { return INT32; }
+"int64_t"    { return INT64; }
+"void"       { return VOID; }
+";"          { return POINTVIR; }
+"{"          { return CHEVOPEN; }
+"}"          { return CHEVCLOSE; }
+"("          { return POPEN; }
+")"          { return PCLOSE; }
+"["          { return PCLOSE; }
+"]"          { return PCLOSE; }
+","          { return PCLOSE; }
+"putchar"    { return PUTCHAR; }
+"getchar"    { return GETCHAR; }
+"return"     { return RETURN; }
+"break"      { return BREAK; }
