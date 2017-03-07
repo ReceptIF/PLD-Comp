@@ -1,7 +1,7 @@
 %{
 #include <stdio.h>
 void yyerror(int *, const char *);
-int yylex(void);
+int yylexpression(void);
 %}
 %union {
    int ival; 
@@ -14,18 +14,18 @@ int yylex(void);
 %token <ival> CVALUE
 %token <ival> INCL
 
-%type <ival> a
-%type <ival> b
-%type <ival> d
+%type <ival> affectation
+%type <ival> bloc
+%type <ival> decdef
 %type <ival> el
 %type <ival> eli
-%type <ival> ex
-%type <ival> f
-%type <ival> i
-%type <ival> p
+%type <ival> expression
+%type <ival> fonction
+%type <ival> instruction
+%type <ival> programme
 %type <ival> pa
-%type <ival> s
-%type <ival> t
+%type <ival> structure
+%type <ival> type
 %type <ival> tpa
 
 %left MOINS PLUS
@@ -35,114 +35,114 @@ int yylex(void);
 
 %%
 
-/*axiome : ex { *resultat = $1; }
+/*axiome : expression { *resultat = $1; }
      ;*/ 
 
-a : NAME EGAL ex {}
-	 | NAME COPEN ex CCLOSE EGAL ex {}
+affectation : NAME EGAL expression {}
+	 | NAME COPEN expression CCLOSE EGAL expression {}
 	 | NAME DPLUS {}
 	 | DPLUS NAME {}
 	 | NAME DMOINS {}
 	 | DMOINS NAME {}
-	 | NAME PLUSEQ ex {}
-	 | NAME MOINSEQ ex {} 
-	 | NAME MULTEQ ex {}
-	 | NAME DIVEQ ex {}
-	 | NAME MODEQ ex {}
-	 | NAME ANDEQ ex {}
-	 | NAME OREQ ex {}
+	 | NAME PLUSEQ expression {}
+	 | NAME MOINSEQ expression {} 
+	 | NAME MULTEQ expression {}
+	 | NAME DIVEQ expression {}
+	 | NAME MODEQ expression {}
+	 | NAME ANDEQ expression {}
+	 | NAME OREQ expression {}
 	 ;
 
-b : CHEVOPEN b CHEVCLOSE {}
-	 | b i {}
-	 | b s {}
+bloc : CHEVOPEN bloc CHEVCLOSE {}
+	 | bloc instruction {}
+	 | bloc structure {}
 	 | /* epsilon */ {}
 	 ;
 
-el : ELSE CHEVOPEN b CHEVCLOSE {}
-	 | ELSE CHEVOPEN b CHEVCLOSE {}
-	 | ELSE i {}
+el : ELSE CHEVOPEN bloc CHEVCLOSE {}
+	 | ELSE CHEVOPEN bloc CHEVCLOSE {}
+	 | ELSE instruction {}
 	 | /* epsilon */ {}
 	 ;
 
-eli : ELSE IF COPEN ex CCLOSE CHEVOPEN b CHEVCLOSE eli el {}
-	 | ELSE IF COPEN ex CCLOSE i eli el {}
+eli : ELSE IF COPEN expression CCLOSE CHEVOPEN bloc CHEVCLOSE eli el {}
+	 | ELSE IF COPEN expression CCLOSE instruction eli el {}
 	 | /* epsilon */ {}
 	 ;
 
-ex : ex PLUS ex {  }
-     | ex MULT ex  {  }
-     | ex DIV ex  {  }
-     | ex MOINS ex{  }
-     | ex MOD ex {  }
-     | OPEN ex CLOSE{  }
-     | ex DINF ex{  }
-     | ex DSUP ex{  }
-     | NOT ex{  }
-     | ex AND ex{  }
-     | ex DAND ex{  }
-     | ex OR ex{  }
-     | ex DOR ex{  }
-     | ex XOR ex{  }
-     | ex SUP ex{  }
-     | ex INF ex{  }
-     | ex INFEQ ex{  }
-     | ex SUPEQ ex{  }
-     | ex DEGAL ex{  }
-     | ex DIFF ex{  }
+expression : expression PLUS expression {  }
+     | expression MULT expression  {  }
+     | expression DIV expression  {  }
+     | expression MOINS expression{  }
+     | expression MOD expression {  }
+     | OPEN expression CLOSE{  }
+     | expression DINF expression{  }
+     | expression DSUP expression{  }
+     | NOT expression{  }
+     | expression AND expression{  }
+     | expression DAND expression{  }
+     | expression OR expression{  }
+     | expression DOR expression{  }
+     | expression XOR expression{  }
+     | expression SUP expression{  }
+     | expression INF expression{  }
+     | expression INFEQ expression{  }
+     | expression SUPEQ expression{  }
+     | expression DEGAL expression{  }
+     | expression DIFF expression{  }
      | NAME {}
-     | NAME COPEN ex CCLOSE  {}
+     | NAME COPEN expression CCLOSE  {}
      | NVALUE { }
      | CVALUE { }
-     | a { }
+     | affectation { }
      ;
 
-d : t NAME { }
-	 | t NAME EGAL ex {}
-	 | t NAME COPEN NVALUE CCLOSE { }
+d : type NAME { }
+	 | type NAME EGAL expression {}
+	 | type NAME COPEN NVALUE CCLOSE { }
 	 ;
 
-f : t NAME COPEN pa CCLOSE CHEVOPEN b CHEVCLOSE {}
-	 | t NAME COPEN CCLOSE CHEVOPEN b CHEVCLOSE {}
-	 | t NAME COPEN VOID CCLOSE CHEVOPEN b CHEVCLOSE {}
-	 | VOID NAME COPEN pa CCLOSE CHEVOPEN b CHEVCLOSE {}
-	 | VOID NAME COPEN CCLOSE CHEVOPEN b CHEVCLOSE {}
-	 | VOID NAME COPEN VOID CCLOSE CHEVOPEN b CHEVCLOSE {}
+fonction : type NAME COPEN pa CCLOSE CHEVOPEN bloc CHEVCLOSE {}
+	 | type NAME COPEN CCLOSE CHEVOPEN bloc CHEVCLOSE {}
+	 | type NAME COPEN VOID CCLOSE CHEVOPEN bloc CHEVCLOSE {}
+	 | VOID NAME COPEN pa CCLOSE CHEVOPEN bloc CHEVCLOSE {}
+	 | VOID NAME COPEN CCLOSE CHEVOPEN bloc CHEVCLOSE {}
+	 | VOID NAME COPEN VOID CCLOSE CHEVOPEN bloc CHEVCLOSE {}
 	 ;
 
-i : d {}
-	 | a {}
-	 | PUTCHAR COPEN ex CCLOSE {}
-	 | GETCHAR COPEN ex CCLOSE {}
+instruction : d {}
+	 | affectation {}
+	 | PUTCHAR COPEN expression CCLOSE {}
+	 | GETCHAR COPEN expression CCLOSE {}
 	 | BREAK {}
-	 | RETURN ex {}
+	 | RETURN expression {}
 	 ;
 
-s : IF COPEN ex CCLOSE CHEVOPEN b CHEVCLOSE eli el {}
-	 | IF COPEN ex CCLOSE i eli el {}
-	 | FOR COPEN ex POINTVIR ex POINTVIR ex CCLOSE CHEVOPEN b CHEVCLOSE {}
-	 | FOR COPEN ex POINTVIR ex POINTVIR ex CCLOSE i {}
-	 | WHILE COPEN ex CCLOSE CHEVOPEN b CHEVCLOSE {}
-	 | WHILE COPEN ex CCLOSE i {}
+structure : IF COPEN expression CCLOSE CHEVOPEN bloc CHEVCLOSE eli el {}
+	 | IF COPEN expression CCLOSE instruction eli el {}
+	 | FOR COPEN expression POINTVIR expression POINTVIR expression CCLOSE CHEVOPEN bloc CHEVCLOSE {}
+	 | FOR COPEN expression POINTVIR expression POINTVIR expression CCLOSE instruction {}
+	 | WHILE COPEN expression CCLOSE CHEVOPEN bloc CHEVCLOSE {}
+	 | WHILE COPEN expression CCLOSE instruction {}
 	 ;
 
-t : CHAR {}
+type : CHAR {}
 	 | INT32 {}
 	 | INT64 {}
 	 ;
 
-tpa : tpa VIRG t NAME {}
-	 | tpa VIRG t CHEVOPEN CHEVCLOSE NAME tpa
+tpa : tpa VIRG type NAME {}
+	 | tpa VIRG type CHEVOPEN CHEVCLOSE NAME tpa
 	 | /* epsilon */ {}
 	 ;
 
-p : p INCL {}
-	 | p f {}
+programme : programme INCL {}
+	 | programme fonction {}
 	 | /* epsilon */ {}
 	 ;
 
-pa :  t NAME tpa { }
-	 | t CHEVOPEN CHEVCLOSE NAME tpa {}
+pa :  type NAME tpa { }
+	 | type CHEVOPEN CHEVCLOSE NAME tpa {}
 	 ;
 
 %%
