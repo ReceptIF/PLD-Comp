@@ -4,11 +4,11 @@
 #include "calc.tab.h"
 %}
 %option noyywrap
-name :     ^([a-zA-Z]+[a-zA-Z_0-9]*)
-nValue :    ^(\d+)/g    OU /^([0-9]+)
-cValue :    ^'(.{1})’/g
-comment :    \/\*(.|[\r\n])*?\*\/
-incl :        ^(#.+>)
+name      ^([a-zA-Z]+[a-zA-Z_0-9]*)
+nValue     ^([0-9]+)
+cValue     ^'(.)'
+comment     \/\*(.|[\r\n])*?\*\/
+incl       ^(#.+>)
 
 %%
 

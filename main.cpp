@@ -1,6 +1,15 @@
+#include <iostream>
+
 #include "Programme.h"
 
-int main(int argc, char *argv) {
+using namespace std;
+
+int main() {
+	Programme* p = new Programme();
+	
+	cout << "Wololo" << endl;
+
+	delete p;
     return 0;
 }
 
