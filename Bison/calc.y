@@ -75,7 +75,7 @@ expression : expression PLUS expression {  }
      | expression DIV expression  {  }
      | expression MOINS expression{  }
      | expression MOD expression {  }
-     | OPEN expression CLOSE{  }
+     | COPEN expression CCLOSE{  }
      | expression DINF expression{  }
      | expression DSUP expression{  }
      | NOT expression{  }
