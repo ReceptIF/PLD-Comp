@@ -59,6 +59,11 @@ bloc : CHEVOPEN bloc CHEVCLOSE {}
 	 | /* epsilon */ {}
 	 ;
 
+decdef : type NAME { }
+	 | type NAME EGAL expression {}
+	 | type NAME COPEN NVALUE CCLOSE { }
+	 ;
+
 el : ELSE CHEVOPEN bloc CHEVCLOSE {}
 	 | ELSE CHEVOPEN bloc CHEVCLOSE {}
 	 | ELSE instruction {}
@@ -97,11 +102,6 @@ expression : expression PLUS expression {  }
      | affectation { }
      ;
 
-d : type NAME { }
-	 | type NAME EGAL expression {}
-	 | type NAME COPEN NVALUE CCLOSE { }
-	 ;
-
 fonction : type NAME COPEN pa CCLOSE CHEVOPEN bloc CHEVCLOSE {}
 	 | type NAME COPEN CCLOSE CHEVOPEN bloc CHEVCLOSE {}
 	 | type NAME COPEN VOID CCLOSE CHEVOPEN bloc CHEVCLOSE {}
@@ -110,7 +110,7 @@ fonction : type NAME COPEN pa CCLOSE CHEVOPEN bloc CHEVCLOSE {}
 	 | VOID NAME COPEN VOID CCLOSE CHEVOPEN bloc CHEVCLOSE {}
 	 ;
 
-instruction : d {}
+instruction : decdef {}
 	 | affectation {}
 	 | PUTCHAR COPEN expression CCLOSE {}
 	 | GETCHAR COPEN expression CCLOSE {}
