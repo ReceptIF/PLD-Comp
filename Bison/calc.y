@@ -38,6 +38,38 @@ int yylexpression(void);
 /*axiome : expression { *resultat = $1; }
      ;*/ 
 
+type : CHAR {}
+	 | INT32 {}
+	 | INT64 {}
+	 ;
+
+expression : expression PLUS expression {  }
+     | expression MULT expression  {  }
+     | expression DIV expression  {  }
+     | expression MOINS expression{  }
+     | expression MOD expression {  }
+     | COPEN expression CCLOSE{  }
+     | expression DINF expression{  }
+     | expression DSUP expression{  }
+     | NOT expression{  }
+     | expression AND expression{  }
+     | expression DAND expression{  }
+     | expression OR expression{  }
+     | expression DOR expression{  }
+     | expression XOR expression{  }
+     | expression SUP expression{  }
+     | expression INF expression{  }
+     | expression INFEQ expression{  }
+     | expression SUPEQ expression{  }
+     | expression DEGAL expression{  }
+     | expression DIFF expression{  }
+     | NAME {}
+     | NAME COPEN expression CCLOSE  {}
+     | NVALUE { }
+     | CVALUE { }
+     | affectation { }
+     ;
+
 affectation : NAME EGAL expression {}
 	 | NAME COPEN expression CCLOSE EGAL expression {}
 	 | NAME DPLUS {}
@@ -75,32 +107,6 @@ eli : ELSE IF COPEN expression CCLOSE CHEVOPEN bloc CHEVCLOSE eli el {}
 	 | /* epsilon */ {}
 	 ;
 
-expression : expression PLUS expression {  }
-     | expression MULT expression  {  }
-     | expression DIV expression  {  }
-     | expression MOINS expression{  }
-     | expression MOD expression {  }
-     | COPEN expression CCLOSE{  }
-     | expression DINF expression{  }
-     | expression DSUP expression{  }
-     | NOT expression{  }
-     | expression AND expression{  }
-     | expression DAND expression{  }
-     | expression OR expression{  }
-     | expression DOR expression{  }
-     | expression XOR expression{  }
-     | expression SUP expression{  }
-     | expression INF expression{  }
-     | expression INFEQ expression{  }
-     | expression SUPEQ expression{  }
-     | expression DEGAL expression{  }
-     | expression DIFF expression{  }
-     | NAME {}
-     | NAME COPEN expression CCLOSE  {}
-     | NVALUE { }
-     | CVALUE { }
-     | affectation { }
-     ;
 
 fonction : type NAME COPEN pa CCLOSE CHEVOPEN bloc CHEVCLOSE {}
 	 | type NAME COPEN CCLOSE CHEVOPEN bloc CHEVCLOSE {}
@@ -126,10 +132,7 @@ structure : IF COPEN expression CCLOSE CHEVOPEN bloc CHEVCLOSE eli el {}
 	 | WHILE COPEN expression CCLOSE instruction {}
 	 ;
 
-type : CHAR {}
-	 | INT32 {}
-	 | INT64 {}
-	 ;
+
 
 tpa : tpa VIRG type NAME {}
 	 | tpa VIRG type CHEVOPEN CHEVCLOSE NAME tpa
