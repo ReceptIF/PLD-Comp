@@ -69,3 +69,4 @@ incl       ^(#.+>)
 "getchar"    { return GETCHAR; }
 "return"     { return RETURN; }
 "break"      { return BREAK; }
+%%

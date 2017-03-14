@@ -41,49 +41,56 @@ int yylexpression(void);
 /*axiome : expression { *resultat = $1; }
      ;*/ 
 
+programme : programme INCL {}
+	 | programme fonction {}
+	 | /* epsilon */ {}
+	 ;
+
 type : CHAR {}
 	 | INT32 {}
 	 | INT64 {}
 	 ;
 
-appfct : NAME COPEN le CCLOSE { }
+lee : expression lee {}
+	 | /* epsilon */ {}
 	 ;
 
-expression : expression PLUS expression { $$ }
-     | expression MULT expression  {  }
-     | expression DIV expression  {  }
-     | expression MOINS expression{  }
-     | expression MOD expression {  }
+le : expression lee {}
+	 | /* epsilon */ {}
+	 ;
+
+appfct : NAME COPEN le CCLOSE {}
+	 ;
+
+expression :  expression PLUS expression { /* $$ = new ExpressionBinaire($1, $3, PLUS); */ }
+     | expression MULT expression  { /* $$ = new ExpressionBinaire($1, $3, MULT); */ }
+     | expression DIV expression  { /* $$ = new ExpressionBinaire($1, $3, DIV); */ }
+     | expression MOINS expression{ /* $$ = new ExpressionBinaire($1, $3, MOINS); */ }
+     | expression MOD expression { /* $$ = new ExpressionBinaire($1, $3, MOD); */ }
      | COPEN expression CCLOSE{ $$ = $2; }
      | expression DINF expression{  }
      | expression DSUP expression{  }
      | NOT expression{  }
-     | expression AND expression{  }
-     | expression DAND expression{  }
-     | expression OR expression{  }
-     | expression DOR expression{  }
-     | expression XOR expression{  }
-     | expression SUP expression{  }
-     | expression INF expression{  }
-     | expression INFEQ expression{  }
-     | expression SUPEQ expression{  }
-     | expression DEGAL expression{  }
-     | expression DIFF expression{  }
+     | expression AND expression{ /* $$ = new ExpressionBinaire($1, $3, AND); */ }
+     | expression DAND expression{ /* $$ = new ExpressionBinaire($1, $3, DAND); */ }
+     | expression OR expression{ /* $$ = new ExpressionBinaire($1, $3, OR); */ }
+     | expression DOR expression{ /* $$ = new ExpressionBinaire($1, $3, DOR); */ }
+     | expression XOR expression{ /* $$ = new ExpressionBinaire($1, $3, XOR); */ }
+     | expression SUP expression{ /* $$ = new ExpressionBinaire($1, $3, SUP); */ }
+     | expression INF expression{ /* $$ = new ExpressionBinaire($1, $3, INF); */ }
+     | expression INFEQ expression{ /* $$ = new ExpressionBinaire($1, $3, INFEQ); */ }
+     | expression SUPEQ expression{ /* $$ = new ExpressionBinaire($1, $3, SUPEQ); */ }
+     | expression DEGAL expression{ /* $$ = new ExpressionBinaire($1, $3, DEGAL); */ }
+     | expression DIFF expression{ /* $$ = new ExpressionBinaire($1, $3, DIFF); */ }
      | NAME {}
      | NAME COPEN expression CCLOSE  {}
-     | NVALUE { }
-     | CVALUE { }
-     | affectation { }
-     | appfct { }
+     | NVALUE {}
+     | CVALUE {}
+     | affectation {}
+     | appfct {}
      ;
 
-lee : expression lee { }
-	 | /* epsilon */ { }
-	 ;
 
-le : expression lee { }
-	 | /* epsilon */ { }
-	 ;
 
 affectation : NAME EGAL expression {}
 	 | NAME COPEN expression CCLOSE EGAL expression {}
@@ -106,9 +113,9 @@ bloc : CHEVOPEN bloc CHEVCLOSE {}
 	 | /* epsilon */ {}
 	 ;
 
-decdef : type NAME { }
+decdef : type NAME {}
 	 | type NAME EGAL expression {}
-	 | type NAME COPEN NVALUE CCLOSE { }
+	 | type NAME COPEN NVALUE CCLOSE {}
 	 ;
 
 el : ELSE CHEVOPEN bloc CHEVCLOSE {}
@@ -132,12 +139,11 @@ fonction : type NAME COPEN pa CCLOSE CHEVOPEN bloc CHEVCLOSE {}
 	 ;
 
 instruction : decdef {}
-	 | affectation {}
 	 | PUTCHAR COPEN expression CCLOSE {}
 	 | GETCHAR COPEN expression CCLOSE {}
 	 | BREAK {}
+	 | expression {}
 	 | RETURN expression {}
-	 | appfct { }
 	 ;
 
 structure : IF COPEN expression CCLOSE CHEVOPEN bloc CHEVCLOSE eli el {}
@@ -155,12 +161,8 @@ tpa : tpa VIRG type NAME {}
 	 | /* epsilon */ {}
 	 ;
 
-programme : programme INCL {}
-	 | programme fonction {}
-	 | /* epsilon */ {}
-	 ;
 
-pa :  type NAME tpa { }
+pa :  type NAME tpa {}
 	 | type CHEVOPEN CHEVCLOSE NAME tpa {}
 	 ;
 
@@ -176,4 +178,3 @@ int main(void) {
    printf("Résutlat : %d\n",res);
    return 0;
 }
-

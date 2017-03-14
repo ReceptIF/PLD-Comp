@@ -4,4 +4,4 @@ default:
 	clang -o calc *.c
 
 clean:
-	rm calc.tab.* calc.output lex.yy.c
+	rm calc.tab.* calc.output lex.yy.c calc
