@@ -3,9 +3,11 @@
 
 #include "Instruction.h"
 
-class Expresion : public Instruction {
+class Expression : public Instruction {
 
 public:
+    Expression();
+    ~Expression();
 
 private:
 

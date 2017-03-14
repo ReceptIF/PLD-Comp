@@ -6,6 +6,8 @@
 class StructCond : public Structure {
 
 public:
+    StructCond();
+    ~StructCond();
 
 private:
 

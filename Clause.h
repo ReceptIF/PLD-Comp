@@ -4,6 +4,8 @@
 class Clause {
 
 public:
+    Clause();
+    ~Clause();
 
 private:
 
