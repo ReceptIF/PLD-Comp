@@ -15,6 +15,7 @@ int yylexpression(void);
 %token <ival> INCL
 
 %type <ival> affectation
+%type <ival> appfct
 %type <ival> bloc
 %type <ival> decdef
 %type <ival> el
@@ -22,6 +23,8 @@ int yylexpression(void);
 %type <ival> expression
 %type <ival> fonction
 %type <ival> instruction
+%type <ival> le
+%type <ival> lee
 %type <ival> programme
 %type <ival> pa
 %type <ival> structure
@@ -41,6 +44,9 @@ int yylexpression(void);
 type : CHAR {}
 	 | INT32 {}
 	 | INT64 {}
+	 ;
+
+appfct : NAME COPEN le CCLOSE { }
 	 ;
 
 expression : expression PLUS expression { $$ }
@@ -68,7 +74,16 @@ expression : expression PLUS expression { $$ }
      | NVALUE { }
      | CVALUE { }
      | affectation { }
+     | appfct { }
      ;
+
+lee : expression lee { }
+	 | /* epsilon */ { }
+	 ;
+
+le : expression lee { }
+	 | /* epsilon */ { }
+	 ;
 
 affectation : NAME EGAL expression {}
 	 | NAME COPEN expression CCLOSE EGAL expression {}
@@ -122,6 +137,7 @@ instruction : decdef {}
 	 | GETCHAR COPEN expression CCLOSE {}
 	 | BREAK {}
 	 | RETURN expression {}
+	 | appfct { }
 	 ;
 
 structure : IF COPEN expression CCLOSE CHEVOPEN bloc CHEVCLOSE eli el {}
