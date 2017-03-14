@@ -14,6 +14,8 @@ int yylexpression(void);
 %token <ival> CVALUE
 %token <ival> INCL
 
+%type <ival> programme
+%type <ival> fonction
 %type <ival> affectation
 %type <ival> appfct
 %type <ival> bloc
@@ -21,11 +23,9 @@ int yylexpression(void);
 %type <ival> el
 %type <ival> eli
 %type <ival> expression
-%type <ival> fonction
 %type <ival> instruction
 %type <ival> le
 %type <ival> lee
-%type <ival> programme
 %type <ival> pa
 %type <ival> structure
 %type <ival> type
@@ -51,23 +51,65 @@ type : CHAR {}
 	 | INT64 {}
 	 ;
 
-lee : expression lee {}
+tpa : tpa VIRG type NAME {}
+	 | tpa VIRG type CHEVOPEN CHEVCLOSE NAME tpa
+	 | /* epsilon */ {}
+	 ;	 
+
+pa :  type NAME tpa {}
+	 | type CHEVOPEN CHEVCLOSE NAME tpa {}
+	 ;
+
+
+instruction : decdef {}
+	 | PUTCHAR COPEN expression CCLOSE {}
+	 | GETCHAR COPEN expression CCLOSE {}
+	 | BREAK {}
+	 | expression {}
+	 | RETURN expression {}
+	 ;
+
+el : ELSE CHEVOPEN bloc CHEVCLOSE {}
+	 | ELSE CHEVOPEN bloc CHEVCLOSE {}
+	 | ELSE instruction {}
 	 | /* epsilon */ {}
 	 ;
 
-le : expression lee {}
+eli : ELSE IF COPEN expression CCLOSE CHEVOPEN bloc CHEVCLOSE eli el {}
+	 | ELSE IF COPEN expression CCLOSE instruction eli el {}
 	 | /* epsilon */ {}
 	 ;
 
-appfct : NAME COPEN le CCLOSE {}
+structure : IF COPEN expression CCLOSE CHEVOPEN bloc CHEVCLOSE eli el {}
+	 | IF COPEN expression CCLOSE instruction eli el {}
+	 | FOR COPEN expression POINTVIR expression POINTVIR expression CCLOSE CHEVOPEN bloc CHEVCLOSE {}
+	 | FOR COPEN expression POINTVIR expression POINTVIR expression CCLOSE instruction {}
+	 | WHILE COPEN expression CCLOSE CHEVOPEN bloc CHEVCLOSE {}
+	 | WHILE COPEN expression CCLOSE instruction {}
 	 ;
+
+bloc : CHEVOPEN bloc CHEVCLOSE {}
+	 | bloc instruction {}
+	 | bloc structure {}
+	 | /* epsilon */ {}
+	 ;
+
+fonction : type NAME COPEN pa CCLOSE CHEVOPEN bloc CHEVCLOSE {}
+	 | type NAME COPEN CCLOSE CHEVOPEN bloc CHEVCLOSE {}
+	 | type NAME COPEN VOID CCLOSE CHEVOPEN bloc CHEVCLOSE {}
+	 | VOID NAME COPEN pa CCLOSE CHEVOPEN bloc CHEVCLOSE {}
+	 | VOID NAME COPEN CCLOSE CHEVOPEN bloc CHEVCLOSE {}
+	 | VOID NAME COPEN VOID CCLOSE CHEVOPEN bloc CHEVCLOSE {}
+	 ;
+
+
 
 expression :  expression PLUS expression { /* $$ = new ExpressionBinaire($1, $3, PLUS); */ }
      | expression MULT expression  { /* $$ = new ExpressionBinaire($1, $3, MULT); */ }
      | expression DIV expression  { /* $$ = new ExpressionBinaire($1, $3, DIV); */ }
      | expression MOINS expression{ /* $$ = new ExpressionBinaire($1, $3, MOINS); */ }
      | expression MOD expression { /* $$ = new ExpressionBinaire($1, $3, MOD); */ }
-     | COPEN expression CCLOSE{ $$ = $2; }
+     | POPEN expression PCLOSE{ $$ = $2; }
      | expression DINF expression{  }
      | expression DSUP expression{  }
      | NOT expression{  }
@@ -90,8 +132,6 @@ expression :  expression PLUS expression { /* $$ = new ExpressionBinaire($1, $3,
      | appfct {}
      ;
 
-
-
 affectation : NAME EGAL expression {}
 	 | NAME COPEN expression CCLOSE EGAL expression {}
 	 | NAME DPLUS {}
@@ -105,12 +145,17 @@ affectation : NAME EGAL expression {}
 	 | NAME MODEQ expression {}
 	 | NAME ANDEQ expression {}
 	 | NAME OREQ expression {}
+	 ;     
+
+lee : expression lee {}
+	 | /* epsilon */ {}
 	 ;
 
-bloc : CHEVOPEN bloc CHEVCLOSE {}
-	 | bloc instruction {}
-	 | bloc structure {}
+le : expression lee {}
 	 | /* epsilon */ {}
+	 ;
+
+appfct : NAME COPEN le CCLOSE {}
 	 ;
 
 decdef : type NAME {}
@@ -118,53 +163,7 @@ decdef : type NAME {}
 	 | type NAME COPEN NVALUE CCLOSE {}
 	 ;
 
-el : ELSE CHEVOPEN bloc CHEVCLOSE {}
-	 | ELSE CHEVOPEN bloc CHEVCLOSE {}
-	 | ELSE instruction {}
-	 | /* epsilon */ {}
-	 ;
 
-eli : ELSE IF COPEN expression CCLOSE CHEVOPEN bloc CHEVCLOSE eli el {}
-	 | ELSE IF COPEN expression CCLOSE instruction eli el {}
-	 | /* epsilon */ {}
-	 ;
-
-
-fonction : type NAME COPEN pa CCLOSE CHEVOPEN bloc CHEVCLOSE {}
-	 | type NAME COPEN CCLOSE CHEVOPEN bloc CHEVCLOSE {}
-	 | type NAME COPEN VOID CCLOSE CHEVOPEN bloc CHEVCLOSE {}
-	 | VOID NAME COPEN pa CCLOSE CHEVOPEN bloc CHEVCLOSE {}
-	 | VOID NAME COPEN CCLOSE CHEVOPEN bloc CHEVCLOSE {}
-	 | VOID NAME COPEN VOID CCLOSE CHEVOPEN bloc CHEVCLOSE {}
-	 ;
-
-instruction : decdef {}
-	 | PUTCHAR COPEN expression CCLOSE {}
-	 | GETCHAR COPEN expression CCLOSE {}
-	 | BREAK {}
-	 | expression {}
-	 | RETURN expression {}
-	 ;
-
-structure : IF COPEN expression CCLOSE CHEVOPEN bloc CHEVCLOSE eli el {}
-	 | IF COPEN expression CCLOSE instruction eli el {}
-	 | FOR COPEN expression POINTVIR expression POINTVIR expression CCLOSE CHEVOPEN bloc CHEVCLOSE {}
-	 | FOR COPEN expression POINTVIR expression POINTVIR expression CCLOSE instruction {}
-	 | WHILE COPEN expression CCLOSE CHEVOPEN bloc CHEVCLOSE {}
-	 | WHILE COPEN expression CCLOSE instruction {}
-	 ;
-
-
-
-tpa : tpa VIRG type NAME {}
-	 | tpa VIRG type CHEVOPEN CHEVCLOSE NAME tpa
-	 | /* epsilon */ {}
-	 ;
-
-
-pa :  type NAME tpa {}
-	 | type CHEVOPEN CHEVCLOSE NAME tpa {}
-	 ;
 
 %%
 
