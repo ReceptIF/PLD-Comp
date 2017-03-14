@@ -43,12 +43,12 @@ type : CHAR {}
 	 | INT64 {}
 	 ;
 
-expression : expression PLUS expression {  }
+expression : expression PLUS expression { $$ }
      | expression MULT expression  {  }
      | expression DIV expression  {  }
      | expression MOINS expression{  }
      | expression MOD expression {  }
-     | COPEN expression CCLOSE{  }
+     | COPEN expression CCLOSE{ $$ = $2; }
      | expression DINF expression{  }
      | expression DSUP expression{  }
      | NOT expression{  }
