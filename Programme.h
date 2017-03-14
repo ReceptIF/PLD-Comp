@@ -6,18 +6,17 @@
 
 #include "Fonction.h"
 
-using namespace std;
-
 class Programme {
 
 public:
 
-Programme();
-~Programme();
+    Programme();
+    ~Programme();
+    void AjouteFonction(Fonction & fonction);
 
 private:
 
-list<Fonction> fonctions;	
+    std::list <Fonction> fonctions;
 
 };
 

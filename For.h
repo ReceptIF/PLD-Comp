@@ -9,7 +9,24 @@ class For : public Structure {
 
 public:
     For();
+
     ~For();
+
+    void SetBloc(Bloc & bloc);
+
+    void SetInitialisation(Expression &expression);
+
+    void SetCondition(Expression &expression);
+
+    void SetIteration(Expression &expression);
+
+    Bloc GetBloc();
+
+    Expression GetInitialisation();
+
+    Expression GetCondition();
+
+    Expression GetIteration();
 
 private:
     Bloc bloc;
