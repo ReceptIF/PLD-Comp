@@ -2,8 +2,28 @@
 #include <iostream>
 #include <string>
 
+#include "../Affectation.h"
+#include "../Bloc.h"
+#include "../Clause.h"
+#include "../Declaration.h"
 #include "../Expression.h"
-/* INCLUDE AU DESSUS DE CETTE LIGNE */
+#include "../ExpressionBinaire.h"
+#include "../ExpressionConstante.h"
+#include "../ExpressionUnaire.h"
+#include "../ExpressionVariable.h"
+#include "../Fonction.h"
+#include "../For.h"
+#include "../Instruction.h"
+#include "../Programme.h"
+#include "../StructCond.h"
+#include "../Structure.h"
+#include "../Type.h"
+#include "../Variable.h"
+#include "../VariableSimple.h"
+#include "../VariableTableau.h"
+#include "../While.h"
+
+/* INCLUDEs AU DESSUS DE CETTE LIGNE */
 #include "calc.tab.h"
 %}
 %option noyywrap

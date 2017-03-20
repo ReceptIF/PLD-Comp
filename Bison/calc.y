@@ -1,18 +1,42 @@
 %{
+#include "../Affectation.h"
+#include "../Bloc.h"
+#include "../Clause.h"
+#include "../Declaration.h"
 #include "../Expression.h"
+#include "../ExpressionBinaire.h"
+#include "../ExpressionConstante.h"
+#include "../ExpressionUnaire.h"
+#include "../ExpressionVariable.h"
+#include "../Fonction.h"
+#include "../For.h"
+#include "../Instruction.h"
+#include "../Programme.h"
+#include "../StructCond.h"
+#include "../Structure.h"
+#include "../Type.h"
+#include "../Variable.h"
+#include "../VariableSimple.h"
+#include "../VariableTableau.h"
+#include "../While.h"
 
 #include <iostream>
 #include <string>
 
 int yylex(void);
-void yyerror(int*, Expression**, const char *);
+void yyerror(int*, Bloc**, Expression**, Fonction**, Programme** prog, const char *);
 int yylexpression(void);
 
 %}
 %union {
    int ival; 
    double dval;
-   Expression *e;
+   char* cval;
+
+   Bloc *block;
+   Expression *expr;
+   Fonction *fonct;
+   Programme *prog;
 }
 
 %token EGAL PLUS MULT DIV MOINS AND DAND OR DOR DEGAL INFEQ SUPEQ DIFF MOD XOR PLUSEQ MULTEQ DIVEQ MOINSEQ DPLUS DMOINS NOT MODEQ DSUP DINF INF SUP ANDEQ OREQ IF ELSE WHILE FOR CHAR INT32 INT64 VOID POINTVIR CHEVOPEN CHEVCLOSE POPEN PCLOSE COPEN CCLOSE VIRG PUTCHAR GETCHAR RETURN BREAK
@@ -22,13 +46,13 @@ int yylexpression(void);
 %token <ival> CVALUE
 %token <ival> INCL
 
-%type <e> programme
-%type <e> fonction
+%type <prog> programme
+%type <fonct> fonction
 %type <e> appfct
 %type <e> bloc
 %type <e> decdef
 %type <e> el
-%type <e> expression
+%type <expr> expression
 %type <e> instruction
 %type <e> le
 %type <e> lee
@@ -52,7 +76,7 @@ int yylexpression(void);
 %right EGAL PLUSEQ MULTEQ DIVEQ MOINSEQ MODEQ ANDEQ OREQ
 %left VIRG
 
-%parse-param { int * resultat } { Expression ** e }
+%parse-param { int * resultat } { Bloc ** block } { Expression ** expr } { Fonction ** fonct }
 
 %%
 
@@ -116,7 +140,7 @@ el : ELSE CHEVOPEN bloc CHEVCLOSE {}
 expression :  NAME {} 
      | NVALUE {}
      | CVALUE {}
-	 | expression PLUS expression { /* $$ = new ExpressionBinaire($1, $3, PLUS); */ }
+	 | expression PLUS expression {  expr = new ExpressionBinaire($1, $3, PLUS);  }
      | expression MULT expression  { /* $$ = new ExpressionBinaire($1, $3, MULT); */ }
      | expression DIV expression  { /* $$ = new ExpressionBinaire($1, $3, DIV); */ }
      | expression MOINS expression{ /* $$ = new ExpressionBinaire($1, $3, MOINS); */ }
@@ -177,20 +201,26 @@ type : CHAR {}
 
 %%
 
-void yyerror(int* a, Expression** b, const char * s)
+void yyerror(int* a, Expression** b, Fonction** c, const char * s)
 {
 	std::cout << s << std::endl;
 }
 
 int main(void) {
    int res = 0;
-   Expression* e = 0;
+   Bloc* block = 0;
+   Expression* expr = 0;
+   Fonction* fonct = 0;
+   Programme* prog = 0;
 
-   yyparse(&res, &e);
+   yyparse(&res, &block, &expr, &fonct, &prog);
 
    std::cout << "Result :" << res << std::endl;
 
-   delete e;
+   delete block;
+   delete expr;
+   delete fonct;
+   delete prog;
 
    return 0;
 }
