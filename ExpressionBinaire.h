@@ -8,8 +8,17 @@ class ExpressionBinaire : public Expression {
 public:
     ExpressionBinaire();
     ~ExpressionBinaire();
+    void setExpression1(Expression &expression);
+    void setExpression2(Expression &expression);
+    void setSymbole(int &symbole);
+    Expression getExpression1();
+    Expression getExpression2();
+    int getSymbole();
 
 private:
+	Expression expression1;
+	Expression expression2;
+	int symbole;
 
 };
 
