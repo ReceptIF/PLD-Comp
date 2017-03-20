@@ -1,5 +1,8 @@
 %{
 #include <stdio.h>
+
+#include "../Expression.h"
+
 void yyerror(int *, const char *);
 int yylexpression(void);
 %}
@@ -20,7 +23,6 @@ int yylexpression(void);
 %type <ival> bloc
 %type <ival> decdef
 %type <ival> el
-/* %type <ival> eli */
 %type <ival> expression
 %type <ival> instruction
 %type <ival> le
