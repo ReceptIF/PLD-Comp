@@ -12,7 +12,7 @@ public:
 
     Programme();
     ~Programme();
-    void AjouteFonction(Fonction & fonction);
+    void AjouteFonction(Fonction* & fonction);
 
 private:
 

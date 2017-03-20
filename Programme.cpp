@@ -12,7 +12,7 @@ Programme::~Programme()
 
 }
 
-void Programme::AjouteFonction(Fonction & fonction)
+void Programme::AjouteFonction(Fonction* & fonction)
 {
     fonctions.push_back(fonction);
 }

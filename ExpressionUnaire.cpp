@@ -10,7 +10,7 @@ ExpressionUnaire::~ExpressionUnaire()
 
 }
 
-void setExpression1(Expression &expression)
+void setExpression1(Expression* &expression)
 {
 	expression1 = expression;
 }

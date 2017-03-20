@@ -10,7 +10,7 @@ Bloc::~Bloc()
 {
 }
 
-void Block::AjouteInstruction(Instruction & instruction)
+void Block::AjouteInstruction(Instruction* & instruction)
 {
     instructions.push_back(instruction);
 }

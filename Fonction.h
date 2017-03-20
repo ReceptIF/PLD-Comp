@@ -2,6 +2,7 @@
 #define PLD_COMP_FONCTION_H
 
 #include <list>
+#include <iostream>
 #include <string>
 
 #include "Variable.h"
@@ -17,7 +18,7 @@ private:
     int typeRetour;
     std::list <Variable*> parametres;
     Bloc* bloc;
-    string nom;
+    std::string nom;
 
 };
 

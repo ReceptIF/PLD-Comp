@@ -8,7 +8,7 @@ class ExpressionUnaire : public Expression {
 public:
     ExpressionUnaire();
     ~ExpressionUnaire();
-    void setExpression1(Expression &expression);
+    void setExpression1(Expression* &expression);
     void setSymbole(int &symbole);
     void setPrefixe(int &prefixe);
     Expression getExpression1();

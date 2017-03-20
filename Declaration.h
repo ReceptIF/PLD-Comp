@@ -2,6 +2,7 @@
 #define PLD_COMP_DECLARATION_H
 
 #include "Instruction.h"
+#include <iostream>
 #include <string>
 
 class Declaration : public Instruction {
@@ -11,7 +12,7 @@ public:
     ~Declaration();
 
 private:
-    string nomVariable;
+    std::string nomVariable;
     int type;
 
 };

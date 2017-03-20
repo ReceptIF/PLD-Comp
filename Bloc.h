@@ -9,7 +9,7 @@ class Bloc {
 public:
     Bloc();
     ~Bloc();
-    void AjouteInstruction(Instruction & instruction);
+    void AjouteInstruction(Instruction* & instruction);
 
 private:
     std::list <Instruction*> instructions;
