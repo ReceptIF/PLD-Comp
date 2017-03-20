@@ -6,9 +6,12 @@
 class Variable {
 
 public:
+	Variable();
+    ~Variable();
 
 private:
     Type type;
+    String nom;
 
 };
 
