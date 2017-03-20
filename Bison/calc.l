@@ -57,6 +57,7 @@ incl       ^(#.+>)
 "int32_t"    { return INT32; }
 "int64_t"    { return INT64; }
 "void"       { return VOID; }
+","			 { return VIRG; }
 ";"          { return POINTVIR; }
 "{"          { return CHEVOPEN; }
 "}"          { return CHEVCLOSE; }

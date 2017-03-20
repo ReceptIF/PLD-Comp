@@ -16,12 +16,11 @@ int yylexpression(void);
 
 %type <ival> programme
 %type <ival> fonction
-%type <ival> affectation
 %type <ival> appfct
 %type <ival> bloc
 %type <ival> decdef
 %type <ival> el
-%type <ival> eli
+/* %type <ival> eli */
 %type <ival> expression
 %type <ival> instruction
 %type <ival> le
@@ -31,8 +30,20 @@ int yylexpression(void);
 %type <ival> type
 %type <ival> tpa
 
-%left MOINS PLUS
-%left MULT DIV
+%left POPEN PCLOSE COPEN CCLOSE DPLUS DMOINS 
+%right NOT NAME NVALUE CVALUE DPLUSAVANT DMOINSAVANT
+%left MULT DIV MOD
+%left PLUS MOINS
+%left DSUP DINF
+%left SUP INF SUPEQ INFEQ
+%left DEGAL DIFF
+%left AND
+%left XOR
+%left OR
+%left DAND
+%left DOR
+%right EGAL PLUSEQ MULTEQ DIVEQ MOINSEQ MODEQ ANDEQ OREQ
+%left VIRG
 
 %parse-param { int * resultat }
 
@@ -46,53 +57,6 @@ programme : programme INCL {}
 	 | /* epsilon */ {}
 	 ;
 
-type : CHAR {}
-	 | INT32 {}
-	 | INT64 {}
-	 ;
-
-tpa : tpa VIRG type NAME {}
-	 | tpa VIRG type CHEVOPEN CHEVCLOSE NAME tpa
-	 | /* epsilon */ {}
-	 ;	 
-
-pa :  type NAME tpa {}
-	 | type CHEVOPEN CHEVCLOSE NAME tpa {}
-	 ;
-
-
-instruction : decdef {}
-	 | PUTCHAR COPEN expression CCLOSE {}
-	 | GETCHAR COPEN expression CCLOSE {}
-	 | BREAK {}
-	 | expression {}
-	 | RETURN expression {}
-	 ;
-
-el : ELSE CHEVOPEN bloc CHEVCLOSE {}
-	 | ELSE CHEVOPEN bloc CHEVCLOSE {}
-	 | ELSE instruction {}
-	 | /* epsilon */ {}
-	 ;
-
-eli : ELSE IF COPEN expression CCLOSE CHEVOPEN bloc CHEVCLOSE eli el {}
-	 | ELSE IF COPEN expression CCLOSE instruction eli el {}
-	 | /* epsilon */ {}
-	 ;
-
-structure : IF COPEN expression CCLOSE CHEVOPEN bloc CHEVCLOSE eli el {}
-	 | IF COPEN expression CCLOSE instruction eli el {}
-	 | FOR COPEN expression POINTVIR expression POINTVIR expression CCLOSE CHEVOPEN bloc CHEVCLOSE {}
-	 | FOR COPEN expression POINTVIR expression POINTVIR expression CCLOSE instruction {}
-	 | WHILE COPEN expression CCLOSE CHEVOPEN bloc CHEVCLOSE {}
-	 | WHILE COPEN expression CCLOSE instruction {}
-	 ;
-
-bloc : CHEVOPEN bloc CHEVCLOSE {}
-	 | bloc instruction {}
-	 | bloc structure {}
-	 | /* epsilon */ {}
-	 ;
 
 fonction : type NAME COPEN pa CCLOSE CHEVOPEN bloc CHEVCLOSE {}
 	 | type NAME COPEN CCLOSE CHEVOPEN bloc CHEVCLOSE {}
@@ -102,16 +66,57 @@ fonction : type NAME COPEN pa CCLOSE CHEVOPEN bloc CHEVCLOSE {}
 	 | VOID NAME COPEN VOID CCLOSE CHEVOPEN bloc CHEVCLOSE {}
 	 ;
 
+bloc : CHEVOPEN bloc CHEVCLOSE {}
+	 | bloc instruction {}
+	 | bloc structure {}
+	 | /* epsilon */ {}
+	 ;	 
+
+instruction : decdef {}
+	 | PUTCHAR COPEN expression CCLOSE {}
+	 | GETCHAR COPEN expression CCLOSE {}
+	 | BREAK {}
+	 | expression {}
+	 | RETURN expression {}
+	 ;
+
+structure : IF POPEN expression PCLOSE CHEVOPEN bloc CHEVCLOSE  el {}
+	 | IF POPEN expression PCLOSE instruction el {}
+	 | FOR POPEN expression POINTVIR expression POINTVIR expression PCLOSE CHEVOPEN bloc CHEVCLOSE {}
+	 | FOR POPEN expression POINTVIR expression POINTVIR expression PCLOSE instruction {}
+	 | WHILE POPEN expression PCLOSE CHEVOPEN bloc CHEVCLOSE {}
+	 | WHILE POPEN expression PCLOSE instruction {}
+	 ;
 
 
-expression :  expression PLUS expression { /* $$ = new ExpressionBinaire($1, $3, PLUS); */ }
+tpa : tpa VIRG type NAME {}
+	 | tpa VIRG type CHEVOPEN CHEVCLOSE NAME tpa {}
+	 | /* epsilon */ {}
+	 ;	 
+
+pa :  type NAME tpa {}
+	 | type CHEVOPEN CHEVCLOSE NAME tpa {}
+	 ;
+
+
+el : ELSE CHEVOPEN bloc CHEVCLOSE {}
+	 | ELSE instruction {}
+	 | ELSE IF POPEN expression PCLOSE CHEVOPEN bloc CHEVCLOSE el {}
+	 | ELSE IF POPEN expression PCLOSE instruction el {}
+	 | /* epsilon */ {}
+	 ;
+
+expression :  NAME {} 
+     | NVALUE {}
+     | CVALUE {}
+	 | expression PLUS expression { /* $$ = new ExpressionBinaire($1, $3, PLUS); */ }
      | expression MULT expression  { /* $$ = new ExpressionBinaire($1, $3, MULT); */ }
      | expression DIV expression  { /* $$ = new ExpressionBinaire($1, $3, DIV); */ }
      | expression MOINS expression{ /* $$ = new ExpressionBinaire($1, $3, MOINS); */ }
      | expression MOD expression { /* $$ = new ExpressionBinaire($1, $3, MOD); */ }
-     | POPEN expression PCLOSE{ $$ = $2; }
-     | expression DINF expression{  }
-     | expression DSUP expression{  }
+     | POPEN expression PCLOSE{ /* $$ = $2; */ }
+     | expression DINF expression {  }
+     | expression DSUP expression {  }
      | NOT expression{  }
      | expression AND expression{ /* $$ = new ExpressionBinaire($1, $3, AND); */ }
      | expression DAND expression{ /* $$ = new ExpressionBinaire($1, $3, DAND); */ }
@@ -124,20 +129,13 @@ expression :  expression PLUS expression { /* $$ = new ExpressionBinaire($1, $3,
      | expression SUPEQ expression{ /* $$ = new ExpressionBinaire($1, $3, SUPEQ); */ }
      | expression DEGAL expression{ /* $$ = new ExpressionBinaire($1, $3, DEGAL); */ }
      | expression DIFF expression{ /* $$ = new ExpressionBinaire($1, $3, DIFF); */ }
-     | NAME {}
      | NAME COPEN expression CCLOSE  {}
-     | NVALUE {}
-     | CVALUE {}
-     | affectation {}
-     | appfct {}
-     ;
-
-affectation : NAME EGAL expression {}
+     | NAME EGAL expression {}
 	 | NAME COPEN expression CCLOSE EGAL expression {}
 	 | NAME DPLUS {}
-	 | DPLUS NAME {}
+	 | DPLUS NAME %prec DPLUSAVANT {}
 	 | NAME DMOINS {}
-	 | DMOINS NAME {}
+	 | DMOINS NAME %prec DMOINSAVANT {}
 	 | NAME PLUSEQ expression {}
 	 | NAME MOINSEQ expression {} 
 	 | NAME MULTEQ expression {}
@@ -145,9 +143,10 @@ affectation : NAME EGAL expression {}
 	 | NAME MODEQ expression {}
 	 | NAME ANDEQ expression {}
 	 | NAME OREQ expression {}
-	 ;     
+     | appfct {}
+     ;   
 
-lee : expression lee {}
+lee : lee VIRG expression {}
 	 | /* epsilon */ {}
 	 ;
 
@@ -155,7 +154,7 @@ le : expression lee {}
 	 | /* epsilon */ {}
 	 ;
 
-appfct : NAME COPEN le CCLOSE {}
+appfct : NAME POPEN le PCLOSE {}
 	 ;
 
 decdef : type NAME {}
@@ -163,6 +162,10 @@ decdef : type NAME {}
 	 | type NAME COPEN NVALUE CCLOSE {}
 	 ;
 
+type : CHAR {}
+	 | INT32 {}
+	 | INT64 {}
+	 ;
 
 
 %%
