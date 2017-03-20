@@ -16,7 +16,7 @@ public:
     int getPrefixe();
 
 private:
-	Expression expression1;
+	Expression* expression1;
 	int symbole;
 	int prefixe;
 };

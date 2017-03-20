@@ -2,7 +2,7 @@
 #define PLD_COMP_DECLARATION_H
 
 #include "Instruction.h"
-#include "Variable.h"
+#include <string>
 
 class Declaration : public Instruction {
 
@@ -11,7 +11,8 @@ public:
     ~Declaration();
 
 private:
-    Variable variable;
+    string nomVariable;
+    int type;
 
 };
 

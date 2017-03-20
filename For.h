@@ -29,10 +29,10 @@ public:
     Expression GetIteration();
 
 private:
-    Bloc bloc;
-    Expression initialisation;
-    Expression condition;
-    Expression iteration;
+    Bloc* bloc;
+    Expression* initialisation;
+    Expression* condition;
+    Expression* iteration;
 
 };
 

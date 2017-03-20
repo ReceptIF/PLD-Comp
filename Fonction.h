@@ -1,7 +1,11 @@
 #ifndef PLD_COMP_FONCTION_H
 #define PLD_COMP_FONCTION_H
 
-#include "Type.h"
+#include <list>
+#include <string>
+
+#include "Variable.h"
+#include "Bloc.h"
 
 class Fonction {
 
@@ -10,7 +14,10 @@ public:
     ~Fonction();
 
 private:
-    Type type;
+    int typeRetour;
+    std::list <Variable*> parametres;
+    Bloc* bloc;
+    string nom;
 
 };
 

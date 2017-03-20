@@ -2,6 +2,7 @@
 #define PLD_COMP_EXPRESSIONVARIABLE_H
 
 #include "Expression.h"
+#include "Variable.h"
 
 class ExpressionVariable : public Expression {
 
@@ -10,7 +11,7 @@ public:
     ~ExpressionVariable();
 
 private:
-
+	Variable* variable;
 };
 
 #endif //PLD_COMP_EXPRESSIONVARIABLE_H

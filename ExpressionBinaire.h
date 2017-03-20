@@ -16,8 +16,8 @@ public:
     int getSymbole();
 
 private:
-	Expression expression1;
-	Expression expression2;
+	Expression* expression1;
+	Expression* expression2;
 	int symbole;
 
 };

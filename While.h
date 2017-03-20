@@ -2,12 +2,14 @@
 #define PLD_COMP_WHILE_H
 
 #include "Structure.h"
+#include "Clause.h"
 
 class While : public Structure {
 
 public:
 
 private:
+	Clause* clause;
 
 };
 

@@ -12,7 +12,7 @@ public:
     void AjouteInstruction(Instruction & instruction);
 
 private:
-    std::list <Instruction> instructions;
+    std::list <Instruction*> instructions;
 
 };
 

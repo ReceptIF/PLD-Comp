@@ -2,6 +2,7 @@
 #define PLD_COMP_VARIABLETABLEAU_H
 
 #include "Variable.h"
+#include "Expression.h"
 
 class VariableTableau : public Variable {
 
@@ -10,7 +11,7 @@ public:
     ~VariableTableau();
 
 private:
-
+	Expression* indice;
 };
 
 #endif //PLD_COMP_VARIABLETABLEAU_H

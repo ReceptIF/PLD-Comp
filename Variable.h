@@ -1,7 +1,7 @@
 #ifndef PLD_COMP_VARIABLE_H
 #define PLD_COMP_VARIABLE_H
 
-#include "Type.h"
+#include <string>
 
 class Variable {
 
@@ -10,9 +10,7 @@ public:
     ~Variable();
 
 private:
-    Type type;
-    String nom;
-
+    string nomVariable;
 };
 
 #endif //PLD_COMP_VARIABLE_H

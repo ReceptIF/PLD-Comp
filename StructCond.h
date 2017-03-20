@@ -16,8 +16,8 @@ public:
     void AjouteClause(Clause & clause);
 
 private:
-    std::list<Clause> clauses;
-    Bloc bloc;
+    std::list<Clause*> clauses;
+    Bloc* bloc;
 
 };
 

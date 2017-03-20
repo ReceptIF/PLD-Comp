@@ -16,7 +16,7 @@ public:
 
 private:
 
-    std::list <Fonction> fonctions;
+    std::list <Fonction*> fonctions;
 
 };
 
