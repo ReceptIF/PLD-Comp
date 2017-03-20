@@ -5,6 +5,9 @@ class Instruction {
 
 public:
 
+	Instruction();
+	~Instruction();
+
 protected:
 
 private:
