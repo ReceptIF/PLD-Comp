@@ -1,6 +1,9 @@
 %{
-#include <stdio.h>
-#include <stdlib.h>
+#include <iostream>
+#include <string>
+
+#include "../Expression.h"
+/* INCLUDE AU DESSUS DE CETTE LIGNE */
 #include "calc.tab.h"
 %}
 %option noyywrap
@@ -63,9 +66,8 @@ incl       ^(#.+>)
 "}"          { return CHEVCLOSE; }
 "("          { return POPEN; }
 ")"          { return PCLOSE; }
-"["          { return PCLOSE; }
-"]"          { return PCLOSE; }
-","          { return PCLOSE; }
+"["          { return COPEN; }
+"]"          { return CCLOSE; }
 "putchar"    { return PUTCHAR; }
 "getchar"    { return GETCHAR; }
 "return"     { return RETURN; }

@@ -1,13 +1,18 @@
 %{
-#include <stdio.h>
-
 #include "../Expression.h"
 
-void yyerror(int *, const char *);
+#include <iostream>
+#include <string>
+
+int yylex(void);
+void yyerror(int*, Expression**, const char *);
 int yylexpression(void);
+
 %}
 %union {
    int ival; 
+   double dval;
+   Expression *e;
 }
 
 %token EGAL PLUS MULT DIV MOINS AND DAND OR DOR DEGAL INFEQ SUPEQ DIFF MOD XOR PLUSEQ MULTEQ DIVEQ MOINSEQ DPLUS DMOINS NOT MODEQ DSUP DINF INF SUP ANDEQ OREQ IF ELSE WHILE FOR CHAR INT32 INT64 VOID POINTVIR CHEVOPEN CHEVCLOSE POPEN PCLOSE COPEN CCLOSE VIRG PUTCHAR GETCHAR RETURN BREAK
@@ -17,20 +22,20 @@ int yylexpression(void);
 %token <ival> CVALUE
 %token <ival> INCL
 
-%type <ival> programme
-%type <ival> fonction
-%type <ival> appfct
-%type <ival> bloc
-%type <ival> decdef
-%type <ival> el
-%type <ival> expression
-%type <ival> instruction
-%type <ival> le
-%type <ival> lee
-%type <ival> pa
-%type <ival> structure
-%type <ival> type
-%type <ival> tpa
+%type <e> programme
+%type <e> fonction
+%type <e> appfct
+%type <e> bloc
+%type <e> decdef
+%type <e> el
+%type <e> expression
+%type <e> instruction
+%type <e> le
+%type <e> lee
+%type <e> pa
+%type <e> structure
+%type <e> type
+%type <e> tpa
 
 %left POPEN PCLOSE COPEN CCLOSE DPLUS DMOINS 
 %right NOT NAME NVALUE CVALUE DPLUSAVANT DMOINSAVANT
@@ -47,7 +52,7 @@ int yylexpression(void);
 %right EGAL PLUSEQ MULTEQ DIVEQ MOINSEQ MODEQ ANDEQ OREQ
 %left VIRG
 
-%parse-param { int * resultat }
+%parse-param { int * resultat } { Expression ** e }
 
 %%
 
@@ -60,12 +65,12 @@ programme : programme INCL {}
 	 ;
 
 
-fonction : type NAME COPEN pa CCLOSE CHEVOPEN bloc CHEVCLOSE {}
-	 | type NAME COPEN CCLOSE CHEVOPEN bloc CHEVCLOSE {}
-	 | type NAME COPEN VOID CCLOSE CHEVOPEN bloc CHEVCLOSE {}
-	 | VOID NAME COPEN pa CCLOSE CHEVOPEN bloc CHEVCLOSE {}
-	 | VOID NAME COPEN CCLOSE CHEVOPEN bloc CHEVCLOSE {}
-	 | VOID NAME COPEN VOID CCLOSE CHEVOPEN bloc CHEVCLOSE {}
+fonction : type NAME POPEN pa PCLOSE CHEVOPEN bloc CHEVCLOSE {}
+	 | type NAME POPEN PCLOSE CHEVOPEN bloc CHEVCLOSE {}
+	 | type NAME POPEN VOID PCLOSE CHEVOPEN bloc CHEVCLOSE {}
+	 | VOID NAME POPEN pa PCLOSE CHEVOPEN bloc CHEVCLOSE {}
+	 | VOID NAME POPEN PCLOSE CHEVOPEN bloc CHEVCLOSE {}
+	 | VOID NAME POPEN VOID PCLOSE CHEVOPEN bloc CHEVCLOSE {}
 	 ;
 
 bloc : CHEVOPEN bloc CHEVCLOSE {}
@@ -172,13 +177,20 @@ type : CHAR {}
 
 %%
 
-void yyerror(int * res, const char * msg) {
-   printf("Syntax error : %s\n",msg);
+void yyerror(int* a, Expression** b, const char * s)
+{
+	std::cout << s << std::endl;
 }
 
 int main(void) {
    int res = 0;
-   yyparse(&res);
-   printf("Résutlat : %d\n",res);
+   Expression* e = 0;
+
+   yyparse(&res, &e);
+
+   std::cout << "Result :" << res << std::endl;
+
+   delete e;
+
    return 0;
 }
