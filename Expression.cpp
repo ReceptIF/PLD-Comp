@@ -9,3 +9,7 @@ Expression::~Expression()
 {
 
 }
+
+int Expression getType() {
+  return this->type;
+}

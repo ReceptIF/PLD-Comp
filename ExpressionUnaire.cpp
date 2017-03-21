@@ -41,3 +41,10 @@ int ExpressionUnaire::getPrefixe()
 {
 	return prefixe;
 }
+
+void ExpressionUnaire::typage() {
+  
+  this->expression1.typage();
+  this->type = expression1.getType();
+  
+}

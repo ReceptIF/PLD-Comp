@@ -10,3 +10,7 @@ ExpressionConstante::~ExpressionConstante()
 {
 
 }
+
+void ExpressionConstante::typage() {
+  // doNothing
+}

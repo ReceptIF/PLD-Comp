@@ -9,6 +9,8 @@ class Expression : public Instruction {
 public:
     Expression();
     ~Expression();
+    virtual void typage();
+    int getType();
     
 protected:
     int type;

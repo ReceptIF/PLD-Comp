@@ -9,6 +9,7 @@ class ExpressionConstante : public Expression {
 public:
     ExpressionConstante(int aType, int aValeur);
     ~ExpressionConstante();
+    void typage();
 
 private:
     int valeur;

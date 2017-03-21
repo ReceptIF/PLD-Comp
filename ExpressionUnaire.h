@@ -15,6 +15,7 @@ public:
     Expression *getExpression1();
     int getSymbole();
     int getPrefixe();
+    void typage();
 
 private:
 	Expression* expression1;

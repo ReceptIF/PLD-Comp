@@ -9,3 +9,10 @@ ExpressionVariable::~ExpressionVariable()
 {
   delete this->variable;
 }
+
+void ExpressionVariable::typage() {
+  
+  // TODO BUT NEED TO DO THE PORTEE
+  this->type = INT32;
+  
+}

@@ -11,6 +11,7 @@ class ExpressionVariable : public Expression {
 public:
     ExpressionVariable(std::string nomVariable);
     ~ExpressionVariable();
+    void typage();
 
 private:
 	Variable* variable;
