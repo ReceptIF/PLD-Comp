@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 
+#include "../AppelFonction.h"
 #include "../Bloc.h"
 #include "../Clause.h"
 #include "../Declaration.h"
@@ -36,11 +37,11 @@ incl       ^(#.+>)
 
 [ \n\t]      { /* ignore */ }
 
-{name}     { return NAME; }
+{name}       { return NAME; }
 {nValue}     { return NVALUE; }
 {cValue}     { return CVALUE; }
-{comment}     { /* ignore */ }
-{incl}     { return INCL; }
+{comment}    { /* ignore */ }
+{incl}       { return INCL; }
 
 "="          { return EGAL; }
 "+"          { return PLUS; }

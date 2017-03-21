@@ -1,6 +1,6 @@
 #include "AppelFonction.h"
 
-AppelFonction::AppelFonction()
+AppelFonction::AppelFonction(std::string nomFonction)
 {
 
 }

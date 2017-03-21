@@ -9,11 +9,11 @@ class Expression;
 class AppelFonction : public Expression {
 
 public:
-    AppelFonction();
+    AppelFonction(std::string nomFonction);
     ~AppelFonction();
 
 private:
-	string nomFonction
+	std::string nomFonction;
 
 };
 

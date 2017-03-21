@@ -9,7 +9,8 @@ ExpressionBinaire::ExpressionBinaire(Expression *e1, Expression *e2, int symb)
 
 ExpressionBinaire::~ExpressionBinaire()
 {
-
+	delete this->expression1;
+	delete this->expression2;
 }
 
 void ExpressionBinaire::setExpression1(Expression* expression)

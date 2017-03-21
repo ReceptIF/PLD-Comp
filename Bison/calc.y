@@ -1,4 +1,5 @@
 %{
+#include "../AppelFonction.h"
 #include "../Bloc.h"
 #include "../Clause.h"
 #include "../Declaration.h"
@@ -32,6 +33,7 @@ int yylexpression(void);
    double dval;
    char* cval;
 
+   AppelFonction *appFonct;
    Bloc *block;
    Expression *expr;
    Fonction *fonct;
@@ -90,13 +92,13 @@ programme : programme INCL { }
 	 ;
 
 
-fonction : type NAME POPEN pa PCLOSE CHEVOPEN bloc CHEVCLOSE {}
-	 | type NAME POPEN PCLOSE CHEVOPEN bloc CHEVCLOSE {}
-	 | type NAME POPEN VOID PCLOSE CHEVOPEN bloc CHEVCLOSE {}
-	 | VOID NAME POPEN pa PCLOSE CHEVOPEN bloc CHEVCLOSE {}
-	 | VOID NAME POPEN PCLOSE CHEVOPEN bloc CHEVCLOSE {}
-	 | VOID NAME POPEN VOID PCLOSE CHEVOPEN bloc CHEVCLOSE {}
-	 ;
+fonction : type NAME POPEN pa PCLOSE CHEVOPEN bloc CHEVCLOSE    { }
+	     | type NAME POPEN PCLOSE CHEVOPEN bloc CHEVCLOSE       { }
+	     | type NAME POPEN VOID PCLOSE CHEVOPEN bloc CHEVCLOSE  { }
+         | VOID NAME POPEN pa PCLOSE CHEVOPEN bloc CHEVCLOSE    { }
+	     | VOID NAME POPEN PCLOSE CHEVOPEN bloc CHEVCLOSE       { }
+	     | VOID NAME POPEN VOID PCLOSE CHEVOPEN bloc CHEVCLOSE  { }
+	     ;
 
 bloc : CHEVOPEN bloc CHEVCLOSE {}
 	 | bloc instruction {}
@@ -178,25 +180,25 @@ expression :  NAME { $$ = new ExpressionVariable($1); }
      | appfct {}
      ;   
 
-lee : lee VIRG expression {}
-	 | /* epsilon */ {}
-	 ;
+lee : lee VIRG expression { }
+	| /* epsilon */       { }
+	;
 
-le : expression lee {}
-	 | /* epsilon */ {}
-	 ;
+le : expression lee { }
+   | /* epsilon */  { }
+   ;
 
 appfct : NAME POPEN le PCLOSE {}
-	 ;
+	   ;
 
-decdef : type NAME { }
-	 | type NAME EGAL expression {}
-	 | type NAME COPEN NVALUE CCLOSE {}
-	 ;
+decdef : type NAME                      { }
+	   | type NAME EGAL expression      { }
+	   | type NAME COPEN NVALUE CCLOSE  { }
+	   ;
 
-type : CHAR {}
-	 | INT32 {}
-	 | INT64 {}
+type : CHAR  { }
+	 | INT32 { }
+	 | INT64 { }
 	 ;
 
 

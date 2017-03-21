@@ -7,4 +7,6 @@ Bison/lex.yy.c
 Bison/calc.tab.*
 
 CMakeLists.txt
+Bison/ReceptifCalc.*
+Bison/ReceptifCalc
 .DS_Store
