@@ -5,6 +5,7 @@
 
 #include "Expression.h"
 
+class Expression;
 class AppelFonction : public Expression {
 
 public:

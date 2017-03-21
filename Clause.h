@@ -4,6 +4,7 @@
 #include "Instruction.h"
 #include "Expression.h"
 
+class Instruction;
 class Clause : public Instruction {
 
 public:
