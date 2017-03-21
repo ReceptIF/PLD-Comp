@@ -3,6 +3,7 @@
 
 #include "Variable.h"
 
+class Variable;
 class VariableSimple : public Variable {
 
 public:

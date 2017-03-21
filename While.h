@@ -4,6 +4,7 @@
 #include "Structure.h"
 #include "Clause.h"
 
+class Structure;
 class While : public Structure {
 
 public:

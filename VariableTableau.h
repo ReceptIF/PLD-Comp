@@ -4,6 +4,7 @@
 #include "Variable.h"
 #include "Expression.h"
 
+class Variable;
 class VariableTableau : public Variable {
 
 public:

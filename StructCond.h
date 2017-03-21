@@ -7,6 +7,7 @@
 #include "Clause.h"
 #include "Bloc.h"
 
+class Structure;
 class StructCond : public Structure {
 
 public:
