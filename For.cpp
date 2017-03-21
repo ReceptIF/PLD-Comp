@@ -10,42 +10,42 @@ For::~For()
 
 }
 
-void For::SetBloc(Bloc* & bloc)
+void For::SetBloc(Bloc* bloc)
 {
     bloc = bloc;
 }
 
-void For::SetCondition(Expression* & expression)
+void For::SetCondition(Expression*  expression)
 {
     condition = expression;
 }
 
-void For::SetInitialisation(Expression* & expression)
+void For::SetInitialisation(Expression* expression)
 {
     initialisation = expression;
 }
 
-void For::SetIteration(Expression* & expression)
+void For::SetIteration(Expression* expression)
 {
     iteration = expression;
 }
 
-Bloc For::GetBloc()
+Bloc* For::GetBloc()
 {
     return bloc;
 }
 
-Expression For::GetCondition()
+Expression* For::GetCondition()
 {
     return condition;
 }
 
-Expression For::GetInitialisation()
+Expression* For::GetInitialisation()
 {
     return initialisation;
 }
 
-Expression For::GetIteration()
+Expression* For::GetIteration()
 {
     return iteration;
 }

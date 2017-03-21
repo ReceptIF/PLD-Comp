@@ -12,21 +12,21 @@ public:
 
     ~For();
 
-    void SetBloc(Bloc* & bloc);
+    void SetBloc(Bloc* bloc);
 
-    void SetInitialisation(Expression* &expression);
+    void SetInitialisation(Expression* expression);
 
-    void SetCondition(Expression* &expression);
+    void SetCondition(Expression* expression);
 
-    void SetIteration(Expression* &expression);
+    void SetIteration(Expression* expression);
 
-    Bloc GetBloc();
+    Bloc* GetBloc();
 
-    Expression GetInitialisation();
+    Expression* GetInitialisation();
 
-    Expression GetCondition();
+    Expression* GetCondition();
 
-    Expression GetIteration();
+    Expression* GetIteration();
 
 private:
     Bloc* bloc;

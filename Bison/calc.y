@@ -140,7 +140,7 @@ el : ELSE CHEVOPEN bloc CHEVCLOSE {}
 expression :  NAME {} 
      | NVALUE {}
      | CVALUE {}
-	 | expression PLUS expression {  expr = new ExpressionBinaire($1, $3, PLUS);  }
+	 | expression PLUS expression {  *expr = new ExpressionBinaire($1, $3, PLUS);  }
      | expression MULT expression  { /* $$ = new ExpressionBinaire($1, $3, MULT); */ }
      | expression DIV expression  { /* $$ = new ExpressionBinaire($1, $3, DIV); */ }
      | expression MOINS expression{ /* $$ = new ExpressionBinaire($1, $3, MOINS); */ }
@@ -221,7 +221,7 @@ int main(void) {
    delete block;
    delete expr;
    delete fonct;
-   delete for;
+   delete bouclefor;
    delete prog;
 
    return 0;
