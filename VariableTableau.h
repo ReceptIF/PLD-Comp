@@ -8,8 +8,8 @@ class Variable;
 class VariableTableau : public Variable {
 
 public:
-	VariableTableau();
-    ~VariableTableau();
+	VariableTableau(std::string nomVar, Expression *ind):Variable(nomVar),indice(ind) {};
+  ~VariableTableau();
 
 private:
 	Expression* indice;

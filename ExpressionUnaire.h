@@ -7,7 +7,7 @@ class Expression;
 class ExpressionUnaire : public Expression {
 
 public:
-    ExpressionUnaire();
+    ExpressionUnaire(Expression *e, int symb, int pref);
     ~ExpressionUnaire();
     void setExpression1(Expression* &expression);
     void setSymbole(int &symbole);

@@ -3,12 +3,13 @@
 
 #include "Expression.h"
 #include "Variable.h"
+#include <string>
 
 class Expression;
 class ExpressionVariable : public Expression {
 
 public:
-    ExpressionVariable();
+    ExpressionVariable(std::string nomVariable);
     ~ExpressionVariable();
 
 private:

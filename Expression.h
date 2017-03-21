@@ -9,6 +9,9 @@ class Expression : public Instruction {
 public:
     Expression();
     ~Expression();
+    
+protected:
+    int type;
 
 private:
 

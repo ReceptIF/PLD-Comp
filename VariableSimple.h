@@ -7,8 +7,8 @@ class Variable;
 class VariableSimple : public Variable {
 
 public:
-	VariableSimple();
-    ~VariableSimple();
+	VariableSimple(std::string nomVar):Variable(nomVar) {};
+  ~VariableSimple();
 
 private:
 

@@ -1,8 +1,9 @@
 #include "ExpressionConstante.h"
 
-ExpressionConstante::ExpressionConstante()
+ExpressionConstante::ExpressionConstante(int aType, int aValeur)
 {
-
+  this->type = aType;
+  this->valeur = aValeur;
 }
 
 ExpressionConstante::~ExpressionConstante()

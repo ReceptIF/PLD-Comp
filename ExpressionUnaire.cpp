@@ -1,8 +1,10 @@
 #include "ExpressionUnaire.h"
 
-ExpressionUnaire::ExpressionUnaire()
+ExpressionUnaire::ExpressionUnaire(Expression *e, int symb, int pref)
 {
-
+  this->expression1 = e;
+  this->symbole = symb;
+  this->prefixe = pref;
 }
 
 ExpressionUnaire::~ExpressionUnaire()

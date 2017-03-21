@@ -7,7 +7,7 @@ class Expression;
 class ExpressionBinaire : public Expression {
 
 public:
-    ExpressionBinaire();
+    ExpressionBinaire(Expression *e1, Expression *e2, int symb);
     ~ExpressionBinaire();
     void setExpression1(Expression* expression);
     void setExpression2(Expression* expression);

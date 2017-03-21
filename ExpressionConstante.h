@@ -7,11 +7,11 @@ class Expression;
 class ExpressionConstante : public Expression {
 
 public:
-    ExpressionConstante();
+    ExpressionConstante(int aType, int aValeur);
     ~ExpressionConstante();
 
 private:
-
+    int valeur;
 };
 
 #endif //PLD_COMP_EXPRESSIONCONSTANTE_H
