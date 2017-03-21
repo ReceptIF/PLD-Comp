@@ -87,10 +87,10 @@ int yylexpression(void);
 /*axiome : expression { *resultat = $1; }
      ;*/ 
 
-programme : programme INCL { }
-	 | programme fonction {}
-	 | /* epsilon */ {}
-	 ;
+programme : programme INCL      { }
+	      | programme fonction  { }
+	      | /* epsilon */       { }
+	      ;
 
 
 fonction : type NAME POPEN pa PCLOSE CHEVOPEN bloc CHEVCLOSE    { }
@@ -101,45 +101,45 @@ fonction : type NAME POPEN pa PCLOSE CHEVOPEN bloc CHEVCLOSE    { }
 	     | VOID NAME POPEN VOID PCLOSE CHEVOPEN bloc CHEVCLOSE  { }
 	     ;
 
-bloc : CHEVOPEN bloc CHEVCLOSE {}
-	 | bloc instruction {}
-	 | bloc structure {}
-	 | /* epsilon */ {}
+bloc : CHEVOPEN bloc CHEVCLOSE  { }
+	 | bloc instruction         { }
+	 | bloc structure           { }
+	 | /* epsilon */            { }
 	 ;	 
 
-instruction : decdef {}
-	 | PUTCHAR COPEN expression CCLOSE {}
-	 | GETCHAR COPEN expression CCLOSE {}
-	 | BREAK {}
-	 | expression {}
-	 | RETURN expression {}
-	 ;
+instruction : decdef                            { }
+	        | PUTCHAR COPEN expression CCLOSE   { }
+	        | GETCHAR COPEN expression CCLOSE   { }
+	        | BREAK                             { }
+	        | expression                        { }
+	        | RETURN expression                 { }
+	        ;
 
-structure : IF POPEN expression PCLOSE CHEVOPEN bloc CHEVCLOSE  el {}
-	 | IF POPEN expression PCLOSE instruction el {}
-	 | FOR POPEN expression POINTVIR expression POINTVIR expression PCLOSE CHEVOPEN bloc CHEVCLOSE {}
-	 | FOR POPEN expression POINTVIR expression POINTVIR expression PCLOSE instruction {}
-	 | WHILE POPEN expression PCLOSE CHEVOPEN bloc CHEVCLOSE {}
-	 | WHILE POPEN expression PCLOSE instruction {}
-	 ;
-
-
-tpa : tpa VIRG type NAME {}
-	 | tpa VIRG type CHEVOPEN CHEVCLOSE NAME tpa {}
-	 | /* epsilon */ {}
-	 ;	 
-
-pa :  type NAME tpa {}
-	 | type CHEVOPEN CHEVCLOSE NAME tpa {}
-	 ;
+structure : IF POPEN expression PCLOSE CHEVOPEN bloc CHEVCLOSE  el                                      { }
+	      | IF POPEN expression PCLOSE instruction el                                                   { }
+	      | FOR POPEN expression POINTVIR expression POINTVIR expression PCLOSE CHEVOPEN bloc CHEVCLOSE { }
+	      | FOR POPEN expression POINTVIR expression POINTVIR expression PCLOSE instruction             { }
+	      | WHILE POPEN expression PCLOSE CHEVOPEN bloc CHEVCLOSE                                       { }
+	      | WHILE POPEN expression PCLOSE instruction                                                   { }
+	      ;
 
 
-el : ELSE CHEVOPEN bloc CHEVCLOSE {}
-	 | ELSE instruction {}
-	 | ELSE IF POPEN expression PCLOSE CHEVOPEN bloc CHEVCLOSE el {}
-	 | ELSE IF POPEN expression PCLOSE instruction el {}
-	 | /* epsilon */ {}
-	 ;
+tpa : tpa VIRG type NAME                        { }
+	| tpa VIRG type CHEVOPEN CHEVCLOSE NAME tpa { }
+	| /* epsilon */                             { }
+	;
+
+pa : type NAME tpa                      { }
+   | type CHEVOPEN CHEVCLOSE NAME tpa   { }
+   ;
+
+
+el : ELSE CHEVOPEN bloc CHEVCLOSE                               { }
+   | ELSE instruction                                           { }
+   | ELSE IF POPEN expression PCLOSE CHEVOPEN bloc CHEVCLOSE el { }
+   | ELSE IF POPEN expression PCLOSE instruction el             { }
+   | /* epsilon */                                              { }
+   ;
 
 expression :  NAME { $$ = new ExpressionVariable(std::to_string($1)); } 
      | NVALUE {}
