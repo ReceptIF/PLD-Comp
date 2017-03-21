@@ -10,32 +10,32 @@ ExpressionUnaire::~ExpressionUnaire()
 
 }
 
-void setExpression1(Expression* &expression)
+void ExpressionUnaire::setExpression1(Expression* &expression)
 {
 	expression1 = expression;
 }
 
-void setSymbole(int &symbole)
+void ExpressionUnaire::setSymbole(int &symbole)
 {
 	symbole = symbole;
 }
 
-void setPrefixe(int &prefixe)
+void ExpressionUnaire::setPrefixe(int &prefixe)
 {
 	prefixe = prefixe;
 }
 
-Expression getExpression1()
+Expression *ExpressionUnaire::getExpression1()
 {
 	return expression1;
 }
 
-int getSymbole()
+int ExpressionUnaire::getSymbole()
 {
 	return symbole;
 }
 
-int getPrefixe()
+int ExpressionUnaire::getPrefixe()
 {
 	return prefixe;
 }

@@ -12,7 +12,7 @@ public:
     void setExpression1(Expression* &expression);
     void setSymbole(int &symbole);
     void setPrefixe(int &prefixe);
-    Expression getExpression1();
+    Expression *getExpression1();
     int getSymbole();
     int getPrefixe();
 
