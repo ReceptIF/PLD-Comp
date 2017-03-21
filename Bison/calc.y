@@ -84,7 +84,7 @@ int yylexpression(void);
 /*axiome : expression { *resultat = $1; }
      ;*/ 
 
-programme : programme INCL {}
+programme : programme INCL { }
 	 | programme fonction {}
 	 | /* epsilon */ {}
 	 ;
@@ -138,29 +138,29 @@ el : ELSE CHEVOPEN bloc CHEVCLOSE {}
 	 | /* epsilon */ {}
 	 ;
 
-expression :  NAME {} 
+expression :  NAME { $$ = new ExpressionVariable($1); } 
      | NVALUE {}
      | CVALUE {}
 	 | expression PLUS expression {  $$ = new ExpressionBinaire($1, $3, PLUS); }
-     | expression MULT expression  { /* $$ = new ExpressionBinaire($1, $3, MULT); */ }
-     | expression DIV expression  { /* $$ = new ExpressionBinaire($1, $3, DIV); */ }
-     | expression MOINS expression{ /* $$ = new ExpressionBinaire($1, $3, MOINS); */ }
-     | expression MOD expression { /* $$ = new ExpressionBinaire($1, $3, MOD); */ }
+     | expression MULT expression  { $$ = new ExpressionBinaire($1, $3, MULT); }
+     | expression DIV expression  { $$ = new ExpressionBinaire($1, $3, DIV); }
+     | expression MOINS expression{ $$ = new ExpressionBinaire($1, $3, MOINS); }
+     | expression MOD expression { $$ = new ExpressionBinaire($1, $3, MOD); }
      | POPEN expression PCLOSE{  $$ = $2;  }
      | expression DINF expression {  }
      | expression DSUP expression {  }
      | NOT expression{  }
-     | expression AND expression{ /* $$ = new ExpressionBinaire($1, $3, AND); */ }
-     | expression DAND expression{ /* $$ = new ExpressionBinaire($1, $3, DAND); */ }
-     | expression OR expression{ /* $$ = new ExpressionBinaire($1, $3, OR); */ }
-     | expression DOR expression{ /* $$ = new ExpressionBinaire($1, $3, DOR); */ }
-     | expression XOR expression{ /* $$ = new ExpressionBinaire($1, $3, XOR); */ }
-     | expression SUP expression{ /* $$ = new ExpressionBinaire($1, $3, SUP); */ }
-     | expression INF expression{ /* $$ = new ExpressionBinaire($1, $3, INF); */ }
-     | expression INFEQ expression{ /* $$ = new ExpressionBinaire($1, $3, INFEQ); */ }
-     | expression SUPEQ expression{ /* $$ = new ExpressionBinaire($1, $3, SUPEQ); */ }
-     | expression DEGAL expression{ /* $$ = new ExpressionBinaire($1, $3, DEGAL); */ }
-     | expression DIFF expression{ /* $$ = new ExpressionBinaire($1, $3, DIFF); */ }
+     | expression AND expression{ $$ = new ExpressionBinaire($1, $3, AND); }
+     | expression DAND expression{ $$ = new ExpressionBinaire($1, $3, DAND); }
+     | expression OR expression{ $$ = new ExpressionBinaire($1, $3, OR); }
+     | expression DOR expression{ $$ = new ExpressionBinaire($1, $3, DOR); }
+     | expression XOR expression{ $$ = new ExpressionBinaire($1, $3, XOR); }
+     | expression SUP expression{ $$ = new ExpressionBinaire($1, $3, SUP); }
+     | expression INF expression{ $$ = new ExpressionBinaire($1, $3, INF); }
+     | expression INFEQ expression{ $$ = new ExpressionBinaire($1, $3, INFEQ); }
+     | expression SUPEQ expression{ $$ = new ExpressionBinaire($1, $3, SUPEQ); }
+     | expression DEGAL expression{ $$ = new ExpressionBinaire($1, $3, DEGAL); }
+     | expression DIFF expression{ $$ = new ExpressionBinaire($1, $3, DIFF); }
      | NAME COPEN expression CCLOSE  {}
      | NAME EGAL expression {}
 	 | NAME COPEN expression CCLOSE EGAL expression {}
