@@ -10,12 +10,12 @@ ExpressionBinaire::~ExpressionBinaire()
 
 }
 
-void setExpression1(Expression &expression)
+void setExpression1(Expression* expression)
 {
 	expression1 = expression;
 }
 
-void setExpression2(Expression &expression)
+void setExpression2(Expression* expression)
 {
 	expression2 = expression;
 }

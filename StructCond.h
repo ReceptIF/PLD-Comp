@@ -11,9 +11,9 @@ class StructCond : public Structure {
 
 public:
     StructCond();
-    StructCond(Clause & clause);
+    StructCond(Clause* & clause);
     ~StructCond();
-    void AjouteClause(Clause & clause);
+    void AjouteClause(Clause* & clause);
 
 private:
     std::list<Clause*> clauses;
