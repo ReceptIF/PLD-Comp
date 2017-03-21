@@ -1,5 +1,4 @@
 %{
-#include "../Affectation.h"
 #include "../Bloc.h"
 #include "../Clause.h"
 #include "../Declaration.h"
@@ -24,7 +23,7 @@
 #include <string>
 
 int yylex(void);
-void yyerror(int*, Bloc**, Expression**, Fonction**, Programme** prog, const char *);
+void yyerror(int*, Bloc**, Expression**, Fonction**, For**, Programme** prog, const char *);
 int yylexpression(void);
 
 %}
@@ -36,6 +35,7 @@ int yylexpression(void);
    Bloc *block;
    Expression *expr;
    Fonction *fonct;
+   For *bouclefor;
    Programme *prog;
 }
 
@@ -76,7 +76,7 @@ int yylexpression(void);
 %right EGAL PLUSEQ MULTEQ DIVEQ MOINSEQ MODEQ ANDEQ OREQ
 %left VIRG
 
-%parse-param { int * resultat } { Bloc ** block } { Expression ** expr } { Fonction ** fonct }
+%parse-param { int * resultat } { Bloc ** block } { Expression ** expr } { Fonction ** fonct } { For ** bouclefor } { Programme ** prog }
 
 %%
 
@@ -211,15 +211,17 @@ int main(void) {
    Bloc* block = 0;
    Expression* expr = 0;
    Fonction* fonct = 0;
+   For* bouclefor = 0;
    Programme* prog = 0;
 
-   yyparse(&res, &block, &expr, &fonct, &prog);
+   yyparse(&res, &block, &expr, &fonct, &bouclefor, &prog);
 
    std::cout << "Result :" << res << std::endl;
 
    delete block;
    delete expr;
    delete fonct;
+   delete for;
    delete prog;
 
    return 0;

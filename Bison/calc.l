@@ -2,7 +2,6 @@
 #include <iostream>
 #include <string>
 
-#include "../Affectation.h"
 #include "../Bloc.h"
 #include "../Clause.h"
 #include "../Declaration.h"
