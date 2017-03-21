@@ -23,7 +23,7 @@
 #include <string>
 
 int yylex(void);
-void yyerror(int*, Bloc**, Expression**, Fonction**, For**, Programme** prog, const char *);
+void yyerror(Programme*, const char *);
 int yylexpression(void);
 
 %}
@@ -34,8 +34,11 @@ int yylexpression(void);
 
    Bloc *block;
    Expression *expr;
+
    Fonction *fonct;
    For *bouclefor;
+
+   Structure* struct;
    Programme *prog;
 }
 
@@ -76,7 +79,7 @@ int yylexpression(void);
 %right EGAL PLUSEQ MULTEQ DIVEQ MOINSEQ MODEQ ANDEQ OREQ
 %left VIRG
 
-%parse-param { int * resultat } { Bloc ** block } { Expression ** expr } { Fonction ** fonct } { For ** bouclefor } { Programme ** prog }
+%parse-param { Programme * prog }
 
 %%
 
@@ -140,12 +143,12 @@ el : ELSE CHEVOPEN bloc CHEVCLOSE {}
 expression :  NAME {} 
      | NVALUE {}
      | CVALUE {}
-	 | expression PLUS expression {  *expr = new ExpressionBinaire($1, $3, PLUS);  }
+	 | expression PLUS expression {  $$ = new ExpressionBinaire($1, $3, PLUS); }
      | expression MULT expression  { /* $$ = new ExpressionBinaire($1, $3, MULT); */ }
      | expression DIV expression  { /* $$ = new ExpressionBinaire($1, $3, DIV); */ }
      | expression MOINS expression{ /* $$ = new ExpressionBinaire($1, $3, MOINS); */ }
      | expression MOD expression { /* $$ = new ExpressionBinaire($1, $3, MOD); */ }
-     | POPEN expression PCLOSE{ /* $$ = $2; */ }
+     | POPEN expression PCLOSE{  $$ = $2;  }
      | expression DINF expression {  }
      | expression DSUP expression {  }
      | NOT expression{  }
@@ -201,27 +204,16 @@ type : CHAR {}
 
 %%
 
-void yyerror(int* a, Expression** b, Fonction** c, const char * s)
+void yyerror(Programme* zz, const char * s)
 {
 	std::cout << s << std::endl;
 }
 
 int main(void) {
-   int res = 0;
-   Bloc* block = 0;
-   Expression* expr = 0;
-   Fonction* fonct = 0;
-   For* bouclefor = 0;
-   Programme* prog = 0;
+   Programme* prog = new Programme();
 
-   yyparse(&res, &block, &expr, &fonct, &bouclefor, &prog);
+   yyparse(prog);
 
-   std::cout << "Result :" << res << std::endl;
-
-   delete block;
-   delete expr;
-   delete fonct;
-   delete bouclefor;
    delete prog;
 
    return 0;
