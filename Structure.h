@@ -3,9 +3,12 @@
 
 #include "Instruction.h"
 
+class Instruction;
 class Structure : public Instruction {
 
 public:
+	Structure();
+	~Structure();
 
 private:
 
