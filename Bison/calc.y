@@ -34,11 +34,9 @@ int yylexpression(void);
 
    Bloc *block;
    Expression *expr;
-
    Fonction *fonct;
    For *bouclefor;
-
-   Structure* struct;
+   Structure* structu;
    Programme *prog;
 }
 
@@ -60,7 +58,7 @@ int yylexpression(void);
 %type <e> le
 %type <e> lee
 %type <e> pa
-%type <e> structure
+%type <structu> structure
 %type <e> type
 %type <e> tpa
 
@@ -191,7 +189,7 @@ le : expression lee {}
 appfct : NAME POPEN le PCLOSE {}
 	 ;
 
-decdef : type NAME {}
+decdef : type NAME { }
 	 | type NAME EGAL expression {}
 	 | type NAME COPEN NVALUE CCLOSE {}
 	 ;
@@ -206,7 +204,7 @@ type : CHAR {}
 
 void yyerror(Programme* zz, const char * s)
 {
-	std::cout << s << std::endl;
+	std::cout << "[ERREUR] Programme : " << std::endl;
 }
 
 int main(void) {
