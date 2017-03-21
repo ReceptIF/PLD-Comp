@@ -11,8 +11,24 @@
 class Fonction {
 
 public:
-    Fonction();
+    Fonction(int typeRetour, Bloc* bloc, std::string nom);
     ~Fonction();
+
+    void setTypeRetour(int typeRetour);
+
+    void addParametre(Variable* parametre);
+
+    void setBloc(Bloc* bloc);
+
+    void setNom(std::string nom);
+
+    int getTypeRetour();
+
+    std::list<Variable*> getParametres();
+
+    Bloc* getBloc();
+
+    std::string getNom();
 
 private:
     int typeRetour;
