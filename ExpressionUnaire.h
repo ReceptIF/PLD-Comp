@@ -3,6 +3,7 @@
 
 #include "Expression.h"
 
+class Expression;
 class ExpressionUnaire : public Expression {
 
 public:

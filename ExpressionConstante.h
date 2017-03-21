@@ -3,6 +3,7 @@
 
 #include "Expression.h"
 
+class Expression;
 class ExpressionConstante : public Expression {
 
 public:

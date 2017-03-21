@@ -3,6 +3,7 @@
 
 #include "Expression.h"
 
+class Expression;
 class ExpressionBinaire : public Expression {
 
 public:
