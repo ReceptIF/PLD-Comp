@@ -3,6 +3,8 @@ cmake-build-debug/
 *.o
 *.exe
 Bison/calc.output
+Bison/lex.yy.c
+Bison/calc.tab.*
 
 CMakeLists.txt
 .DS_Store
