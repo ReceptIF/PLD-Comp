@@ -1,4 +1,7 @@
 %{
+#include <iostream>
+#include <string>
+
 #include "../AppelFonction.h"
 #include "../Bloc.h"
 #include "../Clause.h"
@@ -20,8 +23,6 @@
 #include "../VariableTableau.h"
 #include "../While.h"
 
-#include <iostream>
-#include <string>
 
 int yylex(void);
 void yyerror(Programme*, const char *);
@@ -51,7 +52,7 @@ int yylexpression(void);
 
 %type <prog> programme
 %type <fonct> fonction
-%type <e> appfct
+%type <appFonct> appfct
 %type <e> bloc
 %type <e> decdef
 %type <e> el
@@ -140,7 +141,7 @@ el : ELSE CHEVOPEN bloc CHEVCLOSE {}
 	 | /* epsilon */ {}
 	 ;
 
-expression :  NAME { $$ = new ExpressionVariable($1); } 
+expression :  NAME { $$ = new ExpressionVariable(std::to_string($1)); } 
      | NVALUE {}
      | CVALUE {}
 	 | expression PLUS expression {  $$ = new ExpressionBinaire($1, $3, PLUS); }
