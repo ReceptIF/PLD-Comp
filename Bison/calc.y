@@ -7,7 +7,7 @@
 #include "../Clause.h"
 #include "../Declaration.h"
 #include "../Expression.h"
-#include "../ExpressionBinaire.h"
+//#include "../ExpressionBinaire.h"
 #include "../ExpressionConstante.h"
 #include "../ExpressionUnaire.h"
 #include "../ExpressionVariable.h"

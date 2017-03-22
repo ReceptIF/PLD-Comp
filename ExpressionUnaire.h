@@ -9,9 +9,9 @@ class ExpressionUnaire : public Expression {
 public:
     ExpressionUnaire(Expression *e, int symb, int pref);
     ~ExpressionUnaire();
-    void setExpression1(Expression* &expression);
-    void setSymbole(int &symbole);
-    void setPrefixe(int &prefixe);
+    void setExpression1(Expression* expression);
+    void setSymbole(int symbole);
+    void setPrefixe(int prefixe);
     Expression *getExpression1();
     int getSymbole();
     int getPrefixe();

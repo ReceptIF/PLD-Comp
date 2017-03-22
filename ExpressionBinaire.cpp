@@ -1,5 +1,4 @@
 #include "ExpressionBinaire.h"
-#include "Bison/calc.tab.h"
 
 ExpressionBinaire::ExpressionBinaire(Expression *e1, Expression *e2, int symb)
 {
@@ -46,11 +45,11 @@ int ExpressionBinaire::getSymbole()
 
 void ExpressionBinaire::typage() {
   
-  this->expression1.typage();
-  this->expression2.typage();
+  this->expression1->typage();
+  this->expression2->typage();
   
-  int type1 = expression1.getType();
-  int type2 = expression2.getType();
+  int type1 = expression1->getType();
+  int type2 = expression2->getType();
   
   int resType;
   
@@ -64,17 +63,17 @@ void ExpressionBinaire::typage() {
             symbole == MOINSEQ || symbole == MODEQ) {
     // Opération calculatoire
     if(type1 == INT64 && type2 == INT64) {
-      restype = INT64;
+      resType = INT64;
     } else if((type1 == INT64 && type2 == INT32) || (type1 == INT32 && type2 == INT64)) {
-      restype = INT64;
+      resType = INT64;
     } else if((type1 == INT64 && type2 == CHAR) || (type1 == CHAR && type2 == INT64)) {
-      restype = INT64;
+      resType = INT64;
     } else if(type1 == INT32 && type2 == INT32) {
-      restype = INT32;
+      resType = INT32;
     } else if((type1 == CHAR && type2 == INT32) || (type1 == INT32 && type2 == CHAR)) {
-      restype = INT32;
+      resType = INT32;
     } else if(type1 == CHAR && type2 == CHAR) {
-      restype = CHAR;
+      resType = CHAR;
     } 
     
   } else if(symbole == DAND || symbole == DOR || symbole == DEGAL || 

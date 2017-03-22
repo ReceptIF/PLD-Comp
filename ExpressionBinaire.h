@@ -2,6 +2,7 @@
 #define PLD_COMP_EXPRESSIONBINAIRE_H
 
 #include "Expression.h"
+#include "Bison/calc.tab.h"
 
 class Expression;
 class ExpressionBinaire : public Expression {
