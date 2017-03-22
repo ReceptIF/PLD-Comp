@@ -2,11 +2,12 @@
 cmake-build-debug/
 *.o
 *.exe
+CMakeLists.txt
+.DS_Store
 Bison/calc.output
 Bison/lex.yy.c
 Bison/calc.tab.*
-
-CMakeLists.txt
 Bison/ReceptifCalc.*
 Bison/ReceptifCalc
-.DS_Store
+Bison/cmake*
+Bison/.id*

@@ -36,16 +36,18 @@ int yylexpression(void);
 
    AppelFonction *appFonct;
    Bloc *block;
+   Declaration *decl;
    Expression *expr;
    Fonction *fonct;
    For *bouclefor;
+   Instruction *instru;
    Structure* structu;
    Programme *prog;
 }
 
 %token EGAL PLUS MULT DIV MOINS AND DAND OR DOR DEGAL INFEQ SUPEQ DIFF MOD XOR PLUSEQ MULTEQ DIVEQ MOINSEQ DPLUS DMOINS NOT MODEQ DSUP DINF INF SUP ANDEQ OREQ IF ELSE WHILE FOR CHAR INT32 INT64 VOID POINTVIR CHEVOPEN CHEVCLOSE POPEN PCLOSE COPEN CCLOSE VIRG PUTCHAR GETCHAR RETURN BREAK
 
-%token <ival> NAME
+%token <cval> NAME
 %token <ival> NVALUE
 %token <ival> CVALUE
 %token <ival> INCL
@@ -53,19 +55,19 @@ int yylexpression(void);
 %type <prog> programme
 %type <fonct> fonction
 %type <appFonct> appfct
-%type <e> bloc
-%type <e> decdef
+%type <block> bloc
+%type <decl> decdef
 %type <e> el
 %type <expr> expression
-%type <e> instruction
+%type <instru> instruction
 %type <e> le
 %type <e> lee
 %type <e> pa
 %type <structu> structure
-%type <e> type
+%type <ival> type
 %type <e> tpa
 
-%left POPEN PCLOSE COPEN CCLOSE DPLUS DMOINS 
+%left POPEN PCLOSE COPEN CCLOSE DPLUS DMOINS
 %right NOT NAME NVALUE CVALUE DPLUSAVANT DMOINSAVANT
 %left MULT DIV MOD
 %left PLUS MOINS
@@ -85,27 +87,27 @@ int yylexpression(void);
 %%
 
 /*axiome : expression { *resultat = $1; }
-     ;*/ 
+     ;*/
 
-programme : programme INCL      { }
-	      | programme fonction  { }
+programme : programme INCL      { prog = $1; }
+	      | programme fonction  { prog->AjouteFonction($2); $$ = $1; }
 	      | /* epsilon */       { }
 	      ;
 
 
 fonction : type NAME POPEN pa PCLOSE CHEVOPEN bloc CHEVCLOSE    { }
-	     | type NAME POPEN PCLOSE CHEVOPEN bloc CHEVCLOSE       { }
+	     | type NAME POPEN PCLOSE CHEVOPEN bloc CHEVCLOSE       { $$ = new Fonction($1, $6, $2);  }
 	     | type NAME POPEN VOID PCLOSE CHEVOPEN bloc CHEVCLOSE  { }
          | VOID NAME POPEN pa PCLOSE CHEVOPEN bloc CHEVCLOSE    { }
-	     | VOID NAME POPEN PCLOSE CHEVOPEN bloc CHEVCLOSE       { }
+	     | VOID NAME POPEN PCLOSE CHEVOPEN bloc CHEVCLOSE       { $$ = new Fonction(VOID, $6, $2); }
 	     | VOID NAME POPEN VOID PCLOSE CHEVOPEN bloc CHEVCLOSE  { }
 	     ;
 
-bloc : CHEVOPEN bloc CHEVCLOSE  { }
-	 | bloc instruction         { }
+bloc : CHEVOPEN bloc CHEVCLOSE  { $$ = $2; }
+	 | bloc instruction         { $1->AjouteInstruction($2); $$ = $1; }
 	 | bloc structure           { }
 	 | /* epsilon */            { }
-	 ;	 
+	 ;
 
 instruction : decdef                            { }
 	        | PUTCHAR COPEN expression CCLOSE   { }
@@ -141,8 +143,8 @@ el : ELSE CHEVOPEN bloc CHEVCLOSE                               { }
    | /* epsilon */                                              { }
    ;
 
-expression :  NAME { $$ = new ExpressionVariable(std::to_string($1)); } 
-     | NVALUE {}
+expression :  NAME { /* $$ = new ExpressionVariable(std::to_string($1)); */ }
+     | NVALUE { }
      | CVALUE {}
 	 | expression PLUS expression {  $$ = new ExpressionBinaire($1, $3, PLUS); }
      | expression MULT expression  { $$ = new ExpressionBinaire($1, $3, MULT); }
@@ -150,9 +152,9 @@ expression :  NAME { $$ = new ExpressionVariable(std::to_string($1)); }
      | expression MOINS expression{ $$ = new ExpressionBinaire($1, $3, MOINS); }
      | expression MOD expression { $$ = new ExpressionBinaire($1, $3, MOD); }
      | POPEN expression PCLOSE{  $$ = $2;  }
-     | expression DINF expression {  }
-     | expression DSUP expression {  }
-     | NOT expression{  }
+     | expression DINF expression { $$ = new ExpressionBinaire($1, $3, DINF); }
+     | expression DSUP expression { $$ = new ExpressionBinaire($1, $3, DSUP); }
+     | NOT expression{ $$ = new ExpressionUnaire($2, NOT, 1); }
      | expression AND expression{ $$ = new ExpressionBinaire($1, $3, AND); }
      | expression DAND expression{ $$ = new ExpressionBinaire($1, $3, DAND); }
      | expression OR expression{ $$ = new ExpressionBinaire($1, $3, OR); }
@@ -172,14 +174,14 @@ expression :  NAME { $$ = new ExpressionVariable(std::to_string($1)); }
 	 | NAME DMOINS {}
 	 | DMOINS NAME %prec DMOINSAVANT {}
 	 | NAME PLUSEQ expression {}
-	 | NAME MOINSEQ expression {} 
+	 | NAME MOINSEQ expression {}
 	 | NAME MULTEQ expression {}
 	 | NAME DIVEQ expression {}
 	 | NAME MODEQ expression {}
 	 | NAME ANDEQ expression {}
 	 | NAME OREQ expression {}
      | appfct {}
-     ;   
+     ;
 
 lee : lee VIRG expression { }
 	| /* epsilon */       { }
@@ -197,9 +199,9 @@ decdef : type NAME                      { }
 	   | type NAME COPEN NVALUE CCLOSE  { }
 	   ;
 
-type : CHAR  { }
-	 | INT32 { }
-	 | INT64 { }
+type : CHAR  { $$ = CHAR; }
+	 | INT32 { $$ = INT32;}
+	 | INT64 { $$ = INT64; }
 	 ;
 
 

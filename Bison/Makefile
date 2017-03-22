@@ -11,10 +11,10 @@ FLEXCMD = flex
 ifeq ($(OS),Windows_NT)
     #Windows stuff
     EXECNAME = ReceptifCalc_WIN.exe
-    DELETECMD = del \Q
+    DELETECMD = del /Q
     BISONCMD = win_bison
 	FLEXCMD = win_flex
-	COMPILFLAGS = -std=gnu++0x -DGTEST_OS_CYGWIN=1
+	COMPILFLAGS = -std=gnu++1z -DGTEST_OS_CYGWIN=1
 endif
 
 default:
