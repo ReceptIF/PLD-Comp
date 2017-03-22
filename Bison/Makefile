@@ -1,14 +1,28 @@
 COMPIL = g++
 EXECNAME = ReceptifCalc
 INCLLIST= ../AppelFonction.cpp ../Bloc.cpp ../Clause.cpp ../Declaration.cpp ../Expression.cpp ../ExpressionBinaire.cpp ../ExpressionConstante.cpp ../ExpressionUnaire.cpp ../ExpressionVariable.cpp ../Fonction.cpp ../For.cpp ../Instruction.cpp ../Programme.cpp ../StructCond.cpp ../Structure.cpp ../Type.cpp ../Variable.cpp ../VariableSimple.cpp ../VariableTableau.cpp ../While.cpp
-OPTIMISATIONFLAGS = -std=c++1y -O1
+COMPILFLAGS = -std=c++1y
+OPTIMISATIONFLAGS = -O1
+DELETECMD = rm
+
+BISONCMD = bison
+FLEXCMD = flex
+
+ifeq ($(OS),Windows_NT)
+    #Windows stuff
+    EXECNAME = ReceptifCalc_WIN.exe
+    DELETECMD = del \Q
+    BISONCMD = win_bison
+	FLEXCMD = win_flex
+	COMPILFLAGS = -std=gnu++0x -DGTEST_OS_CYGWIN=1
+endif
 
 default:
-	flex calc.l
-	bison -v -d --defines=calc.tab.h calc.y
-	$(COMPIL) -g -o $(EXECNAME) $(INCLLIST) *.c $(OPTIMISATIONFLAGS)
+	$(FLEXCMD) calc.l
+	$(BISONCMD) -v -d --defines=calc.tab.h calc.y
+	$(COMPIL) -g -o $(EXECNAME) $(INCLLIST) *.c $(COMPILFLAGS) $(OPTIMISATIONFLAGS)
+
 
 .PHONY: clean
-
 clean:
-	rm calc.tab.* calc.output lex.yy.c $(EXECNAME)
+	$(DELETECMD) calc.tab.* calc.output lex.yy.c $(EXECNAME)
