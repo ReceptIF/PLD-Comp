@@ -1,4 +1,5 @@
 #include "ExpressionBinaire.h"
+#include "Bison/calc.tab.h"
 
 ExpressionBinaire::ExpressionBinaire(Expression *e1, Expression *e2, int symb)
 {

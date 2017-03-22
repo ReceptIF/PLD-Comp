@@ -167,7 +167,7 @@ expression :  NAME { $$ = new ExpressionVariable($1); }
      | expression DEGAL expression{ $$ = new ExpressionBinaire($1, $3, DEGAL); }
      | expression DIFF expression{ $$ = new ExpressionBinaire($1, $3, DIFF); }
      | NAME COPEN expression CCLOSE  {}
-     | NAME EGAL expression {}
+     | NAME EGAL expression { Expression e = new ExpressionVariable(NAME) ; $$ = new ExpressionBinaire(e, $3, EGAL); }
 	 | NAME COPEN expression CCLOSE EGAL expression {}
 	 | NAME DPLUS {}
 	 | DPLUS NAME %prec DPLUSAVANT {}
