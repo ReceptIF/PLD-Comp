@@ -16,6 +16,14 @@ For::For(Expression* init, Expression* cond, Expression* ite, Bloc* bloc)
     iteration = ite;
 }
 
+For::For(Expression* init, Expression* cond, Expression* ite, Instruction* instru)
+{
+    instruction = instru;
+    condition = cond;
+    initialisation = init;
+    iteration = ite;
+}
+
 For::~For()
 {
     delete bloc;
@@ -27,6 +35,11 @@ For::~For()
 void For::SetBloc(Bloc* bloc)
 {
     bloc = bloc;
+}
+
+void For::SetInstruction(Instruction* instru)
+{
+    instruction = instru;
 }
 
 void For::SetCondition(Expression*  expression)
@@ -47,6 +60,11 @@ void For::SetIteration(Expression* expression)
 Bloc* For::GetBloc()
 {
     return bloc;
+}
+
+Instruction* For::GetInstruction()
+{
+    return instruction;
 }
 
 Expression* For::GetCondition()
