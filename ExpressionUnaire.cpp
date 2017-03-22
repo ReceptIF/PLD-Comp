@@ -12,19 +12,19 @@ ExpressionUnaire::~ExpressionUnaire()
 
 }
 
-void ExpressionUnaire::setExpression1(Expression* &expression)
+void ExpressionUnaire::setExpression1(Expression* expression)
 {
 	expression1 = expression;
 }
 
-void ExpressionUnaire::setSymbole(int &symbole)
+void ExpressionUnaire::setSymbole(int symbole)
 {
-	symbole = symbole;
+	this->symbole = symbole;
 }
 
-void ExpressionUnaire::setPrefixe(int &prefixe)
+void ExpressionUnaire::setPrefixe(int prefixe)
 {
-	prefixe = prefixe;
+	this->prefixe = prefixe;
 }
 
 Expression *ExpressionUnaire::getExpression1()

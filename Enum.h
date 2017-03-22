@@ -5,7 +5,8 @@
 #ifndef PLD_COMP_ENUM_H
 #define PLD_COMP_ENUM_H
 
-
+#ifndef YYTOKENTYPE
+# define YYTOKENTYPE
 enum yytokentype {
     EGAL = 258,
     PLUS = 259,
@@ -63,5 +64,5 @@ enum yytokentype {
     DMOINSAVANT = 311,
     DPLUSAVANT = 312
 };
-
+#endif
 #endif //PLD_COMP_ENUM_H
