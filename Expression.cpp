@@ -10,6 +10,6 @@ Expression::~Expression()
 
 }
 
-int Expression getType() {
+int Expression::getType() {
   return this->type;
 }

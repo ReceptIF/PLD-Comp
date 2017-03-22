@@ -219,5 +219,8 @@ int main(void) {
 
    delete prog;
 
+   int a;
+   std::cout << "[Fin du programme]" << std::endl;
+   std::cin >> a;
    return 0;
 }
