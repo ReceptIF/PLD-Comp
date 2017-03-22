@@ -105,7 +105,7 @@ fonction : type NAME POPEN pa PCLOSE CHEVOPEN bloc CHEVCLOSE    { }
 
 bloc : CHEVOPEN bloc CHEVCLOSE  { $$ = $2; }
 	 | bloc instruction         { $1->AjouteInstruction($2); $$ = $1; }
-	 | bloc structure           { }
+	 | bloc structure           { $1->AjouteInstruction($2); $$ = $1; }
 	 | /* epsilon */            { }
 	 ;
 

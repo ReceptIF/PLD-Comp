@@ -10,7 +10,14 @@ class Declaration : public Instruction {
 
 public:
     Declaration();
+    Declaration(std::string nomVar, int varType);
     ~Declaration();
+
+    void setNomVariable(std::string nV);
+    std::string getNomVariable();
+
+    void setType(int t);
+    int getType();
 
 private:
     std::string nomVariable;
