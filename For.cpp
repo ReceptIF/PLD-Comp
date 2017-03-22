@@ -2,12 +2,26 @@
 
 For::For()
 {
+    this->bloc = nullptr;
+    condition = nullptr;
+    initialisation = nullptr;
+    iteration = nullptr;
+}
 
+For::For(Expression* init, Expression* cond, Expression* ite, Bloc* bloc)
+{
+    this->bloc = bloc;
+    condition = cond;
+    initialisation = init;
+    iteration = ite;
 }
 
 For::~For()
 {
-
+    delete bloc;
+    delete condition;
+    delete initialisation;
+    delete iteration;
 }
 
 void For::SetBloc(Bloc* bloc)

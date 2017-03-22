@@ -119,7 +119,7 @@ instruction : decdef                            { }
 
 structure : IF POPEN expression PCLOSE CHEVOPEN bloc CHEVCLOSE  el                                      { }
 	      | IF POPEN expression PCLOSE instruction el                                                   { }
-	      | FOR POPEN expression POINTVIR expression POINTVIR expression PCLOSE CHEVOPEN bloc CHEVCLOSE { }
+	      | FOR POPEN expression POINTVIR expression POINTVIR expression PCLOSE CHEVOPEN bloc CHEVCLOSE { $$ = new For($3, $5, $7,$10); }
 	      | FOR POPEN expression POINTVIR expression POINTVIR expression PCLOSE instruction             { }
 	      | WHILE POPEN expression PCLOSE CHEVOPEN bloc CHEVCLOSE                                       { }
 	      | WHILE POPEN expression PCLOSE instruction                                                   { }
@@ -143,7 +143,7 @@ el : ELSE CHEVOPEN bloc CHEVCLOSE                               { }
    | /* epsilon */                                              { }
    ;
 
-expression :  NAME { /* $$ = new ExpressionVariable(std::to_string($1)); */ }
+expression :  NAME { $$ = new ExpressionVariable($1); }
      | NVALUE { }
      | CVALUE {}
 	 | expression PLUS expression {  $$ = new ExpressionBinaire($1, $3, PLUS); }
@@ -194,7 +194,7 @@ le : expression lee { }
 appfct : NAME POPEN le PCLOSE {}
 	   ;
 
-decdef : type NAME                      { }
+decdef : type NAME                      { $$ = new Declaration((char*)NAME, $1); }
 	   | type NAME EGAL expression      { }
 	   | type NAME COPEN NVALUE CCLOSE  { }
 	   ;

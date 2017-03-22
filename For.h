@@ -9,6 +9,7 @@ class For : public Structure {
 
 public:
     For();
+    For(Expression* init, Expression* cond, Expression* ite, Bloc* bloc);
 
     ~For();
 
