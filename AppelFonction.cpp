@@ -9,3 +9,7 @@ AppelFonction::~AppelFonction()
 {
 
 }
+
+std::string AppelFonction::toString() {
+  return "[I] Appel à la fonction "+nomFonction;
+}

@@ -81,3 +81,7 @@ Expression* For::GetIteration()
 {
     return iteration;
 }
+
+std::string For::toString() {
+  return "[I] For";
+}

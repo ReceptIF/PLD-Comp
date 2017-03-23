@@ -60,3 +60,8 @@ std::string Declaration::toSmallString()
 {
     return nomVariable+" ("+stringifyType()+")";
 }
+
+std::string Declaration::toString() 
+{
+    return "[I] Declaration || "+nomVariable+" ("+stringifyType()+")\r\n";
+}

@@ -32,6 +32,8 @@ public:
     Expression* GetCondition();
 
     Expression* GetIteration();
+    
+    std::string toString();
 
 private:
     Bloc* bloc;

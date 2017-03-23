@@ -2,6 +2,7 @@
 #define PLD_COMP_INSTRUCTION_H
 
 #include "Enum.h"
+#include <string>
 
 class Instruction {
 
@@ -9,6 +10,7 @@ public:
 
 	Instruction();
 	~Instruction();
+  virtual std::string toString() = 0;
 
 protected:
 

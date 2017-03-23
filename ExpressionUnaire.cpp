@@ -48,3 +48,8 @@ void ExpressionUnaire::typage() {
   this->type = expression1->getType();
   
 }
+
+std::string ExpressionUnaire::toString() {
+  return "[I] ExpressionUnaire";
+}
+

@@ -8,6 +8,7 @@ class Structure;
 class While : public Structure {
 
 public:
+  std::string toString();
 
 private:
 	Clause* clause;

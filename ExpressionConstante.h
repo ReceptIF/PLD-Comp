@@ -10,6 +10,8 @@ public:
     ExpressionConstante(int aType, int aValeur);
     ~ExpressionConstante();
     void typage();
+    
+    std::string toString();
 
 private:
     int valeur;

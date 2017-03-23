@@ -21,3 +21,7 @@ void StructCond::AjouteClause(Clause* & clause)
 {
     clauses.push_back(clause);
 }
+
+std::string StructCond::toString() {
+  return "[I] StructCond";
+}

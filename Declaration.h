@@ -21,6 +21,7 @@ public:
     
     std::string stringifyType();
     std::string toSmallString();
+    std::string toString();
 
 private:
     std::string nomVariable;

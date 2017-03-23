@@ -15,6 +15,7 @@ public:
     StructCond(Clause* & clause);
     ~StructCond();
     void AjouteClause(Clause* & clause);
+  std::string toString();
 
 private:
     std::list<Clause*> clauses;

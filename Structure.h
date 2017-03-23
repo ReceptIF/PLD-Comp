@@ -9,6 +9,7 @@ class Structure : public Instruction {
 public:
 	Structure();
 	~Structure();
+  virtual std::string toString() = 0;
 
 private:
 

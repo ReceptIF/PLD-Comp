@@ -16,3 +16,8 @@ void ExpressionVariable::typage() {
   this->type = INT32;
   
 }
+
+std::string ExpressionVariable::toString() {
+  return "[I] ExpressionVariable";
+}
+

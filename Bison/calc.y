@@ -196,7 +196,7 @@ le : expression lee { }
 appfct : NAME POPEN le PCLOSE {}
 	   ;
 
-decdef : type NAME                      { $$ = new Declaration((char*)NAME, $1); }
+decdef : type NAME                      { $$ = new Declaration($2, $1); }
 	   | type NAME EGAL expression      { }
 	   | type NAME COPEN NVALUE CCLOSE  { }
 	   ;

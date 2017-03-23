@@ -11,6 +11,7 @@ class AppelFonction : public Expression {
 public:
     AppelFonction(std::string nomFonction);
     ~AppelFonction();
+    std::string toString();
 
 private:
 	std::string nomFonction;

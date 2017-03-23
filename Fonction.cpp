@@ -86,8 +86,8 @@ std::string Fonction::toString() {
         i++;
         
     }
-    
     print += "\r\n";
+    print += this->bloc->toString();
     print += "[F] ~~~ Fin de la fonction "+this->nom+" ~~~\r\n";
     
     return print;

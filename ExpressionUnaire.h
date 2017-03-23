@@ -16,6 +16,8 @@ public:
     int getSymbole();
     int getPrefixe();
     void typage();
+    
+    std::string toString();
 
 private:
 	Expression* expression1;

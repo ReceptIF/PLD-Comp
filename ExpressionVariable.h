@@ -12,6 +12,8 @@ public:
     ExpressionVariable(std::string nomVariable);
     ~ExpressionVariable();
     void typage();
+    
+    std::string toString();
 
 private:
 	Variable* variable;

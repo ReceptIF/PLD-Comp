@@ -95,3 +95,7 @@ void ExpressionBinaire::typage() {
   
   this->type = resType;
 }
+
+std::string ExpressionBinaire::toString() {
+  return "[I] ExprBinaire";
+}

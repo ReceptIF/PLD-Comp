@@ -14,3 +14,7 @@ ExpressionConstante::~ExpressionConstante()
 void ExpressionConstante::typage() {
   // doNothing
 }
+
+std::string ExpressionConstante::toString() {
+  return "[I] ExpressionConstante";
+}
