@@ -2,6 +2,7 @@
 #define PLD_COMP_BLOC_H
 
 #include <list>
+#include <iostream>
 #include "Instruction.h"
 
 class Bloc {

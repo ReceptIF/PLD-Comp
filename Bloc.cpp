@@ -4,6 +4,7 @@ using namespace std;
 
 Bloc::Bloc()
 {
+  cout << "Creation du bloc" << endl;
 }
 
 Bloc::~Bloc()

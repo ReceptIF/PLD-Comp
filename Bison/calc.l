@@ -27,21 +27,15 @@
 #include "calc.tab.h"
 %}
 %option noyywrap
-name      ^([a-zA-Z]+[a-zA-Z_0-9]*)
-nValue     ^([0-9]+)
-cValue     ^'(.)'
+name      [a-zA-Z]+[a-zA-Z_0-9]*
+nValue     [0-9]+
+cValue     "'"."'"
 comment     \/\*(.|[\r\n])*?\*\/
-incl       ^(#.+>)
+incl       "#".+">"
 
 %%
 
 [ \n\t]      { /* ignore */ }
-
-{name}       { return NAME; }
-{nValue}     { return NVALUE; }
-{cValue}     { return CVALUE; }
-{comment}    { /* ignore */ }
-{incl}       { return INCL; }
 
 "="          { return EGAL; }
 "+"          { return PLUS; }
@@ -80,7 +74,7 @@ incl       ^(#.+>)
 "int32_t"    { return INT32; }
 "int64_t"    { return INT64; }
 "void"       { return VOID; }
-","			 { return VIRG; }
+","			     { return VIRG; }
 ";"          { return POINTVIR; }
 "{"          { return CHEVOPEN; }
 "}"          { return CHEVCLOSE; }
@@ -92,4 +86,10 @@ incl       ^(#.+>)
 "getchar"    { return GETCHAR; }
 "return"     { return RETURN; }
 "break"      { return BREAK; }
+
+{name}       { yylval.cval = strdup(yytext); return NAME; }
+{nValue}     { return NVALUE; }
+{cValue}     { return CVALUE; }
+{comment}    { /* ignore */ }
+{incl}       { return INCL; }
 %%

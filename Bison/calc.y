@@ -90,8 +90,8 @@ int yylexpression(void);
      ;*/
 
 programme : programme INCL      { prog = $1; }
-	      | programme fonction  { prog->AjouteFonction($2); $$ = $1; }
-	      | /* epsilon */       { }
+	      | programme fonction    { prog->AjouteFonction($2); $$ = $1; }
+	      | /* epsilon */         { }
 	      ;
 
 
@@ -106,15 +106,15 @@ fonction : type NAME POPEN pa PCLOSE CHEVOPEN bloc CHEVCLOSE    { }
 bloc : CHEVOPEN bloc CHEVCLOSE  { $$ = $2; }
 	 | bloc instruction         { $1->AjouteInstruction($2); $$ = $1; }
 	 | bloc structure           { $1->AjouteInstruction($2); $$ = $1; }
-	 | /* epsilon */            { }
+	 | /* epsilon */            { $$ = new Bloc(); }
 	 ;
 
-instruction : decdef                            { }
-	        | PUTCHAR COPEN expression CCLOSE   { }
-	        | GETCHAR COPEN expression CCLOSE   { }
-	        | BREAK                             { }
-	        | expression                        { }
-	        | RETURN expression                 { }
+instruction : decdef POINTVIR                          { $$ = $1; }
+	        | PUTCHAR COPEN expression CCLOSE POINTVIR   { }
+	        | GETCHAR COPEN expression CCLOSE POINTVIR   { }
+	        | BREAK POINTVIR                             { }
+	        | expression POINTVIR                        { }
+	        | RETURN expression POINTVIR                 { }
 	        ;
 
 structure : IF POPEN expression PCLOSE CHEVOPEN bloc CHEVCLOSE  el                                      { }
@@ -209,10 +209,13 @@ type : CHAR  { $$ = CHAR; }
 
 void yyerror(Programme* zz, const char * s)
 {
-	std::cout << "[ERREUR] Programme : " << std::endl;
+	std::cout << "[ERREUR] Programme : " << s << std::endl << zz->toString() << std::endl;
 }
 
+extern int yydebug;
+
 int main(void) {
+   //yydebug = 1;
    Programme* prog = new Programme();
 
    yyparse(prog);

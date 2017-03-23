@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <list>
+#include <string>
 
 #include "Fonction.h"
 
@@ -13,6 +14,7 @@ public:
     Programme();
     ~Programme();
     void AjouteFonction(Fonction* & fonction);
+    std::string toString();
 
 private:
 

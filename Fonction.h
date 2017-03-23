@@ -23,12 +23,16 @@ public:
     void setNom(std::string nom);
 
     int getTypeRetour();
+    
+    std::string stringifyTypeRetour();
 
     std::list<Variable*> getParametres();
 
     Bloc* getBloc();
 
     std::string getNom();
+    
+    std::string toString();
 
 private:
     int typeRetour;
