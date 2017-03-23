@@ -15,7 +15,7 @@ void Fonction::setTypeRetour(int typeRetour) {
     this->typeRetour = typeRetour;
 }
 
-void Fonction::addParametre(Variable *parametre) {
+void Fonction::addParametre(Declaration *parametre) {
     this->parametres.push_back(parametre);
 }
 
@@ -25,6 +25,12 @@ void Fonction::setBloc(Bloc *bloc) {
 
 void Fonction::setNom(std::string nom) {
     this->nom = nom;
+}
+
+void Fonction::setParametres(std::list<Declaration *> *decList) {
+  
+  this->parametres = *decList;
+  
 }
 
 int Fonction::getTypeRetour() {
@@ -45,12 +51,15 @@ std::string Fonction::stringifyTypeRetour() {
       case CHAR :
         print = "CHAR";
         break;
+      case VOID :
+        print = "VOID";
+        break;
     }
   
     return print;
 }
 
-std::list<Variable *> Fonction::getParametres() {
+std::list<Declaration *> Fonction::getParametres() {
     return parametres;
 }
 
@@ -68,6 +77,17 @@ std::string Fonction::toString() {
     
     print += "[F] ~~~ Début de la fonction "+this->nom+" ~~~\r\n";
     print += "[F] ~ Type de retour : "+this->stringifyTypeRetour()+" \r\n";
+    print += "[F] ~ Paramètres : ";
+    
+    std::list<Declaration *>::iterator i = this->parametres.begin() ;
+    while ( i != this->parametres.end() ) {
+        
+        print += (*i)->toSmallString()+" ";
+        i++;
+        
+    }
+    
+    print += "\r\n";
     print += "[F] ~~~ Fin de la fonction "+this->nom+" ~~~\r\n";
     
     return print;

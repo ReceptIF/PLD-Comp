@@ -18,6 +18,9 @@ public:
 
     void setType(int t);
     int getType();
+    
+    std::string stringifyType();
+    std::string toSmallString();
 
 private:
     std::string nomVariable;

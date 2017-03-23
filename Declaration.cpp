@@ -33,3 +33,30 @@ int Declaration::getType()
 {
     return type;
 }
+
+std::string Declaration::stringifyType() {
+  
+    std::string print = "UNKNOWN";
+    
+    switch(this->type) {
+      case INT32 :
+        print = "INT32";
+        break;
+      case INT64 :
+        print = "INT64";
+        break;
+      case CHAR :
+        print = "CHAR";
+        break;
+      case VOID :
+        print = "VOID";
+        break;
+    }
+  
+    return print;
+}
+
+std::string Declaration::toSmallString() 
+{
+    return nomVariable+" ("+stringifyType()+")";
+}

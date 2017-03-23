@@ -43,6 +43,8 @@ int yylexpression(void);
    Instruction *instru;
    Structure* structu;
    Programme *prog;
+   
+   std::list<Declaration *> *decList;
 }
 
 %token EGAL PLUS MULT DIV MOINS AND DAND OR DOR DEGAL INFEQ SUPEQ DIFF MOD XOR PLUSEQ MULTEQ DIVEQ MOINSEQ DPLUS DMOINS NOT MODEQ DSUP DINF INF SUP ANDEQ OREQ IF ELSE WHILE FOR CHAR INT32 INT64 VOID POINTVIR CHEVOPEN CHEVCLOSE POPEN PCLOSE COPEN CCLOSE VIRG PUTCHAR GETCHAR RETURN BREAK
@@ -62,10 +64,10 @@ int yylexpression(void);
 %type <instru> instruction
 %type <e> le
 %type <e> lee
-%type <e> pa
+%type <decList> pa
 %type <structu> structure
 %type <ival> type
-%type <e> tpa
+%type <decList> tpa
 
 %left POPEN PCLOSE COPEN CCLOSE DPLUS DMOINS
 %right NOT NAME NVALUE CVALUE DPLUSAVANT DMOINSAVANT
@@ -95,12 +97,12 @@ programme : programme INCL      { prog = $1; }
 	      ;
 
 
-fonction : type NAME POPEN pa PCLOSE CHEVOPEN bloc CHEVCLOSE    { }
+fonction : type NAME POPEN pa PCLOSE CHEVOPEN bloc CHEVCLOSE  { Fonction *f = new Fonction($1, $7, $2); f->setParametres($4); $$ = f; }
 	     | type NAME POPEN PCLOSE CHEVOPEN bloc CHEVCLOSE       { $$ = new Fonction($1, $6, $2);  }
-	     | type NAME POPEN VOID PCLOSE CHEVOPEN bloc CHEVCLOSE  { }
-         | VOID NAME POPEN pa PCLOSE CHEVOPEN bloc CHEVCLOSE    { }
+	     | type NAME POPEN VOID PCLOSE CHEVOPEN bloc CHEVCLOSE  { $$ = new Fonction($1, $7, $2);  }
+       | VOID NAME POPEN pa PCLOSE CHEVOPEN bloc CHEVCLOSE    { Fonction *f = new Fonction(VOID, $7, $2); f->setParametres($4); $$ = f; }
 	     | VOID NAME POPEN PCLOSE CHEVOPEN bloc CHEVCLOSE       { $$ = new Fonction(VOID, $6, $2); }
-	     | VOID NAME POPEN VOID PCLOSE CHEVOPEN bloc CHEVCLOSE  { }
+	     | VOID NAME POPEN VOID PCLOSE CHEVOPEN bloc CHEVCLOSE  { $$ = new Fonction(VOID, $7, $2); }
 	     ;
 
 bloc : CHEVOPEN bloc CHEVCLOSE  { $$ = $2; }
@@ -126,12 +128,12 @@ structure : IF POPEN expression PCLOSE CHEVOPEN bloc CHEVCLOSE  el              
 	      ;
 
 
-tpa : tpa VIRG type NAME                        { }
+tpa : tpa VIRG type NAME                        { Declaration *d = new Declaration($4,$3); $1->push_back(d); $$ = $1; }
 	| tpa VIRG type CHEVOPEN CHEVCLOSE NAME tpa { }
-	| /* epsilon */                             { }
+	| /* epsilon */                             { $$ = new std::list<Declaration *> (); }
 	;
 
-pa : type NAME tpa                      { }
+pa : type NAME tpa                      { Declaration *d = new Declaration($2,$1); $3->push_back(d); $$ = $3; }
    | type CHEVOPEN CHEVCLOSE NAME tpa   { }
    ;
 

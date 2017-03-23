@@ -5,7 +5,7 @@
 #include <iostream>
 #include <string>
 
-#include "Variable.h"
+#include "Declaration.h"
 #include "Bloc.h"
 
 class Fonction {
@@ -16,17 +16,19 @@ public:
 
     void setTypeRetour(int typeRetour);
 
-    void addParametre(Variable* parametre);
+    void addParametre(Declaration* parametre);
 
     void setBloc(Bloc* bloc);
 
     void setNom(std::string nom);
+    
+    void setParametres(std::list<Declaration *> *decList);
 
     int getTypeRetour();
     
     std::string stringifyTypeRetour();
 
-    std::list<Variable*> getParametres();
+    std::list<Declaration*> getParametres();
 
     Bloc* getBloc();
 
@@ -36,7 +38,7 @@ public:
 
 private:
     int typeRetour;
-    std::list <Variable*> parametres;
+    std::list <Declaration*> parametres;
     Bloc* bloc;
     std::string nom;
 
