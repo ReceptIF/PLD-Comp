@@ -88,7 +88,7 @@ incl       "#".+">"
 "break"      { return BREAK; }
 
 {name}       { yylval.cval = strdup(yytext); return NAME; }
-{nValue}     { return NVALUE; }
+{nValue}     { yylval.ival = atoi(yytext); return NVALUE; }
 {cValue}     { return CVALUE; }
 {comment}    { /* ignore */ }
 {incl}       { return INCL; }

@@ -9,6 +9,7 @@ class Variable {
 public:
 	Variable(std::string nomVar);
   ~Variable();
+  std::string getNom();
 
 private:
     std::string nomVariable;

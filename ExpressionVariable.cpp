@@ -18,6 +18,10 @@ void ExpressionVariable::typage() {
 }
 
 std::string ExpressionVariable::toString() {
-  return "[I] ExpressionVariable";
+  return "[I] ExprVar | "+variable->getNom()+"\r\n";
+}
+
+std::string ExpressionVariable::toSmallString() {
+  return variable->getNom();
 }
 

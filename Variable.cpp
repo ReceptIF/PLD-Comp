@@ -9,3 +9,7 @@ Variable::~Variable()
 {
 
 }
+
+std::string Variable::getNom() {
+  return nomVariable;
+}

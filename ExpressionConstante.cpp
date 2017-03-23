@@ -4,6 +4,7 @@ ExpressionConstante::ExpressionConstante(int aType, int aValeur)
 {
   this->type = aType;
   this->valeur = aValeur;
+  std::cout << "Const "+valeur << std::endl;
 }
 
 ExpressionConstante::~ExpressionConstante()
@@ -16,5 +17,11 @@ void ExpressionConstante::typage() {
 }
 
 std::string ExpressionConstante::toString() {
-  return "[I] ExpressionConstante";
+  std::string print = "[I] ExprConst | "+valeur;
+  print += "\r\n";
+  return print;
+}
+
+std::string ExpressionConstante::toSmallString() {
+  return "CONST"+valeur;
 }

@@ -115,7 +115,7 @@ instruction : decdef POINTVIR                          { $$ = $1; }
 	        | PUTCHAR COPEN expression CCLOSE POINTVIR   { }
 	        | GETCHAR COPEN expression CCLOSE POINTVIR   { }
 	        | BREAK POINTVIR                             { }
-	        | expression POINTVIR                        { }
+	        | expression POINTVIR                        { $$ = $1; }
 	        | RETURN expression POINTVIR                 { }
 	        ;
 
@@ -146,7 +146,7 @@ el : ELSE CHEVOPEN bloc CHEVCLOSE                               { }
    ;
 
 expression :  NAME { $$ = new ExpressionVariable($1); }
-     | NVALUE { }
+     | NVALUE { $$ = new ExpressionConstante(INT64,$1); }
      | CVALUE {}
 	 | expression PLUS expression {  $$ = new ExpressionBinaire($1, $3, PLUS); }
      | expression MULT expression  { $$ = new ExpressionBinaire($1, $3, MULT); }

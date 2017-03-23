@@ -12,7 +12,9 @@ public:
     ~Expression();
     virtual void typage()=0;
     virtual std::string toString() =0;
+    virtual std::string toSmallString() =0;
     int getType();
+    std::string stringifySymbole(int symb);
     
 protected:
     int type;

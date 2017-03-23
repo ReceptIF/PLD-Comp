@@ -12,6 +12,7 @@ public:
     AppelFonction(std::string nomFonction);
     ~AppelFonction();
     std::string toString();
+    std::string toSmallString();
 
 private:
 	std::string nomFonction;

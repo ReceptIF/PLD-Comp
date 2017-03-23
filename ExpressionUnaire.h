@@ -18,6 +18,7 @@ public:
     void typage();
     
     std::string toString();
+    std::string toSmallString();
 
 private:
 	Expression* expression1;

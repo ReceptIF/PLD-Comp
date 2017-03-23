@@ -97,5 +97,9 @@ void ExpressionBinaire::typage() {
 }
 
 std::string ExpressionBinaire::toString() {
-  return "[I] ExprBinaire";
+  return "[I] ExprBinaire | "+expression1->toSmallString()+" "+this->stringifySymbole(symbole)+" "+expression2->toSmallString()+"\r\n";
+}
+
+std::string ExpressionBinaire::toSmallString() {
+  return "("+expression1->toSmallString()+" "+this->stringifySymbole(symbole)+" "+expression2->toSmallString()+")";
 }
