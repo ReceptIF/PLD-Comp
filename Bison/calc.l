@@ -4,6 +4,7 @@
 
 #include "../AppelFonction.h"
 #include "../Bloc.h"
+#include "../Break.h"
 #include "../Clause.h"
 #include "../Declaration.h"
 #include "../Expression.h"
@@ -15,6 +16,7 @@
 #include "../For.h"
 #include "../Instruction.h"
 #include "../Programme.h"
+#include "../Return.h"
 #include "../StructCond.h"
 #include "../Structure.h"
 #include "../Type.h"

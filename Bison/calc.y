@@ -4,6 +4,7 @@
 
 #include "../AppelFonction.h"
 #include "../Bloc.h"
+#include "../Break.h"
 #include "../Clause.h"
 #include "../Declaration.h"
 #include "../Expression.h"
@@ -15,6 +16,7 @@
 #include "../For.h"
 #include "../Instruction.h"
 #include "../Programme.h"
+#include "../Return.h"
 #include "../StructCond.h"
 #include "../Structure.h"
 #include "../Type.h"
@@ -114,11 +116,11 @@ bloc : CHEVOPEN bloc CHEVCLOSE  { $$ = $2; }
 	 ;
 
 instruction : decdef POINTVIR                          { $$ = $1; }
-	  //      | PUTCHAR COPEN expression CCLOSE POINTVIR   { }
-	  //      | GETCHAR COPEN expression CCLOSE POINTVIR   { }
-	        | BREAK POINTVIR                             { }
+	  //TO-DELETE      | PUTCHAR COPEN expression CCLOSE POINTVIR   { }
+	  //TO-DELETE       | GETCHAR COPEN expression CCLOSE POINTVIR   { }
+	        | BREAK POINTVIR                             { $$ = new Break(); }
 	        | expression POINTVIR                        { $$ = $1; }
-	        | RETURN expression POINTVIR                 { }
+	        | RETURN expression POINTVIR                 { $$ = new Return($2); }
 	        ;
 
 structure : IF POPEN expression PCLOSE CHEVOPEN bloc CHEVCLOSE  el                                    { Clause *c = new Clause($3,$6); $8->AjouteClause(c); $$ = $8; }
