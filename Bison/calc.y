@@ -113,8 +113,8 @@ bloc : CHEVOPEN bloc CHEVCLOSE  { $$ = $2; }
 	 ;
 
 instruction : decdef POINTVIR                          { $$ = $1; }
-	        | PUTCHAR COPEN expression CCLOSE POINTVIR   { }
-	        | GETCHAR COPEN expression CCLOSE POINTVIR   { }
+	  //      | PUTCHAR COPEN expression CCLOSE POINTVIR   { }
+	  //      | GETCHAR COPEN expression CCLOSE POINTVIR   { }
 	        | BREAK POINTVIR                             { }
 	        | expression POINTVIR                        { $$ = $1; }
 	        | RETURN expression POINTVIR                 { }

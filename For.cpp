@@ -1,16 +1,9 @@
 #include "For.h"
 
-For::For()
+For::For(Expression* init, Expression* cond, Expression* ite, Bloc* blocos)
 {
-    this->bloc = nullptr;
-    condition = nullptr;
-    initialisation = nullptr;
-    iteration = nullptr;
-}
-
-For::For(Expression* init, Expression* cond, Expression* ite, Bloc* bloc)
-{
-    this->bloc = bloc;
+    bloc = blocos;
+    instruction = nullptr;
     condition = cond;
     initialisation = init;
     iteration = ite;
@@ -18,6 +11,7 @@ For::For(Expression* init, Expression* cond, Expression* ite, Bloc* bloc)
 
 For::For(Expression* init, Expression* cond, Expression* ite, Instruction* instru)
 {
+    bloc = nullptr;
     instruction = instru;
     condition = cond;
     initialisation = init;
@@ -27,6 +21,7 @@ For::For(Expression* init, Expression* cond, Expression* ite, Instruction* instr
 For::~For()
 {
     delete bloc;
+    delete instruction;
     delete condition;
     delete initialisation;
     delete iteration;
@@ -83,5 +78,22 @@ Expression* For::GetIteration()
 }
 
 std::string For::toString() {
-  return "[I] For";
+  std::string print;
+  
+  print += "[S] === Début de la structure FOR === \r\n";
+  print += "[S] Init : "+initialisation->toSmallString()+"\r\n";
+  print += "[S] Cond : "+condition->toSmallString()+"\r\n";
+  print += "[S] Iter : "+iteration->toSmallString()+"\r\n";
+  
+  if(bloc != nullptr) 
+  {
+    print += bloc->toString();
+  }
+  else if(instruction != nullptr) 
+  {
+    print += instruction->toString();
+  }
+  
+  print += "[S] === Fin de la structure FOR ===\r\n";
+  return print;
 }
