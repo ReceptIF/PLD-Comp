@@ -3,16 +3,19 @@
 
 #include "Instruction.h"
 #include "Expression.h"
+#include "Bloc.h"
 
-class Instruction;
-class Clause : public Instruction {
+class Clause {
 
 public:
-    Clause();
+    Clause(Expression *condition, Bloc *instructions):expression(condition),bloc(instructions) {};
     ~Clause();
+    Expression *getExpression();
+    Bloc *getBloc();
 
 private:
-	Expression* expression;
+	Expression *expression;
+  Bloc *bloc;
 };
 
 #endif //PLD_COMP_CLAUSE_H

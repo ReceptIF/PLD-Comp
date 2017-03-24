@@ -8,9 +8,13 @@ class Structure;
 class While : public Structure {
 
 public:
+  While(Clause *aClause):clause(aClause) {};
+  While(Expression *expression, Bloc *bloc);
+  While(Expression *expression, Instruction *instruction);
+  ~While();
   std::string toString();
 
-private:
+protected:
 	Clause* clause;
 
 };

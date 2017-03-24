@@ -124,8 +124,8 @@ structure : IF POPEN expression PCLOSE CHEVOPEN bloc CHEVCLOSE  el              
 	      | IF POPEN expression PCLOSE instruction el                                                   { }
 	      | FOR POPEN expression POINTVIR expression POINTVIR expression PCLOSE CHEVOPEN bloc CHEVCLOSE { $$ = new For($3, $5, $7, $10); }
 	      | FOR POPEN expression POINTVIR expression POINTVIR expression PCLOSE instruction             { $$ = new For($3, $5, $7, $9); }
-	      | WHILE POPEN expression PCLOSE CHEVOPEN bloc CHEVCLOSE                                       { }
-	      | WHILE POPEN expression PCLOSE instruction                                                   { }
+	      | WHILE POPEN expression PCLOSE CHEVOPEN bloc CHEVCLOSE                                       { $$ = new While($3, $6); }
+	      | WHILE POPEN expression PCLOSE instruction                                                   { $$ = new While($3, $5); }
 	      ;
 
 
