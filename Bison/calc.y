@@ -45,6 +45,7 @@ int yylexpression(void);
    Programme *prog;
    
    std::list<Declaration *> *decList;
+   std::list<Expression *>  *expList;
 }
 
 %token EGAL PLUS MULT DIV MOINS AND DAND OR DOR DEGAL INFEQ SUPEQ DIFF MOD XOR PLUSEQ MULTEQ DIVEQ MOINSEQ DPLUS DMOINS NOT MODEQ DSUP DINF INF SUP ANDEQ OREQ IF ELSE WHILE FOR CHAR INT32 INT64 VOID POINTVIR CHEVOPEN CHEVCLOSE POPEN PCLOSE COPEN CCLOSE VIRG PUTCHAR GETCHAR RETURN BREAK
@@ -62,13 +63,14 @@ int yylexpression(void);
 %type <e> el
 %type <expr> expression
 %type <instru> instruction
-%type <e> le
-%type <e> lee
+%type <expList> le
+%type <expList> lee
 %type <decList> pa
 %type <structu> structure
 %type <ival> type
 %type <decList> tpa
 
+%right EGAL PLUSEQ MULTEQ DIVEQ MOINSEQ MODEQ ANDEQ OREQ
 %left POPEN PCLOSE COPEN CCLOSE DPLUS DMOINS
 %right NOT NAME NVALUE CVALUE DPLUSAVANT DMOINSAVANT
 %left MULT DIV MOD
@@ -81,7 +83,6 @@ int yylexpression(void);
 %left OR
 %left DAND
 %left DOR
-%right EGAL PLUSEQ MULTEQ DIVEQ MOINSEQ MODEQ ANDEQ OREQ
 %left VIRG
 
 %parse-param { Programme * prog }
@@ -185,15 +186,15 @@ expression :  NAME { $$ = new ExpressionVariable($1); }
      | appfct                         { $$ = $1; }
      ;
 
-lee : lee VIRG expression { }
-	| /* epsilon */       { }
+lee : lee VIRG expression { $1->push_back($3); $$ = $1; }
+	| /* epsilon */       { $$ = new std::list<Expression *> (); }
 	;
 
-le : expression lee { }
-   | /* epsilon */  { }
+le : expression lee { $2->push_back($1); $$ = $2; }
+   | /* epsilon */  { $$ = new std::list<Expression *> (); }
    ;
 
-appfct : NAME POPEN le PCLOSE {}
+appfct : NAME POPEN le PCLOSE { AppelFonction *a = new AppelFonction($1); a->setParametres($3); $$ = a;}
 	   ;
 
 decdef : type NAME                      { $$ = new Declaration($2, $1); }
