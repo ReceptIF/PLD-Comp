@@ -1,5 +1,16 @@
 #include "Clause.h"
 
+Clause::Clause(Expression *e, Instruction *i)
+{
+  this->expression = e;
+  
+  Bloc *b = new Bloc();
+  b->AjouteInstruction(i);
+  
+  this->bloc= b;
+  
+}
+
 Clause::~Clause()
 {
 

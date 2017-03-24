@@ -12,14 +12,16 @@ class StructCond : public Structure {
 
 public:
     StructCond();
-    StructCond(Clause* & clause);
+    StructCond(Clause* clause);
+    StructCond(Bloc* b): blocElse(b) {};
+    StructCond(Instruction* i);
     ~StructCond();
-    void AjouteClause(Clause* & clause);
-  std::string toString();
+    void AjouteClause(Clause* clause);
+    std::string toString();
 
 private:
     std::list<Clause*> clauses;
-    Bloc* bloc;
+    Bloc* blocElse;
 
 };
 

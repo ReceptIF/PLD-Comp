@@ -42,6 +42,7 @@ int yylexpression(void);
    For *bouclefor;
    Instruction *instru;
    Structure* structu;
+   StructCond* struCond;
    Programme *prog;
    
    std::list<Declaration *> *decList;
@@ -60,7 +61,7 @@ int yylexpression(void);
 %type <appFonct> appfct
 %type <block> bloc
 %type <decl> decdef
-%type <e> el
+%type <struCond> el
 %type <expr> expression
 %type <instru> instruction
 %type <expList> le
@@ -120,8 +121,8 @@ instruction : decdef POINTVIR                          { $$ = $1; }
 	        | RETURN expression POINTVIR                 { }
 	        ;
 
-structure : IF POPEN expression PCLOSE CHEVOPEN bloc CHEVCLOSE  el                                      { }
-	      | IF POPEN expression PCLOSE instruction el                                                   { }
+structure : IF POPEN expression PCLOSE CHEVOPEN bloc CHEVCLOSE  el                                    { Clause *c = new Clause($3,$6); $8->AjouteClause(c); $$ = $8; }
+	      | IF POPEN expression PCLOSE instruction el                                                   { Clause *c = new Clause($3,$5); $6->AjouteClause(c); $$ = $6; }
 	      | FOR POPEN expression POINTVIR expression POINTVIR expression PCLOSE CHEVOPEN bloc CHEVCLOSE { $$ = new For($3, $5, $7, $10); }
 	      | FOR POPEN expression POINTVIR expression POINTVIR expression PCLOSE instruction             { $$ = new For($3, $5, $7, $9); }
 	      | WHILE POPEN expression PCLOSE CHEVOPEN bloc CHEVCLOSE                                       { $$ = new While($3, $6); }
@@ -139,11 +140,11 @@ pa : type NAME tpa                      { Declaration *d = new Declaration($2,$1
    ;
 
 
-el : ELSE CHEVOPEN bloc CHEVCLOSE                               { }
-   | ELSE instruction                                           { }
-   | ELSE IF POPEN expression PCLOSE CHEVOPEN bloc CHEVCLOSE el { }
-   | ELSE IF POPEN expression PCLOSE instruction el             { }
-   | /* epsilon */                                              { }
+el : ELSE CHEVOPEN bloc CHEVCLOSE                               { $$ = new StructCond($3); }
+   | ELSE instruction                                           { $$ = new StructCond($2); }
+   | ELSE IF POPEN expression PCLOSE CHEVOPEN bloc CHEVCLOSE el { Clause *c = new Clause($4,$7); $9->AjouteClause(c); $$ = $9; }
+   | ELSE IF POPEN expression PCLOSE instruction el             { Clause *c = new Clause($4,$6); $7->AjouteClause(c); $$ = $7; }
+   | /* epsilon */                                              { $$ = new StructCond(); }
    ;
 
 expression :  NAME { $$ = new ExpressionVariable($1); }

@@ -9,6 +9,7 @@ class Clause {
 
 public:
     Clause(Expression *condition, Bloc *instructions):expression(condition),bloc(instructions) {};
+    Clause(Expression *condition, Instruction *instruction);
     ~Clause();
     Expression *getExpression();
     Bloc *getBloc();
