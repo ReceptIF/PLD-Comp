@@ -1,14 +1,10 @@
 #include "Declaration.h"
 
-Declaration::Declaration()
-{
-
-}
-
-Declaration::Declaration(std::string nomVar, int varType)
+Declaration::Declaration(std::string nomVar, int varType, int size)
 {
     nomVariable = nomVar;
     type = varType;
+    tabSize = size;
 }
 
 Declaration::~Declaration()
@@ -32,6 +28,10 @@ void Declaration::setType(int t)
 int Declaration::getType()
 {
     return type;
+}
+
+void Declaration::setInit(Expression *e) {
+    init = e;
 }
 
 std::string Declaration::stringifyType() {
@@ -58,10 +58,36 @@ std::string Declaration::stringifyType() {
 
 std::string Declaration::toSmallString() 
 {
-    return nomVariable+" ("+stringifyType()+")";
+    std::string print;
+    print += nomVariable;
+    if(tabSize>0) { 
+      print += "["+std::to_string(this->tabSize); 
+      print += "]"; 
+    } else if(tabSize==0) { 
+      print += "[]"; 
+    }
+    print += " ("+stringifyType()+")";
+    
+    return print;
 }
 
 std::string Declaration::toString() 
 {
-    return "[I] Declaration || "+nomVariable+" ("+stringifyType()+")\r\n";
+    std::string print;
+    print += "[I] Declaration || "+nomVariable;
+    if(tabSize>0) { 
+      print += "["+std::to_string(this->tabSize); 
+      print += "]"; 
+    } else if(tabSize==0) { 
+      print += "[]"; 
+    }
+    print += " ("+stringifyType()+")";
+    
+    if(init != nullptr) { 
+      print += " = "+init->toSmallString(); 
+    }
+    
+    print += "\r\n";
+    
+    return print;
 }

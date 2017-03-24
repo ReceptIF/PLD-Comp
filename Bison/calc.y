@@ -130,13 +130,13 @@ structure : IF POPEN expression PCLOSE CHEVOPEN bloc CHEVCLOSE  el              
 	      ;
 
 
-tpa : tpa VIRG type NAME                        { Declaration *d = new Declaration($4,$3); $1->push_back(d); $$ = $1; }
-	| tpa VIRG type CHEVOPEN CHEVCLOSE NAME tpa { }
+tpa : tpa VIRG type NAME                      { Declaration *d = new Declaration($4,$3); $1->push_back(d); $$ = $1; }
+	| tpa VIRG type COPEN CCLOSE NAME tpa       { Declaration *d = new Declaration($6,$3,0); $7->push_back(d); $$ = $7; }
 	| /* epsilon */                             { $$ = new std::list<Declaration *> (); }
 	;
 
-pa : type NAME tpa                      { Declaration *d = new Declaration($2,$1); $3->push_back(d); $$ = $3; }
-   | type CHEVOPEN CHEVCLOSE NAME tpa   { }
+pa : type NAME tpa                  { Declaration *d = new Declaration($2,$1); $3->push_back(d); $$ = $3; }
+   | type COPEN CCLOSE NAME tpa     { Declaration *d = new Declaration($4,$1,0); $5->push_back(d); $$ = $5; }
    ;
 
 
@@ -198,9 +198,9 @@ le : expression lee { $2->push_back($1); $$ = $2; }
 appfct : NAME POPEN le PCLOSE { AppelFonction *a = new AppelFonction($1); a->setParametres($3); $$ = a;}
 	   ;
 
-decdef : type NAME                      { $$ = new Declaration($2, $1); }
-	   | type NAME EGAL expression      { }
-	   | type NAME COPEN NVALUE CCLOSE  { }
+decdef : type NAME                    { $$ = new Declaration($2, $1); }
+	   | type NAME EGAL expression      { Declaration *d = new Declaration($2, $1); d->setInit($4); $$ = d; }
+	   | type NAME COPEN NVALUE CCLOSE  { $$ = new Declaration($2, $1, $4); }
 	   ;
 
 type : CHAR  { $$ = CHAR; }
