@@ -10,6 +10,7 @@ class VariableTableau : public Variable {
 public:
 	VariableTableau(std::string nomVar, Expression *ind):Variable(nomVar),indice(ind) {};
   ~VariableTableau();
+  std::string toSmallString();
 
 private:
 	Expression* indice;

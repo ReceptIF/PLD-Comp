@@ -89,7 +89,7 @@ incl       "#".+">"
 
 {name}       { yylval.cval = strdup(yytext); return NAME; }
 {nValue}     { yylval.ival = atoi(yytext); return NVALUE; }
-{cValue}     { return CVALUE; }
+{cValue}     { yylval.ival = yytext[1]; return CVALUE; }
 {comment}    { /* ignore */ }
 {incl}       { return INCL; }
 %%

@@ -147,42 +147,42 @@ el : ELSE CHEVOPEN bloc CHEVCLOSE                               { }
 
 expression :  NAME { $$ = new ExpressionVariable($1); }
      | NVALUE { $$ = new ExpressionConstante(INT64,$1); }
-     | CVALUE {}
-	 | expression PLUS expression {  $$ = new ExpressionBinaire($1, $3, PLUS); }
-     | expression MULT expression  { $$ = new ExpressionBinaire($1, $3, MULT); }
-     | expression DIV expression  { $$ = new ExpressionBinaire($1, $3, DIV); }
-     | expression MOINS expression{ $$ = new ExpressionBinaire($1, $3, MOINS); }
-     | expression MOD expression { $$ = new ExpressionBinaire($1, $3, MOD); }
-     | POPEN expression PCLOSE{  $$ = $2;  }
-     | expression DINF expression { $$ = new ExpressionBinaire($1, $3, DINF); }
-     | expression DSUP expression { $$ = new ExpressionBinaire($1, $3, DSUP); }
-     | NOT expression{ $$ = new ExpressionUnaire($2, NOT, 1); }
-     | expression AND expression{ $$ = new ExpressionBinaire($1, $3, AND); }
-     | expression DAND expression{ $$ = new ExpressionBinaire($1, $3, DAND); }
-     | expression OR expression{ $$ = new ExpressionBinaire($1, $3, OR); }
-     | expression DOR expression{ $$ = new ExpressionBinaire($1, $3, DOR); }
-     | expression XOR expression{ $$ = new ExpressionBinaire($1, $3, XOR); }
-     | expression SUP expression{ $$ = new ExpressionBinaire($1, $3, SUP); }
-     | expression INF expression{ $$ = new ExpressionBinaire($1, $3, INF); }
-     | expression INFEQ expression{ $$ = new ExpressionBinaire($1, $3, INFEQ); }
-     | expression SUPEQ expression{ $$ = new ExpressionBinaire($1, $3, SUPEQ); }
-     | expression DEGAL expression{ $$ = new ExpressionBinaire($1, $3, DEGAL); }
-     | expression DIFF expression{ $$ = new ExpressionBinaire($1, $3, DIFF); }
-     | NAME COPEN expression CCLOSE  {}
-     | NAME EGAL expression { ExpressionVariable* e = new ExpressionVariable((char*)NAME) ; $$ = new ExpressionBinaire(e, $3, EGAL); }
-	 | NAME COPEN expression CCLOSE EGAL expression {}
-	 | NAME DPLUS {}
-	 | DPLUS NAME %prec DPLUSAVANT {}
-	 | NAME DMOINS {}
-	 | DMOINS NAME %prec DMOINSAVANT {}
-	 | NAME PLUSEQ expression {}
-	 | NAME MOINSEQ expression {}
-	 | NAME MULTEQ expression {}
-	 | NAME DIVEQ expression {}
-	 | NAME MODEQ expression {}
-	 | NAME ANDEQ expression {}
-	 | NAME OREQ expression {}
-     | appfct {}
+     | CVALUE { $$ = new ExpressionConstante(CHAR,$1); }
+  	 | expression PLUS expression     { $$ = new ExpressionBinaire($1, $3, PLUS); }
+     | expression MULT expression     { $$ = new ExpressionBinaire($1, $3, MULT); }
+     | expression DIV expression      { $$ = new ExpressionBinaire($1, $3, DIV); }
+     | expression MOINS expression    { $$ = new ExpressionBinaire($1, $3, MOINS); }
+     | expression MOD expression      { $$ = new ExpressionBinaire($1, $3, MOD); }
+     | POPEN expression PCLOSE        { $$ = $2;  }
+     | expression DINF expression     { $$ = new ExpressionBinaire($1, $3, DINF); }
+     | expression DSUP expression     { $$ = new ExpressionBinaire($1, $3, DSUP); }
+     | NOT expression                 { $$ = new ExpressionUnaire($2, NOT, 1); }
+     | expression AND expression      { $$ = new ExpressionBinaire($1, $3, AND); }
+     | expression DAND expression     { $$ = new ExpressionBinaire($1, $3, DAND); }
+     | expression OR expression       { $$ = new ExpressionBinaire($1, $3, OR); }
+     | expression DOR expression      { $$ = new ExpressionBinaire($1, $3, DOR); }
+     | expression XOR expression      { $$ = new ExpressionBinaire($1, $3, XOR); }
+     | expression SUP expression      { $$ = new ExpressionBinaire($1, $3, SUP); }
+     | expression INF expression      { $$ = new ExpressionBinaire($1, $3, INF); }
+     | expression INFEQ expression    { $$ = new ExpressionBinaire($1, $3, INFEQ); }
+     | expression SUPEQ expression    { $$ = new ExpressionBinaire($1, $3, SUPEQ); }
+     | expression DEGAL expression    { $$ = new ExpressionBinaire($1, $3, DEGAL); }
+     | expression DIFF expression     { $$ = new ExpressionBinaire($1, $3, DIFF); }
+     | NAME COPEN expression CCLOSE   { ExpressionVariable* e = new ExpressionVariable($1,$3); $$ = e; }
+     | NAME EGAL expression           { ExpressionVariable* e = new ExpressionVariable($1) ; $$ = new ExpressionBinaire(e, $3, EGAL); }
+	   | NAME COPEN expression CCLOSE EGAL expression { ExpressionVariable* e = new ExpressionVariable($1,$3); $$ = new ExpressionBinaire(e, $6, EGAL);  }
+	   | NAME DPLUS                     { ExpressionVariable* e = new ExpressionVariable($1); $$ = new ExpressionUnaire(e, DPLUS, 0); }
+	   | DPLUS NAME %prec DPLUSAVANT    { ExpressionVariable* e = new ExpressionVariable($2); $$ = new ExpressionUnaire(e, DPLUS, 1); }
+	   | NAME DMOINS                    { ExpressionVariable* e = new ExpressionVariable($1); $$ = new ExpressionUnaire(e, DMOINS, 0); }
+	   | DMOINS NAME %prec DMOINSAVANT  { ExpressionVariable* e = new ExpressionVariable($2); $$ = new ExpressionUnaire(e, DMOINS, 1); }
+  	 | NAME PLUSEQ expression         { ExpressionVariable* e = new ExpressionVariable($1); $$ = new ExpressionBinaire(e, $3, PLUSEQ); }
+     | NAME MOINSEQ expression        { ExpressionVariable* e = new ExpressionVariable($1); $$ = new ExpressionBinaire(e, $3, MOINSEQ); }
+	   | NAME MULTEQ expression         { ExpressionVariable* e = new ExpressionVariable($1); $$ = new ExpressionBinaire(e, $3, MULTEQ); }
+  	 | NAME DIVEQ expression          { ExpressionVariable* e = new ExpressionVariable($1); $$ = new ExpressionBinaire(e, $3, DIVEQ); }
+  	 | NAME MODEQ expression          { ExpressionVariable* e = new ExpressionVariable($1); $$ = new ExpressionBinaire(e, $3, MODEQ); }
+  	 | NAME ANDEQ expression          { ExpressionVariable* e = new ExpressionVariable($1); $$ = new ExpressionBinaire(e, $3, ANDEQ); }
+  	 | NAME OREQ expression           { ExpressionVariable* e = new ExpressionVariable($1); $$ = new ExpressionBinaire(e, $3, OREQ); }
+     | appfct                         { $$ = $1; }
      ;
 
 lee : lee VIRG expression { }

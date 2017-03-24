@@ -2,7 +2,12 @@
 
 ExpressionVariable::ExpressionVariable(std::string nomVariable)
 {
-  this->variable = new Variable(nomVariable);
+  this->variable = new VariableSimple(nomVariable);
+}
+
+ExpressionVariable::ExpressionVariable(std::string nomVariable, Expression *e)
+{
+  this->variable = new VariableTableau(nomVariable,e);
 }
 
 ExpressionVariable::~ExpressionVariable()
@@ -18,10 +23,10 @@ void ExpressionVariable::typage() {
 }
 
 std::string ExpressionVariable::toString() {
-  return "[I] ExprVar | "+variable->getNom()+"\r\n";
+  return "[I] ExprVar | "+variable->toSmallString()+"\r\n";
 }
 
 std::string ExpressionVariable::toSmallString() {
-  return variable->getNom();
+  return variable->toSmallString();
 }
 

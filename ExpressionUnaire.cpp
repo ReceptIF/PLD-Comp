@@ -50,7 +50,7 @@ void ExpressionUnaire::typage() {
 }
 
 std::string ExpressionUnaire::toString() {
-  if(prefixe) {
+  if(!prefixe) {
     return "[I] ExprUnaire | "+expression1->toSmallString()+stringifySymbole(symbole)+"\r\n";
   }else {
     return "[I] ExprUnaire | "+stringifySymbole(symbole)+expression1->toSmallString()+"\r\n";

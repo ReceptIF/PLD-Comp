@@ -10,8 +10,9 @@ public:
 	Variable(std::string nomVar);
   ~Variable();
   std::string getNom();
+  virtual std::string toSmallString() =0;
 
-private:
+protected:
     std::string nomVariable;
 };
 

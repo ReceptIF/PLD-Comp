@@ -9,6 +9,7 @@ class VariableSimple : public Variable {
 public:
 	VariableSimple(std::string nomVar):Variable(nomVar) {};
   ~VariableSimple();
+  std::string toSmallString();
 
 private:
 

@@ -4,3 +4,7 @@ VariableSimple::~VariableSimple()
 {
 
 }
+
+std::string VariableSimple::toSmallString() {
+  return nomVariable;
+}
