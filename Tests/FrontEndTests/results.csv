@@ -1,12 +1,12 @@
 Test ID;Return code validation;Out result;StdErr result;File creation result;Global result
-././Tests/LexError/Test1;1;2;2;2;1
+././Tests/LexError/Test1;0;2;2;2;0
 ././Tests/LexError/Test2;0;2;2;2;0
-././Tests/SemanticError/Test1;1;2;2;2;1
-././Tests/SyntaxError/Test1;1;2;2;2;1
-././Tests/SyntaxError/Test2;1;2;2;2;1
-././Tests/SyntaxError/Test3;1;2;2;2;1
-././Tests/SyntaxError/Test4;1;2;2;2;1
-././Tests/SyntaxError/Test5;1;2;2;2;1
+././Tests/SemanticError/Test1;0;2;2;2;0
+././Tests/SyntaxError/Test1;0;2;2;2;0
+././Tests/SyntaxError/Test2;0;2;2;2;0
+././Tests/SyntaxError/Test3;0;2;2;2;0
+././Tests/SyntaxError/Test4;0;2;2;2;0
+././Tests/SyntaxError/Test5;0;2;2;2;0
 ././Tests/ValidPrograms/Test1;1;2;2;2;1
 ././Tests/ValidPrograms/Test10;0;2;2;2;0
 ././Tests/ValidPrograms/Test11;0;2;2;2;0
