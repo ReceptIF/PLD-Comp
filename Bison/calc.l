@@ -33,7 +33,7 @@ name      [a-zA-Z]+[a-zA-Z_0-9]*
 nValue     [0-9]+
 cValue     "'"."'"
 comment     \/\*(.|[\r\n])*?\*\/
-incl       "#".+">"
+incl       ^\#.*\>
 
 %%
 

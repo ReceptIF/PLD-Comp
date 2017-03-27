@@ -95,7 +95,7 @@ int yylexpression(void);
 /*axiome : expression { *resultat = $1; }
      ;*/
 
-programme : programme INCL      { prog = $1; }
+programme : programme INCL      { $$ = $1; }
 	      | programme fonction    { prog->AjouteFonction($2); $$ = $1; }
 	      | /* epsilon */         { }
 	      ;
