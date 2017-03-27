@@ -17,6 +17,8 @@ public:
     StructCond(Instruction* i);
     ~StructCond();
     void AjouteClause(Clause* clause);
+    std::list<Clause *> GetClauses();
+    Bloc *getElse();
     std::string toString();
 
 private:

@@ -3,7 +3,6 @@
 For::For(Expression* init, Expression* cond, Expression* ite, Bloc* blocos)
 {
     bloc = blocos;
-    instruction = nullptr;
     condition = cond;
     initialisation = init;
     iteration = ite;
@@ -11,8 +10,10 @@ For::For(Expression* init, Expression* cond, Expression* ite, Bloc* blocos)
 
 For::For(Expression* init, Expression* cond, Expression* ite, Instruction* instru)
 {
-    bloc = nullptr;
-    instruction = instru;
+    Bloc *b = new Bloc();
+    b->AjouteInstruction(instru);
+  
+    bloc = b;
     condition = cond;
     initialisation = init;
     iteration = ite;
@@ -21,7 +22,6 @@ For::For(Expression* init, Expression* cond, Expression* ite, Instruction* instr
 For::~For()
 {
     delete bloc;
-    delete instruction;
     delete condition;
     delete initialisation;
     delete iteration;
@@ -30,11 +30,6 @@ For::~For()
 void For::SetBloc(Bloc* bloc)
 {
     bloc = bloc;
-}
-
-void For::SetInstruction(Instruction* instru)
-{
-    instruction = instru;
 }
 
 void For::SetCondition(Expression*  expression)
@@ -55,11 +50,6 @@ void For::SetIteration(Expression* expression)
 Bloc* For::GetBloc()
 {
     return bloc;
-}
-
-Instruction* For::GetInstruction()
-{
-    return instruction;
 }
 
 Expression* For::GetCondition()
@@ -84,16 +74,7 @@ std::string For::toString() {
   print += "[S] Init : "+initialisation->toSmallString()+"\r\n";
   print += "[S] Cond : "+condition->toSmallString()+"\r\n";
   print += "[S] Iter : "+iteration->toSmallString()+"\r\n";
-  
-  if(bloc != nullptr) 
-  {
-    print += bloc->toString();
-  }
-  else if(instruction != nullptr) 
-  {
-    print += instruction->toString();
-  }
-  
+  print += bloc->toString();
   print += "[S] === Fin de la structure FOR ===\r\n";
   return print;
 }

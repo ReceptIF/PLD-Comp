@@ -1,6 +1,8 @@
 #include "Bloc.h"
 #include "AppelFonction.h"
 #include "While.h"
+#include "For.h"
+#include "StructCond.h"
 
 using namespace std;
 
@@ -68,12 +70,30 @@ void Bloc::resoudrePortees(int *globalContext, std::list<std::string> *varStack,
         w->getClause()->getExpression()->resoudrePortees(varStack,varMap,fctStack);
         w->getClause()->getBloc()->resoudrePortees(globalContext, varStack, varMap, fctStack);
         
-        // Recherche de la portée
-        w->getClause()->getExpression()->resoudrePortees(varStack,varMap,fctStack);
         
       } else if (dynamic_cast<For *>(*i)) {
         
         For *f = (For *)*i;
+        f->GetInitialisation()->resoudrePortees(varStack,varMap,fctStack);
+        f->GetCondition()->resoudrePortees(varStack,varMap,fctStack);
+        f->GetIteration()->resoudrePortees(varStack,varMap,fctStack);
+        f->GetBloc()->resoudrePortees(globalContext,varStack,varMap,fctStack);
+        
+      } else if (dynamic_cast<StructCond *>(*i)) {
+        
+        StructCond *s = (StructCond *)*i;
+        
+        std::list<Clause *> c = s->GetClauses(); 
+        std::list<Clause *>::iterator j = c.begin() ;
+        while ( j != c.end() ) {
+          
+          (*j)->getExpression()->resoudrePortees(varStack,varMap,fctStack);
+          (*j)->getBloc()->resoudrePortees(globalContext,varStack,varMap,fctStack);
+          j++;
+          
+        }
+        
+        s->getElse()->resoudrePortees(globalContext,varStack,varMap,fctStack);
         
       }
       

@@ -29,6 +29,14 @@ void StructCond::AjouteClause(Clause* clause)
     clauses.push_back(clause);
 }
 
+std::list<Clause *> StructCond::GetClauses() {
+    return clauses;
+}
+
+Bloc *StructCond::getElse() {
+    return this->blocElse;
+}
+
 std::string StructCond::toString() {
   std::string print;
   print += "[S] === Début de la structure IF/ELSE ===\r\n";

@@ -14,8 +14,6 @@ public:
 
     void SetBloc(Bloc* bloc);
 
-    void SetInstruction(Instruction* instru);
-
     void SetInitialisation(Expression* expression);
 
     void SetCondition(Expression* expression);
@@ -23,8 +21,6 @@ public:
     void SetIteration(Expression* expression);
 
     Bloc* GetBloc();
-
-    Instruction* GetInstruction();
 
     Expression* GetInitialisation();
 
@@ -36,7 +32,6 @@ public:
 
 private:
     Bloc* bloc;
-    Instruction* instruction;
     Expression* initialisation;
     Expression* condition;
     Expression* iteration;
