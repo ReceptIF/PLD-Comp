@@ -10,6 +10,7 @@ public:
 	Variable(std::string nomVar);
   ~Variable();
   std::string getNom();
+  void setNom(std::string nom);
   virtual std::string toSmallString() =0;
 
 protected:

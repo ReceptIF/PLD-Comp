@@ -3,8 +3,11 @@
 
 #include <string>
 #include <list>
+#include <map>
 
 #include "Expression.h"
+#include "Declaration.h"
+#include "Fonction.h"
 
 class Expression;
 class AppelFonction : public Expression {
@@ -16,6 +19,7 @@ public:
     std::string toSmallString();
     void setParametres(std::list<Expression *> *list);
     void typage();
+    void resoudrePortees(std::list<std::string> *varStack, std::map<std::string,Declaration *> *varMap, std::list<std::string> *fctStack);
 
 private:
 	std::string nomFonction;

@@ -92,3 +92,34 @@ std::string Fonction::toString() {
     
     return print;
 }
+    
+void Fonction::resoudrePortees(int *globalContext, std::list<std::string> *varStack, std::map<std::string,Declaration *> *varMap, std::list<std::string> *fctStack) {
+      
+    int stackAdding = 0;
+    int localContext = ++(*globalContext);
+    
+    std::list<Declaration *>::iterator i = this->parametres.begin() ;
+    while ( i != this->parametres.end() ) {
+      
+        // Renommage des paramètres
+        std::string varName = std::to_string(localContext)+"_"+(*i)->getNomVariable();
+        (*i)->setNomVariable(varName);
+        
+        // Ajout des paramètres au contexte
+        varMap->insert( std::pair<std::string,Declaration *>(varName,(*i)) );
+        varStack->push_back(varName);
+        stackAdding++;
+        
+        // Résolution interne
+        bloc->resoudrePortees(globalContext, varStack, varMap, fctStack);
+        
+        i++;
+    }
+        
+    // Nettoyage du contexte
+    while(stackAdding > 0) {
+      varStack->pop_back();
+      stackAdding--;
+    }
+    
+}

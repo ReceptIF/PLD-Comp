@@ -2,7 +2,10 @@
 #define PLD_COMP_EXPRESSION_H
 
 #include "Instruction.h"
+#include "Declaration.h"
 #include <string>
+#include <map>
+#include <list>
 
 class Instruction;
 class Expression : public Instruction {
@@ -16,6 +19,8 @@ public:
     int getType();
     std::string stringifySymbole(int symb);
     
+    virtual void resoudrePortees(std::list<std::string> *varStack, std::map<std::string,Declaration *> *varMap, std::list<std::string> *fctStack) = 0;
+
 protected:
     int type;
 

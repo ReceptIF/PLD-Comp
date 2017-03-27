@@ -41,3 +41,28 @@ std::string AppelFonction::toSmallString() {
   print += ")";
   return print;
 }
+
+void AppelFonction::resoudrePortees(std::list<std::string> *varStack, std::map<std::string,Declaration *> *varMap, std::list<std::string> *fctStack) {
+  
+  int fctExist = 0;
+  
+  std::list<std::string>::iterator i = fctStack->begin() ;
+  while ( i != fctStack->end() && fctExist == 0) {
+      
+      if(*i == this->nomFonction) {
+        fctExist = 1;
+      }  
+      i++;
+      
+  }
+  
+  if(fctExist == 1) {
+    Fonction *fct;
+    
+    // TODO Check Args
+  }
+  else
+  {
+    std::cerr << "Erreur, la fonction appellée '"+this->nomFonction+"' n'existe pas dans ce contexte" << std::endl;
+  }
+}

@@ -2,6 +2,7 @@
 #define PLD_COMP_FONCTION_H
 
 #include <list>
+#include <map>
 #include <iostream>
 #include <string>
 
@@ -35,6 +36,8 @@ public:
     std::string getNom();
     
     std::string toString();
+    
+    void resoudrePortees(int *globalContext, std::list<std::string> *varStack, std::map<std::string,Declaration *> *varMap, std::list<std::string> *fctStack);
 
 private:
     int typeRetour;

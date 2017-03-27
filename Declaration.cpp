@@ -1,4 +1,5 @@
 #include "Declaration.h"
+#include "Expression.h"
 
 Declaration::Declaration(std::string nomVar, int varType, int size)
 {
@@ -91,3 +92,4 @@ std::string Declaration::toString()
     
     return print;
 }
+

@@ -103,3 +103,9 @@ std::string ExpressionBinaire::toString() {
 std::string ExpressionBinaire::toSmallString() {
   return "("+expression1->toSmallString()+" "+this->stringifySymbole(symbole)+" "+expression2->toSmallString()+")";
 }
+
+
+void ExpressionBinaire::resoudrePortees(std::list<std::string> *varStack, std::map<std::string,Declaration *> *varMap, std::list<std::string> *fctStack) {
+  expression1->resoudrePortees(varStack, varMap, fctStack);
+  expression2->resoudrePortees(varStack, varMap, fctStack);
+}

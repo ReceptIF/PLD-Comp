@@ -1,4 +1,6 @@
 #include "Bloc.h"
+#include "AppelFonction.h"
+#include "While.h"
 
 using namespace std;
 
@@ -32,4 +34,57 @@ std::string Bloc::toString() {
 void Bloc::AjouteInstruction(Instruction* instruction)
 {
     instructions.push_back(instruction);
+}
+
+void Bloc::resoudrePortees(int *globalContext, std::list<std::string> *varStack, std::map<std::string,Declaration *> *varMap, std::list<std::string> *fctStack) {
+
+    int stackAdding = 0;
+    int localContext = ++(*globalContext);
+    
+    std::list<Instruction *>::iterator i = this->instructions.begin() ;
+    while ( i != this->instructions.end() ) {
+      
+      if (dynamic_cast<Declaration *>(*i)) {
+        
+        Declaration *d = (Declaration *)*i;
+        
+        // Ajout d'une variable déclarée
+        std::string varName = std::to_string(localContext)+"_"+d->getNomVariable();
+        d->setNomVariable(varName);
+        varMap->insert( std::pair<std::string,Declaration *>(varName,d) );
+        varStack->push_back(varName);
+        stackAdding++;
+        
+      } else if (dynamic_cast<ExpressionBinaire *>(*i) || dynamic_cast<ExpressionUnaire *>(*i) || dynamic_cast<ExpressionConstante *>(*i) || dynamic_cast<ExpressionVariable *>(*i) || dynamic_cast<AppelFonction *>(*i)) {
+        
+        Expression *e = (Expression *)*i;
+        
+        // Recherche de la portée
+        e->resoudrePortees(varStack,varMap,fctStack);
+        
+      } else if (dynamic_cast<While *>(*i)) {
+        
+        While *w = (While *)*i;
+        w->getClause()->getExpression()->resoudrePortees(varStack,varMap,fctStack);
+        w->getClause()->getBloc()->resoudrePortees(globalContext, varStack, varMap, fctStack);
+        
+        // Recherche de la portée
+        w->getClause()->getExpression()->resoudrePortees(varStack,varMap,fctStack);
+        
+      } else if (dynamic_cast<For *>(*i)) {
+        
+        For *f = (For *)*i;
+        
+      }
+      
+      
+      i++;
+    }
+        
+    // Nettoyage du contexte
+    while(stackAdding > 0) {
+      varStack->pop_back();
+      stackAdding--;
+    }
+
 }

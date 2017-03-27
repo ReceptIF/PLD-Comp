@@ -12,6 +12,7 @@ public:
   While(Expression *expression, Bloc *bloc);
   While(Expression *expression, Instruction *instruction);
   ~While();
+  Clause *getClause();
   std::string toString();
 
 protected:

@@ -13,3 +13,7 @@ Variable::~Variable()
 std::string Variable::getNom() {
   return nomVariable;
 }
+
+void Variable::setNom(std::string nom) {
+  nomVariable = nom;
+}

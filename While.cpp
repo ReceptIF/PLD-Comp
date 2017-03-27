@@ -21,6 +21,10 @@ While::~While() {
   delete clause;
 }
 
+Clause *While::getClause() {
+  return clause;
+}
+
 std::string While::toString() {
   std::string print;
   print += "[S] === Début de la structure WHILE ===\r\n";

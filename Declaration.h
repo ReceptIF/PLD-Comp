@@ -2,10 +2,10 @@
 #define PLD_COMP_DECLARATION_H
 
 #include "Instruction.h"
-#include "Expression.h"
 #include <iostream>
 #include <string>
 
+class Expression;
 class Instruction;
 class Declaration : public Instruction {
 
@@ -23,7 +23,7 @@ public:
     std::string stringifyType();
     std::string toSmallString();
     std::string toString();
-
+    
 private:
     std::string nomVariable;
     int type;

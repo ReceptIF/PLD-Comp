@@ -65,3 +65,6 @@ std::string ExpressionUnaire::toSmallString() {
   }
 }
 
+void ExpressionUnaire::resoudrePortees(std::list<std::string> *varStack, std::map<std::string,Declaration *> *varMap, std::list<std::string> *fctStack) {
+  expression1->resoudrePortees(varStack, varMap, fctStack);
+}

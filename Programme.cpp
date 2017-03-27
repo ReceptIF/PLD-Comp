@@ -34,3 +34,23 @@ string Programme::toString()
   
   return printer;
 }
+
+void Programme::resoudrePortees() {
+  
+  std::list<std::string> varStack;
+  std::list<std::string> fctStack;
+  
+  int *globalContext = new int();
+  *globalContext = 31080;
+  int localContext = *globalContext;
+  
+  std::list<Fonction*>::iterator ite;
+  for(ite=fonctions.begin();ite!=fonctions.end();ite++) {
+      
+      fonctionMap.insert ( std::pair<std::string,Fonction *>((*ite)->getNom(),(*ite)) );
+      fctStack.push_back((*ite)->getNom());
+      (*ite)->resoudrePortees(globalContext, &varStack, &variableMap, &fctStack);
+      
+  }
+  
+}
