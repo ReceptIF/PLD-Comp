@@ -1,7 +1,9 @@
 #ifndef PLD_COMP_CFG_H
 #define PLD_COMP_CFG_H
 
-#include "Programme.h"
+#include "../Programme.h"
+#include "../Fonction.h"
+#include "BasicBlock.h"
 #include <map>
 #include <list>
 #include <string>

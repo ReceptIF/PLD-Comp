@@ -1,9 +1,12 @@
 #ifndef PLD_COMP_BASICBLOCK_H
 #define PLD_COMP_BASICBLOCK_H
 
+#include "IRInstr.h"
+#include "../Fonction.h"
 #include <list>
 #include <string>
 
+class CFG;
 class BasicBlock {
 
     public:

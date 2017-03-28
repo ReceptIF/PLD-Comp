@@ -2,6 +2,9 @@
 #define PLD_COMP_IR_IRINSTR_H
 
 #include <string>
+#include <list>
+
+class CFG;
 using namespace std;
 
 class IRInstr {
@@ -16,7 +19,7 @@ protected:
     CFG *cfg;
     int mnemo;
     
-    vector<string> parametres;
+    list<string> parametres;
     // == PARAMETRES ==
     // 3 opérandes : dest, p1, p2
     // MNEMO_CONST : dest, const

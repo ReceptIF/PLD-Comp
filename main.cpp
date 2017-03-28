@@ -5,6 +5,7 @@
 #include "For.h"
 #include "Structure.h"
 #include "StructCond.h"
+#include "IR/CFG.h"
 
 #include "Bison/calc.tab.h"
 extern int yydebug;
@@ -25,7 +26,7 @@ int main(void) {
    ir->mettreEnPlaceIR(prog);
    
    std::cout << "Generation de l'assembleur" << std::endl;
-   std::cout << ir->genererAssembleur(); << std::endl;
+   std::cout << ir->genererAssembleur() << std::endl;
 
    delete prog;
 
