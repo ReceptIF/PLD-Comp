@@ -1,5 +1,10 @@
 #include "Programme.h"
+#include "AppelFonction.h"
+#include "For.h"
+#include "Structure.h"
+#include "StructCond.h"
 
+#include "Bison/calc.tab.h"
 extern int yydebug;
 
 int main(void) {

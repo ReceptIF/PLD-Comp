@@ -17,12 +17,12 @@ ifeq ($(OS),Windows_NT)
 endif
 
  
-SRC = $(wildcard *.cpp)
-OBJS = $(SRC:.c=.o)
+SRC = $(wildcard *.cpp) $(wildcard Bison/*.c)
+OBJS = $(SRC:.cXX=.o)
 
 
-all : $(EXECNAME) 
- 
+all : $(EXECNAME)
+
 $(EXECNAME) : $(OBJS)
 	$(COMPIL) -o $@ $(COMPILFLAGS) $(OPTIMISATIONFLAGS) $^
 %.o : %.c
