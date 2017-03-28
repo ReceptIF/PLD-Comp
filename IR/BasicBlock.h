@@ -1,6 +1,8 @@
 #ifndef PLD_COMP_BASICBLOCK_H
 #define PLD_COMP_BASICBLOCK_H
 
+#include <list>
+
 class BasicBlock {
 
     public:
