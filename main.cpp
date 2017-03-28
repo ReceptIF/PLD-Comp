@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 
 #include "Programme.h"
 #include "AppelFonction.h"
@@ -10,29 +11,40 @@
 #include "Bison/calc.tab.h"
 extern int yydebug;
 
+void writeFile(std::string fileName, std::string ext, std::string content) {
+    cout << ext;
+    std::ofstream file;
+    file.open(fileName + "." + ext);
+    file << content;
+    file.close();
+}
+
 int main(void) {
-   //yydebug = 1;
-   Programme* prog = new Programme();
-   CFG *ir = new CFG();
+    //yydebug = 1;
+    Programme* prog = new Programme();
+    CFG *ir = new CFG();
 
-   std::cout << "Etude lexicale du programme" << std::endl;
-   yyparse(prog);
-   
-   std::cout << "Etude de la portée des variables" << std::endl;
-   prog->resoudrePortees();
-   std::cout << prog->toString() << std::endl;
-   
-   std::cout << "Generation de l'IR" << std::endl;
-   ir->mettreEnPlaceIR(prog);
-   
-   std::cout << "Generation de l'assembleur" << std::endl;
-   std::cout << ir->genererAssembleur() << std::endl;
+    std::cout << "Etude lexicale du programme" << std::endl;
+    yyparse(prog);
 
-   delete prog;
-   delete ir;
+    std::cout << "Etude de la portée des variables" << std::endl;
+    prog->resoudrePortees();
+    std::cout << prog->toString() << std::endl;
 
-   int a;
-   std::cout << "[Fin du programme]" << std::endl;
-   std::cin >> a;
-   return 0;
+    std::cout << "Generation de l'IR" << std::endl;
+    ir->mettreEnPlaceIR(prog);
+
+    std::cout << "Generation de l'assembleur" << std::endl;
+    std::string assembleur = ir->genererAssembleur();
+    std::cout << assembleur << std::endl;
+    writeFile("generatedAss", "s", assembleur);
+
+
+    delete prog;
+    delete ir;
+
+    int a;
+    std::cout << "[Fin du programme]" << std::endl;
+    std::cin >> a;
+    return 0;
 }
