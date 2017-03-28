@@ -16,9 +16,10 @@ public:
     ~Programme();
     
     void AjouteFonction(Fonction* & fonction);
+    std::map <std::string, Fonction *> getFonctions();
+    std::map <std::string, Declaration *> getVariables();
     
     std::string toString();
-    
     void resoudrePortees();
 
 private:

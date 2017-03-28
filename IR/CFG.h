@@ -4,13 +4,15 @@
 #include "Programme.h"
 #include <map>
 #include <list>
+#include <string>
 
 class CFG {
 
 public:
     CFG();
     ~CFG();
-    void genererAssembleur();
+    std::string genererAssembleur();
+    void mettreEnPlaceIR(Programme *prog);
 
 private:
     std::map <std::string,Declaration *> variableMap;

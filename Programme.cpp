@@ -18,6 +18,14 @@ void Programme::AjouteFonction(Fonction* & fonction)
     fonctions.push_back(fonction);
 }
 
+std::map <std::string, Fonction *> Programme::getFonctions() {
+  return this->fonctionMap;
+}
+
+std::map <std::string, Declaration *> Programme::getVariables() {
+  return this->variableMap;
+}
+
 string Programme::toString()
 {
   
