@@ -17,7 +17,7 @@ ifeq ($(OS),Windows_NT)
 endif
 
  
-SRC = $(wildcard *.cpp) $(wildcard Bison/*.c)
+SRC = $(wildcard *.cpp) $(wildcard Bison/*.c) $(wildcard IR/*.cpp)
 OBJS = $(SRC:.cXX=.o)
 
 
