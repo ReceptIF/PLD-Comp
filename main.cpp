@@ -29,6 +29,7 @@ int main(void) {
    std::cout << ir->genererAssembleur() << std::endl;
 
    delete prog;
+   delete ir;
 
    int a;
    std::cout << "[Fin du programme]" << std::endl;
