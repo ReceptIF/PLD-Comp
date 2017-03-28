@@ -1,4 +1,5 @@
 #include "Programme.h"
+#include "Bison/calc.y"
 
 extern int yydebug;
 
