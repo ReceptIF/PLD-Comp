@@ -20,9 +20,11 @@ public:
     Bloc();
     ~Bloc();
     void AjouteInstruction(Instruction* instruction);
+    std::list<Instruction *> getInstructions();
     std::string toString();
     
     void resoudrePortees(int *globalContext, std::list<std::string> *varStack, std::map<std::string,Declaration *> *varMap, std::list<std::string> *fctStack);
+    void completeSymboleMap(std::map<std::string,Declaration *> *map);
 
 private:
     std::list <Instruction*> instructions;

@@ -7,6 +7,20 @@ CFG::CFG(Fonction *fct, IR *ir)
   ast = fct;
   this->ir = ir;
   
+  // Ajout des paramètres dans les variables
+  std::list<Declaration *> params = ast->getParametres();
+  std::list<Declaration *>::iterator i = params.begin() ;
+  while ( i != params.end() ) {
+        Declaration *d = (*i);
+        IRVar var(d->getType(), d->getNomVariable(), 0);
+        this->addVariable(var);
+        i++;
+  }
+  
+  // Création des blocs
+  BasicBlock *b = new BasicBlock(fct->getBloc(), this, fct->getNom()+"_bp");
+  this->addBB(b);
+  
 }
 
 CFG::~CFG()
@@ -18,12 +32,47 @@ void CFG::addBB(BasicBlock *bb) {
   this->basicBlocks.push_back(bb);
 }
 
+void CFG::addVariable(IRVar var) {
+  
+    variableMap.insert(pair<string,IRVar> (var.getName(), var));
+  
+}
+
+int CFG::giveOffsets() {
+    int offset = -8;
+    int totalSize = 0;
+    
+    std::map<std::string,IRVar>::iterator i = variableMap.begin() ;
+    while ( i != variableMap.end() ) {
+        i->second.setOffset(offset);
+        
+        switch(i->second.getType()) {
+          case CHAR: offset -= 8; totalSize += 8; break;
+          case INT32: offset -= 8; totalSize += 8; break;
+          case INT64: offset -= 8; totalSize += 8; break;
+        }
+        
+        i++;
+    }
+    
+    return totalSize;
+    
+}
+
 std::string CFG::genererAssembleur() {
+  
+  int stackSize = this->giveOffsets();
+  //cout << "Size " << stackSize << endl;
   
   std::string ass;
   ass += this->ast->getNom()+":\r\n";
   ass += "\r\n";
-  ass += "    retq\r\n";
+  ass += "    pushq   %rbp \r\n";
+  ass += "    movq    % rsp, %rbp \r\n";
+  ass += "    subq    $"+to_string(stackSize+8)+", %rsp \r\n";
+  ass += "\r\n";
+  ass += "    leave\r\n";
+  ass += "    ret\r\n";
   ass += "\r\n";
   
   return ass;

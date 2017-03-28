@@ -38,6 +38,10 @@ void Bloc::AjouteInstruction(Instruction* instruction)
 {
     instructions.push_back(instruction);
 }
+    
+std::list<Instruction *> Bloc::getInstructions() {
+  return instructions;
+}
 
 void Bloc::resoudrePortees(int *globalContext, std::list<std::string> *varStack, std::map<std::string,Declaration *> *varMap, std::list<std::string> *fctStack) {
 

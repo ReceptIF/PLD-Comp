@@ -3,6 +3,7 @@
 
 #include "IRInstr.h"
 #include "../Fonction.h"
+#include "IRVar.h"
 #include <list>
 #include <string>
 
@@ -11,7 +12,7 @@ class BasicBlock {
 
     public:
         BasicBlock();
-        BasicBlock(Fonction *fct);
+        BasicBlock(Bloc *blc, CFG *cfg, std::string aLabel);
         ~BasicBlock();
 
         std::string genererAssembleur();

@@ -3,7 +3,9 @@
 
 #include "../Programme.h"
 #include "../Fonction.h"
+#include "../Enum.h"
 #include "BasicBlock.h"
+#include "IRVar.h"
 #include <map>
 #include <list>
 #include <string>
@@ -16,9 +18,11 @@ public:
     ~CFG();
     std::string genererAssembleur();
     void addBB(BasicBlock *bb);
+    void addVariable(IRVar var);
+    int giveOffsets();
 
 private:
-    std::map <std::string,Declaration *> variableMap;
+    std::map <std::string,IRVar> variableMap;
     std::list<BasicBlock*> basicBlocks;
     Fonction *ast;
     IR *ir;
