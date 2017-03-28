@@ -1,15 +1,23 @@
-#include <iostream>
-
 #include "Programme.h"
 
-using namespace std;
+extern int yydebug;
 
-int main() {
-	Programme* p = new Programme();
-	
-	cout << "Wololo" << endl;
+int main(void) {
+   //yydebug = 1;
+   Programme* prog = new Programme();
 
-	delete p;
-    return 0;
+   std::cout << "Etude lexicale du programme" << std::endl;
+   yyparse(prog);
+   
+   std::cout << "Etude de la portée des variables" << std::endl;
+   prog->resoudrePortees();
+   
+   std::cout << prog->toString() << std::endl;
+
+   delete prog;
+
+   int a;
+   std::cout << "[Fin du programme]" << std::endl;
+   std::cin >> a;
+   return 0;
 }
-

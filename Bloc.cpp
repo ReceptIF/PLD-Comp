@@ -3,6 +3,7 @@
 #include "While.h"
 #include "For.h"
 #include "StructCond.h"
+#include "Return.h"
 
 using namespace std;
 
@@ -57,7 +58,7 @@ void Bloc::resoudrePortees(int *globalContext, std::list<std::string> *varStack,
         varStack->push_back(varName);
         stackAdding++;
         
-      } else if (dynamic_cast<ExpressionBinaire *>(*i) || dynamic_cast<ExpressionUnaire *>(*i) || dynamic_cast<ExpressionConstante *>(*i) || dynamic_cast<ExpressionVariable *>(*i) || dynamic_cast<AppelFonction *>(*i)) {
+      } else if (dynamic_cast<Expression *>(*i) || dynamic_cast<ExpressionBinaire *>(*i) || dynamic_cast<ExpressionUnaire *>(*i) || dynamic_cast<ExpressionConstante *>(*i) || dynamic_cast<ExpressionVariable *>(*i) || dynamic_cast<AppelFonction *>(*i)) {
         
         Expression *e = (Expression *)*i;
         
@@ -94,6 +95,11 @@ void Bloc::resoudrePortees(int *globalContext, std::list<std::string> *varStack,
         }
         
         s->getElse()->resoudrePortees(globalContext,varStack,varMap,fctStack);
+        
+      } else if (dynamic_cast<Return *>(*i)) {
+        
+        Return *r = (Return *)*i;
+        r->getExpression()->resoudrePortees(varStack,varMap,fctStack);
         
       }
       

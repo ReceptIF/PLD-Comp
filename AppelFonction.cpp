@@ -59,7 +59,13 @@ void AppelFonction::resoudrePortees(std::list<std::string> *varStack, std::map<s
   if(fctExist == 1) {
     Fonction *fct;
     
-    // TODO Check Args
+     std::list<Expression *>::iterator i = this->parametres.begin() ;
+     while ( i != this->parametres.end() ) {
+          (*i)->resoudrePortees(varStack,varMap,fctStack);
+          i++;
+      }
+    
+    // TODO: Check Args
   }
   else
   {

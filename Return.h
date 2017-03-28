@@ -13,6 +13,7 @@ public:
     Return(Expression *e):expression(e) {};
     ~Return();
     std::string toString();
+    Expression *getExpression();
 
 private:
     Expression *expression;

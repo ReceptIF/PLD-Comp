@@ -20,7 +20,7 @@ public:
     void setParametres(std::list<Expression *> *list);
     void typage();
     void resoudrePortees(std::list<std::string> *varStack, std::map<std::string,Declaration *> *varMap, std::list<std::string> *fctStack);
-
+    
 private:
 	std::string nomFonction;
   std::list<Expression *> parametres;

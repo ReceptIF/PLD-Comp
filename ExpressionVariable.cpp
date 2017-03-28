@@ -3,11 +3,13 @@
 ExpressionVariable::ExpressionVariable(std::string nomVariable)
 {
   this->variable = new VariableSimple(nomVariable);
+  this->type = INT64;
 }
 
 ExpressionVariable::ExpressionVariable(std::string nomVariable, Expression *e)
 {
   this->variable = new VariableTableau(nomVariable,e);
+  this->type = INT64;
 }
 
 ExpressionVariable::~ExpressionVariable()
@@ -17,8 +19,7 @@ ExpressionVariable::~ExpressionVariable()
 
 void ExpressionVariable::typage() {
   
-  // TODO BUT NEED TO DO THE PORTEE
-  this->type = INT32;
+  // La portée doit avoir été fait au préalable pour réaliser le typage
   
 }
 
@@ -48,6 +49,10 @@ void ExpressionVariable::resoudrePortees(std::list<std::string> *varStack, std::
         if(stackName == name) {
           finded = 1;
           this->variable->setNom(*i);
+          std::map<std::string, Declaration *>::iterator varDec = varMap->find(*i);
+          if(varDec != varMap->end()) {
+            this->type = varDec->second->getType();
+          }
         }
         
         i++;
