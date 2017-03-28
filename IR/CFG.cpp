@@ -1,9 +1,12 @@
 #include "CFG.h"
 using namespace std;
 
-CFG::CFG()
+CFG::CFG(Fonction *fct, IR *ir)
 {
-
+  
+  ast = fct;
+  this->ir = ir;
+  
 }
 
 CFG::~CFG()
@@ -18,34 +21,11 @@ void CFG::addBB(BasicBlock *bb) {
 std::string CFG::genererAssembleur() {
   
   std::string ass;
-  ass += ".text                       # section declaration\r\n";
-  ass += ".global main                # entry point\r\n";
+  ass += this->ast->getNom()+":\r\n";
+  ass += "\r\n";
+  ass += "    retq\r\n";
   ass += "\r\n";
   
-  std::list<BasicBlock*>::iterator ite;
-  for(ite=basicBlocks.begin();ite!=basicBlocks.end();ite++) {
-      
-      ass += (*ite)->genererAssembleur();
-      
-  }
-  
   return ass;
-  
-}
-
-void CFG::mettreEnPlaceIR(Programme *prog) {
-  
-  ast = prog;
-  variableMap = ast->getVariables();
-  fonctionMap = ast->getFonctions();
-  
-  // Generation des BB de fonctions
-  map<std::string,Fonction *>::iterator fct;
-  
-  for(fct = fonctionMap.begin() ; fct!=fonctionMap.end() ; fct++)
-  {
-      BasicBlock *bf = new BasicBlock(fct->second);
-      this->addBB(bf);
-  }
   
 }

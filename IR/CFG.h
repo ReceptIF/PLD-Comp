@@ -8,20 +8,20 @@
 #include <list>
 #include <string>
 
+class IR;
 class CFG {
 
 public:
-    CFG();
+    CFG(Fonction *fonction, IR *ir);
     ~CFG();
     std::string genererAssembleur();
     void addBB(BasicBlock *bb);
-    void mettreEnPlaceIR(Programme *prog);
 
 private:
     std::map <std::string,Declaration *> variableMap;
-    std::map <std::string,Fonction *> fonctionMap;
     std::list<BasicBlock*> basicBlocks;
-    Programme *ast;
+    Fonction *ast;
+    IR *ir;
 
 };
 
