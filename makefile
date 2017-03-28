@@ -1,23 +1,35 @@
-ReceptComp.exe: main.o Programme.o Fonction.o ExpressionBinaire.o
-	g++ -o ReceptComp.exe main.o Programme.o Expression.o Fonction.o
+COMPIL = g++
+EXECNAME = ReceptifCalc_UNIX.exe
+COMPILFLAGS = -std=c++1y
+OPTIMISATIONFLAGS = -O1
+DELETECMD = rm
 
-main.o: main.cpp
-	g++ -c main.cpp
+BISONCMD = bison
+FLEXCMD = flex
 
-Programme.o: Programme.cpp Programme.h Fonction.h
-	g++ -c Programme.cpp
+ifeq ($(OS),Windows_NT)
+    #Windows stuff
+    EXECNAME = ReceptifCalc_WIN.exe
+    DELETECMD = del /Q
+    BISONCMD = win_bison
+	FLEXCMD = win_flex
+	COMPILFLAGS = -std=gnu++1z -DGTEST_OS_CYGWIN=1
+endif
 
-Fonction.o: Fonction.cpp Fonction.h
-	g++ -c Fonction.cpp
+ 
+SRC = $(wildcard *.cpp)
+OBJS = $(SRC:.c=.o)
 
-Instruction.o: Instruction.cpp Instruction.h
-	g++ -c Instruction.cpp
 
-Expression.o: Expression.cpp Expression.h Instruction.h
-	g++ -c Expression.cpp
+all : $(EXECNAME) 
+ 
+$(EXECNAME) : $(OBJS)
+	$(COMPIL) -o $@ $(COMPILFLAGS) $(OPTIMISATIONFLAGS) $^
+%.o : %.c
+	$(COMPIL)  -o $@ $(COMPILFLAGS) $(OPTIMISATIONFLAGS) -c $<
 
-ExpressionBinaire.o: ExpressionBinaire.cpp ExpressionBinaire.h Expression.h
-	g++ -c ExpressionBinaire.cpp
 
+
+.PHONY: clean
 clean:
-	rm -f *.o *.exe
+	$(DELETECMD) *.o *.exe
