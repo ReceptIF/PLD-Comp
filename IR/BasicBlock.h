@@ -14,7 +14,7 @@ class BasicBlock {
         BasicBlock(Fonction *fct);
         ~BasicBlock();
 
-        void genererAssembleur();
+        std::string genererAssembleur();
 
     private:
         std::list<IRInstr*> irInstrList;

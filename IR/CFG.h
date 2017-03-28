@@ -14,6 +14,7 @@ public:
     CFG();
     ~CFG();
     std::string genererAssembleur();
+    void addBB(BasicBlock *bb);
     void mettreEnPlaceIR(Programme *prog);
 
 private:

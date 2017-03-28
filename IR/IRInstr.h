@@ -13,7 +13,7 @@ public:
     IRInstr();
     ~IRInstr();
     
-    void genererAssembleur();
+    std::string genererAssembleur();
     
 protected:
     CFG *cfg;
