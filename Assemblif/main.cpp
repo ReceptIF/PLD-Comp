@@ -4,11 +4,13 @@
 
 using namespace std;
 
-int main( int argc, char* argv[] )
+int main(int argc, char* argv[])
 {
-    if(argc != 3)
+    if((argc != 3 && argc !=4) || (string)argv[1] == "-h")
     {
         cout << "Usage : Assemblif.exe input.s outputName" << endl;
+        cout << "Optional arguments :" << endl;
+        cout << "-O[1,2,3] : Tell GCC to optimize" << endl;
         return 1;
     }
     string inputName = argv[1];
@@ -22,6 +24,8 @@ int main( int argc, char* argv[] )
 
     //g++
     string gCommand = "gcc "+ inputNameWithOextension + " -o "+ outputName;
+    if(argc == 4)
+        gCommand = gCommand + ' ' +argv[3];
     cout << "Running command " << gCommand << endl;
     system(gCommand.c_str());
     return 0;

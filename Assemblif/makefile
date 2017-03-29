@@ -7,7 +7,7 @@ ifeq ($(OS),Windows_NT)
 endif
 
 all : 
-	g++ -Wall main.cpp -o $(OUTPUTNAME)
+	g++ -Wall main.cpp -o $(OUTPUTNAME) -O3
 
 clean :
 	$(DELETECMD) Assemblif.exe
