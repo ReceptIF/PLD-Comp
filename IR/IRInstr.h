@@ -6,6 +6,7 @@
 #include <iostream>
 #include <vector>
 #include "IREnum.h"
+#include "IRVar.h"
 
 class CFG;
 using namespace std;
@@ -29,6 +30,7 @@ protected:
     // MNEMO_CALL  : dest, label, p1, p2, ... , pn
     // MNEMO_LECT  : dest, source
     // MNEMO_ECR   : dest, source
+    
 };
 
 #endif //PLD_COMP_IR_IRINSTR_H

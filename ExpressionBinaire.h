@@ -4,6 +4,7 @@
 #include "Expression.h"
 
 class Expression;
+class BasicBlock;
 class ExpressionBinaire : public Expression {
 
 public:
@@ -15,12 +16,13 @@ public:
     Expression *getExpression1();
     Expression *getExpression2();
     int getSymbole();
-    void typage();
     
     std::string toString();
     std::string toSmallString();
     
+    void typage();
     void resoudrePortees(std::list<std::string> *varStack, std::map<std::string,Declaration *> *varMap, std::list<std::string> *fctStack);
+    void getIR(BasicBlock *bb);
 
 private:
 	Expression* expression1;

@@ -1,4 +1,8 @@
 #include "ExpressionBinaire.h"
+#include "ExpressionVariable.h"
+#include "IR/IRVar.h"
+#include "IR/BasicBlock.h"
+#include "IR/CFG.h"
 
 ExpressionBinaire::ExpressionBinaire(Expression *e1, Expression *e2, int symb)
 {
@@ -108,4 +112,44 @@ std::string ExpressionBinaire::toSmallString() {
 void ExpressionBinaire::resoudrePortees(std::list<std::string> *varStack, std::map<std::string,Declaration *> *varMap, std::list<std::string> *fctStack) {
   expression1->resoudrePortees(varStack, varMap, fctStack);
   expression2->resoudrePortees(varStack, varMap, fctStack);
+}
+
+void ExpressionBinaire::getIR(BasicBlock *bb) {
+  
+  if(this->symbole == EGAL) {
+    if(dynamic_cast<ExpressionVariable *>(this->expression1)) {
+      // Pour l'instant on gère que les affectations 
+      // variable = constante & variable = variable
+      
+      ExpressionVariable *lvar = (ExpressionVariable *) this->expression1;
+      
+      if(dynamic_cast<ExpressionConstante *>(this->expression2)) {
+        ExpressionConstante *rval = (ExpressionConstante *) this->expression2;
+        
+        list<std::string> params;
+        params.push_back("@"+lvar->getVariable()->getNom());
+        params.push_back("$"+to_string(rval->getValeur()));
+        IRInstr *instr = new IRInstr(bb->getCFG(),MNEMO_CONST,params);
+        bb->addInstr(instr);
+        
+      }else if(dynamic_cast<ExpressionVariable *>(this->expression2)) {
+        ExpressionVariable *rvar = (ExpressionVariable *) this->expression2;
+        
+        list<std::string> params;
+        params.push_back("%rax");
+        params.push_back("@"+rvar->getVariable()->getNom());
+        IRInstr *instr = new IRInstr(bb->getCFG(),MNEMO_ECR,params);
+        bb->addInstr(instr);
+        
+        list<std::string> params2;
+        params2.push_back("@"+lvar->getVariable()->getNom());
+        params2.push_back("%rax");
+        IRInstr *instr2 = new IRInstr(bb->getCFG(),MNEMO_ECR,params2);
+        bb->addInstr(instr2);
+        
+      }
+      
+    } else { std::cerr << "[ERROR] La partie gauche d'une affectation n'est pas une variable" << std::endl; }
+  }
+  
 }

@@ -16,3 +16,7 @@ void IRVar::setOffset(int off) {
 int IRVar::getType() {
   return this->type;
 }
+
+int IRVar::getOffset() {
+  return this->offset;
+}

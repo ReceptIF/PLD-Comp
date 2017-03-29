@@ -90,8 +90,8 @@ void AppelFonction::getIR(BasicBlock *bb) {
               constVal += "";
               
               std::list<std::string> params;
-              params.push_back(constVal);
               params.push_back(edi);
+              params.push_back(constVal);
               
               IRInstr *instr = new IRInstr(bb->getCFG(),MNEMO_CONST,params);
               bb->addInstr(instr);

@@ -20,6 +20,7 @@ public:
     void addBB(BasicBlock *bb);
     void addVariable(IRVar var);
     int giveOffsets();
+    IRVar *getVariable(std::string name);
 
 private:
     std::map <std::string,IRVar> variableMap;

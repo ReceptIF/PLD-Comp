@@ -38,6 +38,14 @@ void CFG::addVariable(IRVar var) {
   
 }
 
+IRVar *CFG::getVariable(std::string nom) {
+    
+    std::map<std::string,IRVar>::iterator varIte;
+    varIte = variableMap.find(nom);
+    return &(varIte->second);
+  
+}
+
 int CFG::giveOffsets() {
     int offset = -8;
     int totalSize = 0;

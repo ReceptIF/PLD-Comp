@@ -13,6 +13,7 @@ public:
     std::string getName();
     void setOffset(int off);
     int getType();
+    int getOffset();
     
 protected:
     int type;

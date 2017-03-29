@@ -28,6 +28,11 @@ BasicBlock::BasicBlock(Bloc *blc, CFG *cfg, std::string aLabel) {
         AppelFonction *a = (AppelFonction *)*i;
         a->getIR(this);
         
+      } else if (dynamic_cast<ExpressionBinaire *>(*i)) {
+        
+        ExpressionBinaire *e = (ExpressionBinaire *)*i;
+        e->getIR(this);
+        
       }
       
       i++;

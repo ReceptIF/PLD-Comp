@@ -17,6 +17,10 @@ ExpressionVariable::~ExpressionVariable()
   delete this->variable;
 }
 
+Variable *ExpressionVariable::getVariable() {
+  return variable;
+}
+
 void ExpressionVariable::typage() {
   
   // La portée doit avoir été fait au préalable pour réaliser le typage
