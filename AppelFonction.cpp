@@ -85,7 +85,6 @@ void AppelFonction::getIR(BasicBlock *bb) {
             
               ExpressionConstante *c = (ExpressionConstante *)*i;
               std::string edi = "%edi";
-              //char ch = itoa();
               std::string constVal = "$"+to_string(c->getValeur());
               constVal += "";
               
@@ -94,6 +93,20 @@ void AppelFonction::getIR(BasicBlock *bb) {
               params.push_back(constVal);
               
               IRInstr *instr = new IRInstr(bb->getCFG(),MNEMO_CONST,params);
+              bb->addInstr(instr);
+              
+          }else if (dynamic_cast<ExpressionVariable *>(*i)) {
+            
+              ExpressionVariable *var = (ExpressionVariable *)*i;
+              std::string edi = "%edi";
+              
+              std::cout << "CHIBRE " << "@"+var->getVariable()->getNom() << std::endl;
+              
+              std::list<std::string> params;
+              params.push_back(edi);
+              params.push_back("@"+var->getVariable()->getNom());
+              
+              IRInstr *instr = new IRInstr(bb->getCFG(),MNEMO_ECR,params);
               bb->addInstr(instr);
               
           }
