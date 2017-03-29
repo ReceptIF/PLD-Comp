@@ -3,6 +3,9 @@
 
 #include <string>
 #include <list>
+#include <iostream>
+#include <vector>
+#include "IREnum.h"
 
 class CFG;
 using namespace std;
@@ -10,7 +13,7 @@ using namespace std;
 class IRInstr {
 
 public:
-    IRInstr();
+    IRInstr(CFG *cfg, int mnemonique, list<string> parametres);
     ~IRInstr();
     
     std::string genererAssembleur();
@@ -18,8 +21,8 @@ public:
 protected:
     CFG *cfg;
     int mnemo;
-    
     list<string> parametres;
+    
     // == PARAMETRES ==
     // 3 opérandes : dest, p1, p2
     // MNEMO_CONST : dest, const

@@ -68,8 +68,16 @@ std::string CFG::genererAssembleur() {
   ass += this->ast->getNom()+":\r\n";
   ass += "\r\n";
   ass += "    pushq   %rbp \r\n";
-  ass += "    movq    % rsp, %rbp \r\n";
+  ass += "    movq    %rsp, %rbp \r\n";
   ass += "    subq    $"+to_string(stackSize+8)+", %rsp \r\n";
+  ass += "\r\n";
+  
+  std::list<BasicBlock *>::iterator i = basicBlocks.begin() ;
+  while ( i != basicBlocks.end() ) {
+        ass += (*i)->genererAssembleur();
+        i++;
+  }
+  
   ass += "\r\n";
   ass += "    leave\r\n";
   ass += "    ret\r\n";

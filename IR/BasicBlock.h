@@ -16,6 +16,8 @@ class BasicBlock {
         ~BasicBlock();
 
         std::string genererAssembleur();
+        CFG *getCFG();
+        void addInstr(IRInstr *i);
 
     private:
         std::list<IRInstr*> irInstrList;

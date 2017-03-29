@@ -1,4 +1,5 @@
 #include "AppelFonction.h"
+#include <stdlib.h>
 
 AppelFonction::AppelFonction(std::string nom)
 {
@@ -71,4 +72,42 @@ void AppelFonction::resoudrePortees(std::list<std::string> *varStack, std::map<s
   {
     std::cerr << "Erreur, la fonction appellée '"+this->nomFonction+"' n'existe pas dans ce contexte" << std::endl;
   }
+}
+
+void AppelFonction::getIR(BasicBlock *bb) {
+  
+    // Gestion des paramètres
+    std::list<Expression *>::iterator i = this->parametres.begin() ;
+    while ( i != this->parametres.end() ) {
+      
+          // Temporaire
+          if (dynamic_cast<ExpressionConstante *>(*i)) {
+            
+              ExpressionConstante *c = (ExpressionConstante *)*i;
+              std::string edi = "%edi";
+              //char ch = itoa();
+              std::string constVal = "$"+to_string(c->getValeur());
+              constVal += "";
+              
+              std::list<std::string> params;
+              params.push_back(constVal);
+              params.push_back(edi);
+              
+              IRInstr *instr = new IRInstr(bb->getCFG(),MNEMO_CONST,params);
+              bb->addInstr(instr);
+              
+          }
+          i++;
+          
+    }
+    
+    // Appel à la fct
+    if(nomFonction == "putchar") {
+        list<std::string> params;
+        params.push_back("nop");
+        params.push_back(nomFonction);
+        IRInstr *instr = new IRInstr(bb->getCFG(),MNEMO_CALL,params);
+        bb->addInstr(instr);
+    }
+  
 }

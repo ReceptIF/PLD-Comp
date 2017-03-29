@@ -8,6 +8,9 @@
 #include "Expression.h"
 #include "Declaration.h"
 #include "Fonction.h"
+#include "IR/BasicBlock.h"
+#include "IR/IRInstr.h"
+#include "IR/IREnum.h"
 
 class Expression;
 class AppelFonction : public Expression {
@@ -20,6 +23,7 @@ public:
     void setParametres(std::list<Expression *> *list);
     void typage();
     void resoudrePortees(std::list<std::string> *varStack, std::map<std::string,Declaration *> *varMap, std::list<std::string> *fctStack);
+    void getIR(BasicBlock *bb);
     
 private:
 	std::string nomFonction;

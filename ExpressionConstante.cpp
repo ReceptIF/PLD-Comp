@@ -34,3 +34,7 @@ std::string ExpressionConstante::toSmallString() {
   }
   return print;
 }
+
+int ExpressionConstante::getValeur() {
+  return valeur;
+}

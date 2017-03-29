@@ -84,8 +84,6 @@ incl       ^\#.*\>
 ")"          { return PCLOSE; }
 "["          { return COPEN; }
 "]"          { return CCLOSE; }
-"putchar"    { return PUTCHAR; }
-"getchar"    { return GETCHAR; }
 "return"     { return RETURN; }
 "break"      { return BREAK; }
 
