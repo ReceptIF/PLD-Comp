@@ -21,6 +21,7 @@ public:
     std::string toSmallString();
     
     void resoudrePortees(std::list<std::string> *varStack, std::map<std::string,Declaration *> *varMap, std::list<std::string> *fctStack);
+    IRVar *getIR(BasicBlock *bb);
 
 private:
 	Variable* variable;

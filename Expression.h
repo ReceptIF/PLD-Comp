@@ -6,8 +6,10 @@
 #include <string>
 #include <map>
 #include <list>
+#include "IR/IRVar.h"
 
 class Instruction;
+class BasicBlock;
 class Expression : public Instruction {
 
 public:
@@ -20,6 +22,7 @@ public:
     std::string stringifySymbole(int symb);
     
     virtual void resoudrePortees(std::list<std::string> *varStack, std::map<std::string,Declaration *> *varMap, std::list<std::string> *fctStack) = 0;
+    virtual IRVar *getIR(BasicBlock *bb) =0;
 
 protected:
     int type;

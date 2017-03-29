@@ -22,7 +22,7 @@ public:
     
     void typage();
     void resoudrePortees(std::list<std::string> *varStack, std::map<std::string,Declaration *> *varMap, std::list<std::string> *fctStack);
-    void getIR(BasicBlock *bb);
+    IRVar *getIR(BasicBlock *bb);
 
 private:
 	Expression* expression1;

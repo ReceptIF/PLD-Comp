@@ -6,6 +6,7 @@ CFG::CFG(Fonction *fct, IR *ir)
   
   ast = fct;
   this->ir = ir;
+  nbTemp = 0;
   
   // Ajout des paramètres dans les variables
   std::list<Declaration *> params = ast->getParametres();
@@ -36,6 +37,16 @@ void CFG::addVariable(IRVar var) {
   
     variableMap.insert(pair<string,IRVar> (var.getName(), var));
   
+}
+
+int CFG::addTempVar(int type) {
+  
+    int varNumber = ++nbTemp;
+    std::string varName = "r"+to_string(varNumber);
+    IRVar *var = new IRVar(type,varName);
+    variableMap.insert(pair<string, IRVar> (var->getName(), *var));
+    
+    return varNumber;
 }
 
 IRVar *CFG::getVariable(std::string nom) {

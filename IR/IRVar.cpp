@@ -20,3 +20,7 @@ int IRVar::getType() {
 int IRVar::getOffset() {
   return this->offset;
 }
+
+int IRVar::isTmp() {
+  return this->tmp;
+}

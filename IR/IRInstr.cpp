@@ -22,29 +22,22 @@ std::string IRInstr::genererAssembleur() {
   int nbParams = parametres.size();
   std::string p0 = "";
   std::string p1 = "";
+  std::string p2 = "";
   
   std::list<std::string>::iterator i = parametres.begin();
   if(nbParams >= 1) { p0 = *i; i++; }
   if(nbParams >= 2) { p1 = *i; i++; }
+  if(nbParams >= 3) { p2 = *i; i++; }
     
-  if(p0[0] == '@') {
-    std::string nomVar = p0.substr(1);
-    IRVar *var = cfg->getVariable(nomVar);
-    int varOffset = var->getOffset();
-    p0 = to_string(varOffset)+"(%rbp)";
-  }
-    
-  if(p1[0] == '@') {
-    std::string nomVar = p1.substr(1);
-    IRVar *var = cfg->getVariable(nomVar);
-    int varOffset = var->getOffset();
-    p1 = to_string(varOffset)+"(%rbp)";
-  }
+  p0 = transParam(p0);
+  p1 = transParam(p1);
+  p2 = transParam(p2);
   
   switch(mnemo) {
     case MNEMO_CONST :
       ass += "    movl   "+p1+", "+p0+"\r\n";
       break;
+      
     case MNEMO_ECR :
       ass += "    mov    "+p1+", "+p0+"\r\n";
       break;
@@ -53,7 +46,45 @@ std::string IRInstr::genererAssembleur() {
       ass += "    call   "+p1+"\r\n";
       break;
       
+    case MNEMO_PLUS :
+      ass += "    mov    "+p2+", %r15\r\n";
+      ass += "    add    "+p1+", "+p2+"\r\n";
+      ass += "    mov    "+p2+", "+p0+"\r\n";
+      ass += "    mov    %r15, "+p2+"\r\n";
+      break;
+      
+    case MNEMO_MOINS :
+      ass += "    mov    "+p2+", %r15\r\n";
+      ass += "    sub    "+p1+", "+p2+"\r\n";
+      ass += "    mov    "+p2+", "+p0+"\r\n";
+      ass += "    mov    %r15, "+p2+"\r\n";
+      break;
+      
+    case MNEMO_MULT :
+      ass += "    mov    "+p2+", %r15\r\n";
+      ass += "    imul    "+p1+", "+p2+"\r\n";
+      ass += "    mov    "+p2+", "+p0+"\r\n";
+      ass += "    mov    %r15, "+p2+"\r\n";
+      break;
+      
   }
   
   return ass;
+}
+
+std::string IRInstr::transParam(std::string p) {
+  if(p[0] == '@') {
+    
+    std::string nomVar = p.substr(1);
+    IRVar *var = cfg->getVariable(nomVar);
+    int varOffset = var->getOffset();
+    
+    if(var->isTmp()) {
+      p = "!"+nomVar;
+    } else {
+      p = to_string(varOffset)+"(%rbp)";
+    }
+  } 
+  
+  return p;
 }

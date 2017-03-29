@@ -114,7 +114,9 @@ void ExpressionBinaire::resoudrePortees(std::list<std::string> *varStack, std::m
   expression2->resoudrePortees(varStack, varMap, fctStack);
 }
 
-void ExpressionBinaire::getIR(BasicBlock *bb) {
+IRVar *ExpressionBinaire::getIR(BasicBlock *bb) {
+  
+  IRVar *ret = nullptr;
   
   if(this->symbole == EGAL) {
     if(dynamic_cast<ExpressionVariable *>(this->expression1)) {
@@ -150,6 +152,47 @@ void ExpressionBinaire::getIR(BasicBlock *bb) {
       }
       
     } else { std::cerr << "[ERROR] La partie gauche d'une affectation n'est pas une variable" << std::endl; }
+  
+  } else {
+    
+      IRVar *left = this->expression1->getIR(bb);
+      IRVar *right = this->expression2->getIR(bb);
+          
+      int tmpVar = bb->getCFG()->addTempVar(this->type);
+      ret = bb->getCFG()->getVariable("r"+to_string(tmpVar));
+      
+      list<std::string> params;
+      params.push_back("%rdx");
+      params.push_back("@"+left->getName());
+      IRInstr *instr = new IRInstr(bb->getCFG(),MNEMO_ECR,params);
+      bb->addInstr(instr);
+      
+      list<std::string> params2;
+      params2.push_back("%rax");
+      params2.push_back("@"+right->getName());
+      IRInstr *instr2 = new IRInstr(bb->getCFG(),MNEMO_ECR,params2);
+      bb->addInstr(instr2);
+      
+      list<std::string> params3;
+      params3.push_back("@"+ret->getName());
+      params3.push_back("%rax");
+      params3.push_back("%rdx");
+      IRInstr *instr3;
+      
+      switch(this->symbole) {
+        case PLUS:
+          instr3 = new IRInstr(bb->getCFG(),MNEMO_PLUS,params3);
+          break;
+      
+        case MOINS:
+          instr3 = new IRInstr(bb->getCFG(),MNEMO_MOINS,params3);
+          break;
+        
+      }
+       bb->addInstr(instr3);
+    
   }
+  
+  return ret;
   
 }

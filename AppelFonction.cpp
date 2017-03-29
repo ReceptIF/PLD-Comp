@@ -1,4 +1,5 @@
 #include "AppelFonction.h"
+#include "IR/BasicBlock.h"
 #include <stdlib.h>
 
 AppelFonction::AppelFonction(std::string nom)
@@ -74,7 +75,7 @@ void AppelFonction::resoudrePortees(std::list<std::string> *varStack, std::map<s
   }
 }
 
-void AppelFonction::getIR(BasicBlock *bb) {
+IRVar *AppelFonction::getIR(BasicBlock *bb) {
   
     // Gestion des paramètres
     std::list<Expression *>::iterator i = this->parametres.begin() ;
@@ -100,8 +101,6 @@ void AppelFonction::getIR(BasicBlock *bb) {
               ExpressionVariable *var = (ExpressionVariable *)*i;
               std::string edi = "%edi";
               
-              std::cout << "CHIBRE " << "@"+var->getVariable()->getNom() << std::endl;
-              
               std::list<std::string> params;
               params.push_back(edi);
               params.push_back("@"+var->getVariable()->getNom());
@@ -117,10 +116,11 @@ void AppelFonction::getIR(BasicBlock *bb) {
     // Appel à la fct
     if(nomFonction == "putchar") {
         list<std::string> params;
-        params.push_back("nop");
+        params.push_back("unused");
         params.push_back(nomFonction);
         IRInstr *instr = new IRInstr(bb->getCFG(),MNEMO_CALL,params);
         bb->addInstr(instr);
     }
   
+  return nullptr;
 }

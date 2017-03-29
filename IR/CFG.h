@@ -19,6 +19,7 @@ public:
     std::string genererAssembleur();
     void addBB(BasicBlock *bb);
     void addVariable(IRVar var);
+    int addTempVar(int type);
     int giveOffsets();
     IRVar *getVariable(std::string name);
 
@@ -27,6 +28,7 @@ private:
     std::list<BasicBlock*> basicBlocks;
     Fonction *ast;
     IR *ir;
+    int nbTemp;
 
 };
 

@@ -5,7 +5,6 @@ using namespace std;
 
 BasicBlock::BasicBlock()
 {
-
 }
 
 BasicBlock::BasicBlock(Bloc *blc, CFG *cfg, std::string aLabel) {
@@ -31,6 +30,11 @@ BasicBlock::BasicBlock(Bloc *blc, CFG *cfg, std::string aLabel) {
       } else if (dynamic_cast<ExpressionBinaire *>(*i)) {
         
         ExpressionBinaire *e = (ExpressionBinaire *)*i;
+        e->getIR(this);
+        
+      }else if (dynamic_cast<ExpressionConstante *>(*i)) {
+        
+        ExpressionConstante *e = (ExpressionConstante *)*i;
         e->getIR(this);
         
       }

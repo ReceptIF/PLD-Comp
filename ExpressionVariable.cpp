@@ -1,4 +1,6 @@
 #include "ExpressionVariable.h"
+#include "IR/BasicBlock.h"
+#include "IR/CFG.h"
 
 ExpressionVariable::ExpressionVariable(std::string nomVariable)
 {
@@ -66,4 +68,11 @@ void ExpressionVariable::resoudrePortees(std::list<std::string> *varStack, std::
     if(!finded) {
       std::cerr << "La variable '"+name+"' n'existe pas dans ce contexte" << std::endl;
     }
+}
+
+IRVar *ExpressionVariable::getIR(BasicBlock *bb) {
+  
+  IRVar *var = bb->getCFG()->getVariable(this->getVariable()->getNom());
+  return var;
+  
 }

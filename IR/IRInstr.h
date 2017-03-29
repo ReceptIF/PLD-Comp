@@ -24,6 +24,8 @@ protected:
     int mnemo;
     list<string> parametres;
     
+    std::string transParam(std::string p);
+    
     // == PARAMETRES ==
     // 3 opérandes : dest, p1, p2
     // MNEMO_CONST : dest, const
