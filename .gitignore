@@ -11,3 +11,7 @@ Bison/ReceptifCalc.*
 Bison/ReceptifCalc
 Bison/cmake*
 Bison/.id*
+generatedAss.s
+TestsCompl/*
+Assemblif/Assemblif
+EXE
