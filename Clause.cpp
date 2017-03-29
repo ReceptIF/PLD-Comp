@@ -13,7 +13,8 @@ Clause::Clause(Expression *e, Instruction *i)
 
 Clause::~Clause()
 {
-
+  delete expression;
+  delete bloc;
 }
 
 Expression *Clause::getExpression() {

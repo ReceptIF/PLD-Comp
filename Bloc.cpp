@@ -14,6 +14,11 @@ Bloc::Bloc()
 
 Bloc::~Bloc()
 {
+  list<Instruction*>::iterator it;
+  for(it = instructions.begin(); it!=instructions.end(); ++it)
+  {
+    delete *it;
+  }
 }
 
 std::string Bloc::toString() {

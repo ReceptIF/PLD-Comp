@@ -16,7 +16,7 @@ public:
 
 private:
 	Expression *expression;
-  Bloc *bloc;
+  	Bloc *bloc;
 };
 
 #endif //PLD_COMP_CLAUSE_H

@@ -2,7 +2,7 @@
 
 VariableTableau::~VariableTableau()
 {
-
+  delete indice;
 }
 
 std::string VariableTableau::toSmallString() {

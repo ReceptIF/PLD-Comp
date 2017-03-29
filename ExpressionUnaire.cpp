@@ -9,7 +9,7 @@ ExpressionUnaire::ExpressionUnaire(Expression *e, int symb, int pref)
 
 ExpressionUnaire::~ExpressionUnaire()
 {
-
+    delete expression1;
 }
 
 void ExpressionUnaire::setExpression1(Expression* expression)

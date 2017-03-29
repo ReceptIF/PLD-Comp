@@ -1,5 +1,7 @@
 #include "Fonction.h"
 
+#include <list>
+
 Fonction::Fonction(int typeRetour, Bloc *bloc, std::string nom) {
     std::cout << "Creation de la fonction " << nom << std::endl;
     this->setTypeRetour(typeRetour);
@@ -8,7 +10,12 @@ Fonction::Fonction(int typeRetour, Bloc *bloc, std::string nom) {
 }
 
 Fonction::~Fonction() {
-
+    std::list<Declaration*>::iterator it;
+    for(it = parametres.begin(); it!=parametres.end(); ++it)
+    {
+        delete *it;
+    }
+    delete bloc;
 }
 
 void Fonction::setTypeRetour(int typeRetour) {

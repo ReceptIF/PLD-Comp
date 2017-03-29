@@ -10,7 +10,7 @@ Declaration::Declaration(std::string nomVar, int varType, int size)
 
 Declaration::~Declaration()
 {
-
+    delete init;
 }
 
 void Declaration::setNomVariable(std::string nV)

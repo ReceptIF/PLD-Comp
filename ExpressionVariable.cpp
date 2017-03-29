@@ -14,7 +14,7 @@ ExpressionVariable::ExpressionVariable(std::string nomVariable, Expression *e)
 
 ExpressionVariable::~ExpressionVariable()
 {
-  delete this->variable;
+  delete variable;
 }
 
 Variable *ExpressionVariable::getVariable() {
