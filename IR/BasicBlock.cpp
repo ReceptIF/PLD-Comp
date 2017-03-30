@@ -33,6 +33,12 @@ BasicBlock::BasicBlock(Bloc *blc, CFG *cfg, std::string aLabel) {
         e->typage();
         e->getIR(this);
         
+      } else if (dynamic_cast<ExpressionUnaire *>(*i)) {
+        
+        ExpressionUnaire *e = (ExpressionUnaire *)*i;
+        e->typage();
+        e->getIR(this);
+        
       }else if (dynamic_cast<ExpressionConstante *>(*i)) {
         
         ExpressionConstante *e = (ExpressionConstante *)*i;

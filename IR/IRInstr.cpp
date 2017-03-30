@@ -47,10 +47,14 @@ std::string IRInstr::genererAssembleur() {
       break;
       
     case MNEMO_PLUS :
-      ass += "    mov    "+p2+", %r15\r\n";
-      ass += "    add    "+p1+", "+p2+"\r\n";
-      ass += "    mov    "+p2+", "+p0+"\r\n";
-      ass += "    mov    %r15, "+p2+"\r\n";
+      if(p0 != p2) {
+        ass += "    mov    "+p2+", %r15\r\n";
+        ass += "    add    "+p1+", "+p2+"\r\n";
+        ass += "    mov    "+p2+", "+p0+"\r\n";
+        ass += "    mov    %r15, "+p2+"\r\n";
+      } else {
+        ass += "    add    "+p1+", "+p2+"\r\n";
+      }
       break;
       
     case MNEMO_MOINS :

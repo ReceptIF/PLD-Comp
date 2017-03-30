@@ -1,4 +1,8 @@
 #include "ExpressionUnaire.h"
+#include "IR/IRInstr.h"
+#include "IR/BasicBlock.h"
+#include "IR/IRVar.h"
+#include "IR/CFG.h"
 
 ExpressionUnaire::ExpressionUnaire(Expression *e, int symb, int pref)
 {
@@ -72,9 +76,40 @@ void ExpressionUnaire::resoudrePortees(std::list<std::string> *varStack, std::ma
 IRVar *ExpressionUnaire::getIR(BasicBlock *bb) {
   
   IRVar *ret = nullptr;
+  IRVar *ope = this->expression1->getIR(bb);
   
-  if(this->symbole == DPLUS) {
+  if(this->prefixe == 1 && this->symbole == DPLUS) {
     
+      int tmpVar = bb->getCFG()->addTempVar(this->type);
+      IRVar *one = bb->getCFG()->getVariable("!r"+to_string(tmpVar));
+      
+      list<std::string> params;
+      params.push_back("@!r"+to_string(tmpVar));
+      params.push_back("$1");
+      IRInstr *instr = new IRInstr(bb->getCFG(),MNEMO_CONST,params);
+      bb->addInstr(instr);
+      
+      list<std::string> params2;
+      params2.push_back("%rax");
+      params2.push_back("@!r"+to_string(tmpVar));
+      IRInstr *instr2 = new IRInstr(bb->getCFG(),MNEMO_ECR,params2);
+      bb->addInstr(instr2);
+      
+      list<std::string> params3;
+      params3.push_back("@"+ope->getName());
+      params3.push_back("%rax");
+      params3.push_back("@"+ope->getName());
+      IRInstr *instr3;
+      
+      switch(this->symbole) {
+        case DPLUS: 
+          instr3 = new IRInstr(bb->getCFG(),MNEMO_PLUS,params3);
+          break;
+      }
+      bb->addInstr(instr3);
+      
+      ret = ope;
+      
   }
   
   return ret;
