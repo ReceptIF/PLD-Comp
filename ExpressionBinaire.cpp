@@ -169,7 +169,7 @@ IRVar *ExpressionBinaire::getIR(BasicBlock *bb) {
       
     } else { std::cerr << "[ERROR] La partie gauche d'une affectation n'est pas une variable" << std::endl; }
   
-  } else {
+  } else if (this->symbole == PLUS || this->symbole == MOINS || this->symbole == MULT || this->symbole == DIV) {
     
       IRVar *left = this->expression1->getIR(bb);
       IRVar *right = this->expression2->getIR(bb);
@@ -215,6 +215,37 @@ IRVar *ExpressionBinaire::getIR(BasicBlock *bb) {
       }
        bb->addInstr(instr3);
     
+  } else if (this->symbole == PLUSEQ) {
+    
+      IRVar *left = this->expression1->getIR(bb);
+      IRVar *right = this->expression2->getIR(bb);
+      ret = left;
+      
+      list<std::string> params;
+      params.push_back("%rdx");
+      params.push_back("@"+left->getName());
+      IRInstr *instr = new IRInstr(bb->getCFG(),MNEMO_ECR,params);
+      bb->addInstr(instr);
+      
+      list<std::string> params2;
+      params2.push_back("%rax");
+      params2.push_back("@"+right->getName());
+      IRInstr *instr2 = new IRInstr(bb->getCFG(),MNEMO_ECR,params2);
+      bb->addInstr(instr2);
+      
+      list<std::string> params3;
+      params3.push_back("@"+left->getName());
+      params3.push_back("%rax");
+      params3.push_back("%rdx");
+      IRInstr *instr3;
+    
+      switch(this->symbole) {
+        case PLUSEQ:
+          instr3 = new IRInstr(bb->getCFG(),MNEMO_PLUS,params3);
+          break;
+        
+      }
+      bb->addInstr(instr3);
   }
   
   return ret;

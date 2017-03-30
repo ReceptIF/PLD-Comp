@@ -70,5 +70,12 @@ void ExpressionUnaire::resoudrePortees(std::list<std::string> *varStack, std::ma
 }
 
 IRVar *ExpressionUnaire::getIR(BasicBlock *bb) {
-  return nullptr;
+  
+  IRVar *ret = nullptr;
+  
+  if(this->symbole == EGAL) {
+    
+  }
+  
+  return ret;
 }
