@@ -78,7 +78,7 @@ IRVar *ExpressionUnaire::getIR(BasicBlock *bb) {
   IRVar *ret = nullptr;
   IRVar *ope = this->expression1->getIR(bb);
   
-  if(this->prefixe == 1 && this->symbole == DPLUS) {
+  if(this->prefixe == 1 && (this->symbole == DPLUS || this->symbole == DMOINS)) {
       // INCREMENTATIONS PREFIXEES
       
       int tmpVar = bb->getCFG()->addTempVar(this->type);
@@ -106,12 +106,16 @@ IRVar *ExpressionUnaire::getIR(BasicBlock *bb) {
         case DPLUS: 
           instr3 = new IRInstr(bb->getCFG(),MNEMO_PLUS,params3);
           break;
+          
+        case DMOINS: 
+          instr3 = new IRInstr(bb->getCFG(),MNEMO_MOINS,params3);
+          break;
       }
       bb->addInstr(instr3);
       
       ret = ope;
       
-  } else if(this->prefixe == 0 && this->symbole == DPLUS) {
+  } else if(this->prefixe == 0 && (this->symbole == DPLUS || this->symbole == DMOINS)) {
     // INCREMENTATION SUFFIXEE
     
     int tmpVar = bb->getCFG()->addTempVar(this->type);
@@ -153,6 +157,10 @@ IRVar *ExpressionUnaire::getIR(BasicBlock *bb) {
     switch(this->symbole) {
       case DPLUS: 
         instr5 = new IRInstr(bb->getCFG(),MNEMO_PLUS,params5);
+        break;
+        
+      case DMOINS: 
+        instr5 = new IRInstr(bb->getCFG(),MNEMO_MOINS,params5);
         break;
     }
     bb->addInstr(instr5);
