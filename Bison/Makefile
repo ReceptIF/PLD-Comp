@@ -19,7 +19,7 @@ endif
 
 default:
 	$(FLEXCMD) calc.l
-	$(BISONCMD) -v -d --defines=calc.tab.h calc.y
+	$(BISONCMD) -v -d -t --defines=calc.tab.h calc.y
 #	$(COMPIL) -g -o  $(EXECNAME) -DYYDEBUG=1 $(INCLLIST) *.c $(COMPILFLAGS) $(OPTIMISATIONFLAGS)
 
 

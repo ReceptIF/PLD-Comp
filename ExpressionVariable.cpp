@@ -44,7 +44,7 @@ void ExpressionVariable::resoudrePortees(std::list<std::string> *varStack, std::
     
     std::list<std::string> localStack = *varStack;
     localStack.reverse();
-    
+    std::cout << "PRE WHILE COUT" << endl;
     std::list<std::string>::iterator i = localStack.begin() ;
     while ( i != localStack.end() && finded == 0 ) {
       
@@ -62,8 +62,9 @@ void ExpressionVariable::resoudrePortees(std::list<std::string> *varStack, std::
         }
         
         i++;
-        
+        std::cout << "WHILE COUT" << endl;
     }
+    std::cout << "BITE COUT" << endl;
     
     std::cout << "GROSCHIBRE " << name << " finded ? " << to_string(finded) << std::endl;
     

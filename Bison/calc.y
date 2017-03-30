@@ -216,4 +216,5 @@ type : CHAR  { $$ = CHAR; }
 void yyerror(Programme* zz, const char * s)
 {
 	std::cout << "[ERREUR] Programme : " << s << std::endl << zz->toString() << std::endl;
+	exit(1);
 }
