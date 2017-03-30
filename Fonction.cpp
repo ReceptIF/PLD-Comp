@@ -117,11 +117,11 @@ void Fonction::resoudrePortees(int *globalContext, std::list<std::string> *varSt
         varStack->push_back(varName);
         stackAdding++;
         
-        // Résolution interne
-        bloc->resoudrePortees(globalContext, varStack, varMap, fctStack);
-        
         i++;
     }
+        
+    // Résolution interne
+    bloc->resoudrePortees(globalContext, varStack, varMap, fctStack);
         
     // Nettoyage du contexte
     while(stackAdding > 0) {

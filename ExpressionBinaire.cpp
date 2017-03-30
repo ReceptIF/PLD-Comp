@@ -215,7 +215,7 @@ IRVar *ExpressionBinaire::getIR(BasicBlock *bb) {
       }
        bb->addInstr(instr3);
     
-  } else if (this->symbole == PLUSEQ) {
+  } else if (this->symbole == PLUSEQ || this->symbole == MOINSEQ || this->symbole == MULTEQ || this->symbole == DIVEQ) {
     
       IRVar *left = this->expression1->getIR(bb);
       IRVar *right = this->expression2->getIR(bb);
@@ -242,6 +242,18 @@ IRVar *ExpressionBinaire::getIR(BasicBlock *bb) {
       switch(this->symbole) {
         case PLUSEQ:
           instr3 = new IRInstr(bb->getCFG(),MNEMO_PLUS,params3);
+          break;
+          
+        case MOINSEQ:
+          instr3 = new IRInstr(bb->getCFG(),MNEMO_MOINS,params3);
+          break;
+          
+        case MULTEQ:
+          instr3 = new IRInstr(bb->getCFG(),MNEMO_MULT,params3);
+          break;
+          
+        case DIVEQ:
+          instr3 = new IRInstr(bb->getCFG(),MNEMO_DIV,params3);
           break;
         
       }

@@ -73,7 +73,7 @@ IRVar *ExpressionUnaire::getIR(BasicBlock *bb) {
   
   IRVar *ret = nullptr;
   
-  if(this->symbole == EGAL) {
+  if(this->symbole == DPLUS) {
     
   }
   
