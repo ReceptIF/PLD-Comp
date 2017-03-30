@@ -65,7 +65,9 @@ void ExpressionVariable::resoudrePortees(std::list<std::string> *varStack, std::
         
     }
     
-    if(!finded) {
+    std::cout << "GROSCHIBRE " << name << " finded ? " << to_string(finded) << std::endl;
+    
+    if(finded == 0) {
       std::cerr << "La variable '"+name+"' n'existe pas dans ce contexte" << std::endl;
     }
 }
