@@ -62,7 +62,14 @@ std::string IRInstr::genererAssembleur() {
       
     case MNEMO_MULT :
       ass += "    mov    "+p2+", %r15\r\n";
-      ass += "    imul    "+p1+", "+p2+"\r\n";
+      ass += "    imul   "+p1+", "+p2+"\r\n";
+      ass += "    mov    "+p2+", "+p0+"\r\n";
+      ass += "    mov    %r15, "+p2+"\r\n";
+      break;
+      
+    case MNEMO_DIV :
+      ass += "    mov    "+p2+", %r15\r\n";
+      ass += "    idiv   "+p1+", "+p2+"\r\n";
       ass += "    mov    "+p2+", "+p0+"\r\n";
       ass += "    mov    %r15, "+p2+"\r\n";
       break;
@@ -79,11 +86,14 @@ std::string IRInstr::transParam(std::string p) {
     IRVar *var = cfg->getVariable(nomVar);
     int varOffset = var->getOffset();
     
-    if(var->isTmp()) {
-      p = "!"+nomVar;
-    } else {
+    /*if(var->isTmp()) {
+      int regValue = stoi(var->getName().substr(1));
+      regValue %= 5;
+      regValue += 9;
+      p = "%r"+to_string(regValue);
+    } else {*/
       p = to_string(varOffset)+"(%rbp)";
-    }
+    //}
   } 
   
   return p;

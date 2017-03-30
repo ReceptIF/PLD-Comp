@@ -42,7 +42,7 @@ void CFG::addVariable(IRVar var) {
 int CFG::addTempVar(int type) {
   
     int varNumber = ++nbTemp;
-    std::string varName = "r"+to_string(varNumber);
+    std::string varName = "!r"+to_string(varNumber);
     IRVar *var = new IRVar(type,varName);
     variableMap.insert(pair<string, IRVar> (var->getName(), *var));
     
@@ -61,6 +61,7 @@ int CFG::giveOffsets() {
     int offset = -8;
     int totalSize = 0;
     
+    
     std::map<std::string,IRVar>::iterator i = variableMap.begin() ;
     while ( i != variableMap.end() ) {
         i->second.setOffset(offset);
@@ -69,6 +70,7 @@ int CFG::giveOffsets() {
           case CHAR: offset -= 8; totalSize += 8; break;
           case INT32: offset -= 8; totalSize += 8; break;
           case INT64: offset -= 8; totalSize += 8; break;
+          default: offset -= 8; totalSize += 8; break;
         }
         
         i++;

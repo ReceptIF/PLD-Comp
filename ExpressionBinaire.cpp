@@ -149,6 +149,22 @@ IRVar *ExpressionBinaire::getIR(BasicBlock *bb) {
         IRInstr *instr2 = new IRInstr(bb->getCFG(),MNEMO_ECR,params2);
         bb->addInstr(instr2);
         
+      }else if(dynamic_cast<ExpressionBinaire *>(this->expression2) || dynamic_cast<ExpressionUnaire *>(this->expression2)) {
+        
+        IRVar *result = this->expression2->getIR(bb);
+        
+        list<std::string> params;
+        params.push_back("%rax");
+        params.push_back("@"+result->getName());
+        IRInstr *instr = new IRInstr(bb->getCFG(),MNEMO_ECR,params);
+        bb->addInstr(instr);
+        
+        list<std::string> params2;
+        params2.push_back("@"+lvar->getVariable()->getNom());
+        params2.push_back("%rax");
+        IRInstr *instr2 = new IRInstr(bb->getCFG(),MNEMO_ECR,params2);
+        bb->addInstr(instr2);
+        
       }
       
     } else { std::cerr << "[ERROR] La partie gauche d'une affectation n'est pas une variable" << std::endl; }
@@ -159,7 +175,7 @@ IRVar *ExpressionBinaire::getIR(BasicBlock *bb) {
       IRVar *right = this->expression2->getIR(bb);
           
       int tmpVar = bb->getCFG()->addTempVar(this->type);
-      ret = bb->getCFG()->getVariable("r"+to_string(tmpVar));
+      ret = bb->getCFG()->getVariable("!r"+to_string(tmpVar));
       
       list<std::string> params;
       params.push_back("%rdx");
@@ -186,6 +202,14 @@ IRVar *ExpressionBinaire::getIR(BasicBlock *bb) {
       
         case MOINS:
           instr3 = new IRInstr(bb->getCFG(),MNEMO_MOINS,params3);
+          break;
+      
+        case MULT:
+          instr3 = new IRInstr(bb->getCFG(),MNEMO_MULT,params3);
+          break;
+      
+        case DIV:
+          instr3 = new IRInstr(bb->getCFG(),MNEMO_DIV,params3);
           break;
         
       }

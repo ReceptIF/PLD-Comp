@@ -51,7 +51,7 @@ void AppelFonction::resoudrePortees(std::list<std::string> *varStack, std::map<s
   std::list<std::string>::iterator i = fctStack->begin() ;
   while ( i != fctStack->end() && fctExist == 0) {
       
-      if(*i == this->nomFonction) {
+      if(*i == this->nomFonction || this->nomFonction == "putchar" || this->nomFonction == "getchar") {
         fctExist = 1;
       }  
       i++;
