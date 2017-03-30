@@ -77,49 +77,25 @@ void AppelFonction::resoudrePortees(std::list<std::string> *varStack, std::map<s
 
 IRVar *AppelFonction::getIR(BasicBlock *bb) {
   
-    // Gestion des paramètres
-    std::list<Expression *>::iterator i = this->parametres.begin() ;
-    while ( i != this->parametres.end() ) {
-      
-          // Temporaire
-          if (dynamic_cast<ExpressionConstante *>(*i)) {
-            
-              ExpressionConstante *c = (ExpressionConstante *)*i;
-              std::string edi = "%edi";
-              std::string constVal = "$"+to_string(c->getValeur());
-              constVal += "";
-              
-              std::list<std::string> params;
-              params.push_back(edi);
-              params.push_back(constVal);
-              
-              IRInstr *instr = new IRInstr(bb->getCFG(),MNEMO_CONST,params);
-              bb->addInstr(instr);
-              
-          }else if (dynamic_cast<ExpressionVariable *>(*i)) {
-            
-              ExpressionVariable *var = (ExpressionVariable *)*i;
-              std::string edi = "%edi";
-              
-              std::list<std::string> params;
-              params.push_back(edi);
-              params.push_back("@"+var->getVariable()->getNom());
-              
-              IRInstr *instr = new IRInstr(bb->getCFG(),MNEMO_ECR,params);
-              bb->addInstr(instr);
-              
-          }
-          i++;
-          
-    }
-    
-    // Appel à la fct
+    // GESTION DE PUTCHAR
     if(nomFonction == "putchar") {
+        
+        std::list<Expression *>::iterator i = this->parametres.begin() ;
+        Expression *inputEx = *i;
+        IRVar *inputVar = inputEx->getIR(bb);
+        
         list<std::string> params;
-        params.push_back("unused");
-        params.push_back(nomFonction);
+        params.push_back("%edi");
+        params.push_back("@"+inputVar->getName());
         IRInstr *instr = new IRInstr(bb->getCFG(),MNEMO_CALL,params);
         bb->addInstr(instr);
+        
+        list<std::string> params2;
+        params2.push_back("unused");
+        params2.push_back("putchar");
+        IRInstr *instr2 = new IRInstr(bb->getCFG(),MNEMO_CALL,params2);
+        bb->addInstr(instr2);
+        
     }
   
   return nullptr;

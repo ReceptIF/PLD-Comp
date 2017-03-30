@@ -120,52 +120,16 @@ IRVar *ExpressionBinaire::getIR(BasicBlock *bb) {
   
   if(this->symbole == EGAL) {
     if(dynamic_cast<ExpressionVariable *>(this->expression1)) {
-      // Pour l'instant on gère que les affectations 
-      // variable = constante & variable = variable
+      // On ne peut faire des affectations que vers des variables
       
       ExpressionVariable *lvar = (ExpressionVariable *) this->expression1;
-      
-      if(dynamic_cast<ExpressionConstante *>(this->expression2)) {
-        ExpressionConstante *rval = (ExpressionConstante *) this->expression2;
+      IRVar *right = this->expression2->getIR(bb);
         
-        list<std::string> params;
-        params.push_back("@"+lvar->getVariable()->getNom());
-        params.push_back("$"+to_string(rval->getValeur()));
-        IRInstr *instr = new IRInstr(bb->getCFG(),MNEMO_CONST,params);
-        bb->addInstr(instr);
-        
-      }else if(dynamic_cast<ExpressionVariable *>(this->expression2)) {
-        ExpressionVariable *rvar = (ExpressionVariable *) this->expression2;
-        
-        list<std::string> params;
-        params.push_back("%rax");
-        params.push_back("@"+rvar->getVariable()->getNom());
-        IRInstr *instr = new IRInstr(bb->getCFG(),MNEMO_ECR,params);
-        bb->addInstr(instr);
-        
-        list<std::string> params2;
-        params2.push_back("@"+lvar->getVariable()->getNom());
-        params2.push_back("%rax");
-        IRInstr *instr2 = new IRInstr(bb->getCFG(),MNEMO_ECR,params2);
-        bb->addInstr(instr2);
-        
-      }else if(dynamic_cast<ExpressionBinaire *>(this->expression2) || dynamic_cast<ExpressionUnaire *>(this->expression2)) {
-        
-        IRVar *result = this->expression2->getIR(bb);
-        
-        list<std::string> params;
-        params.push_back("%rax");
-        params.push_back("@"+result->getName());
-        IRInstr *instr = new IRInstr(bb->getCFG(),MNEMO_ECR,params);
-        bb->addInstr(instr);
-        
-        list<std::string> params2;
-        params2.push_back("@"+lvar->getVariable()->getNom());
-        params2.push_back("%rax");
-        IRInstr *instr2 = new IRInstr(bb->getCFG(),MNEMO_ECR,params2);
-        bb->addInstr(instr2);
-        
-      }
+      list<std::string> params;
+      params.push_back("@"+lvar->getVariable()->getNom());
+      params.push_back("@"+right->getName());
+      IRInstr *instr = new IRInstr(bb->getCFG(),MNEMO_ECR,params);
+      bb->addInstr(instr);
       
     } else { std::cerr << "[ERROR] La partie gauche d'une affectation n'est pas une variable" << std::endl; }
   
@@ -178,86 +142,74 @@ IRVar *ExpressionBinaire::getIR(BasicBlock *bb) {
       ret = bb->getCFG()->getVariable("!r"+to_string(tmpVar));
       
       list<std::string> params;
-      params.push_back("%rdx");
+      params.push_back("@"+ret->getName());
       params.push_back("@"+left->getName());
-      IRInstr *instr = new IRInstr(bb->getCFG(),MNEMO_ECR,params);
-      bb->addInstr(instr);
-      
-      list<std::string> params2;
-      params2.push_back("%rax");
-      params2.push_back("@"+right->getName());
-      IRInstr *instr2 = new IRInstr(bb->getCFG(),MNEMO_ECR,params2);
-      bb->addInstr(instr2);
-      
-      list<std::string> params3;
-      params3.push_back("@"+ret->getName());
-      params3.push_back("%rax");
-      params3.push_back("%rdx");
-      IRInstr *instr3;
+      params.push_back("@"+right->getName());
+      IRInstr *instr;
       
       switch(this->symbole) {
         case PLUS:
-          instr3 = new IRInstr(bb->getCFG(),MNEMO_PLUS,params3);
+          instr = new IRInstr(bb->getCFG(),MNEMO_PLUS,params);
           break;
       
         case MOINS:
-          instr3 = new IRInstr(bb->getCFG(),MNEMO_MOINS,params3);
+          instr = new IRInstr(bb->getCFG(),MNEMO_MOINS,params);
           break;
       
         case MULT:
-          instr3 = new IRInstr(bb->getCFG(),MNEMO_MULT,params3);
+          instr = new IRInstr(bb->getCFG(),MNEMO_MULT,params);
           break;
       
         case DIV:
-          instr3 = new IRInstr(bb->getCFG(),MNEMO_DIV,params3);
+          instr = new IRInstr(bb->getCFG(),MNEMO_DIV,params);
           break;
         
       }
-       bb->addInstr(instr3);
+       bb->addInstr(instr);
     
   } else if (this->symbole == PLUSEQ || this->symbole == MOINSEQ || this->symbole == MULTEQ || this->symbole == DIVEQ) {
     
       IRVar *left = this->expression1->getIR(bb);
       IRVar *right = this->expression2->getIR(bb);
+          
+      int tmpVar = bb->getCFG()->addTempVar(this->type);
+      IRVar *inter = bb->getCFG()->getVariable("!r"+to_string(tmpVar));
+      
       ret = left;
       
+      // CALCULATOR OPERATION
       list<std::string> params;
-      params.push_back("%rdx");
+      params.push_back("@"+inter->getName());
       params.push_back("@"+left->getName());
-      IRInstr *instr = new IRInstr(bb->getCFG(),MNEMO_ECR,params);
-      bb->addInstr(instr);
+      params.push_back("@"+right->getName());
+      IRInstr *instr;
       
-      list<std::string> params2;
-      params2.push_back("%rax");
-      params2.push_back("@"+right->getName());
-      IRInstr *instr2 = new IRInstr(bb->getCFG(),MNEMO_ECR,params2);
-      bb->addInstr(instr2);
-      
-      list<std::string> params3;
-      params3.push_back("@"+left->getName());
-      params3.push_back("%rax");
-      params3.push_back("%rdx");
-      IRInstr *instr3;
-    
       switch(this->symbole) {
         case PLUSEQ:
-          instr3 = new IRInstr(bb->getCFG(),MNEMO_PLUS,params3);
+          instr = new IRInstr(bb->getCFG(),MNEMO_PLUS,params);
           break;
-          
+      
         case MOINSEQ:
-          instr3 = new IRInstr(bb->getCFG(),MNEMO_MOINS,params3);
+          instr = new IRInstr(bb->getCFG(),MNEMO_MOINS,params);
           break;
-          
+      
         case MULTEQ:
-          instr3 = new IRInstr(bb->getCFG(),MNEMO_MULT,params3);
+          instr = new IRInstr(bb->getCFG(),MNEMO_MULT,params);
           break;
-          
+      
         case DIVEQ:
-          instr3 = new IRInstr(bb->getCFG(),MNEMO_DIV,params3);
+          instr = new IRInstr(bb->getCFG(),MNEMO_DIV,params);
           break;
         
       }
-      bb->addInstr(instr3);
+      bb->addInstr(instr);
+      
+      // AFFECTATION OPERATION
+      list<std::string> params2;
+      params2.push_back("@"+left->getName());
+      params2.push_back("@"+inter->getName());
+      IRInstr *instr2 = new IRInstr(bb->getCFG(),MNEMO_ECR,params2);
+      bb->addInstr(instr2);
   }
   
   return ret;

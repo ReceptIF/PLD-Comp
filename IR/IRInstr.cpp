@@ -39,6 +39,11 @@ std::string IRInstr::genererAssembleur() {
       break;
       
     case MNEMO_ECR :
+      ass += "    mov    "+p1+", %rax\r\n";
+      ass += "    mov    %rax, "+p0+"\r\n";
+      break;
+      
+    case MNEMO_ECREG :
       ass += "    mov    "+p1+", "+p0+"\r\n";
       break;
       
@@ -47,35 +52,30 @@ std::string IRInstr::genererAssembleur() {
       break;
       
     case MNEMO_PLUS :
-      if(p0 != p2) {
-        ass += "    mov    "+p2+", %r15\r\n";
-        ass += "    add    "+p1+", "+p2+"\r\n";
-        ass += "    mov    "+p2+", "+p0+"\r\n";
-        ass += "    mov    %r15, "+p2+"\r\n";
-      } else {
-        ass += "    add    "+p1+", "+p2+"\r\n";
-      }
+      ass += "    mov    "+p1+", %rdx\r\n";
+      ass += "    mov    "+p2+", %rax\r\n";
+      ass += "    add    %rdx, %rax\r\n";
+      ass += "    mov    %rax, "+p0+"\r\n";
+      
       break;
       
     case MNEMO_MOINS :
-      ass += "    mov    "+p2+", %r15\r\n";
-      ass += "    sub    "+p1+", "+p2+"\r\n";
-      ass += "    mov    "+p2+", "+p0+"\r\n";
-      ass += "    mov    %r15, "+p2+"\r\n";
+      ass += "    mov    "+p1+", %rax\r\n";
+      ass += "    sub    "+p2+", %rax\r\n";
+      ass += "    mov    %rax, "+p0+"\r\n";
       break;
       
     case MNEMO_MULT :
-      ass += "    mov    "+p2+", %r15\r\n";
-      ass += "    imul   "+p1+", "+p2+"\r\n";
-      ass += "    mov    "+p2+", "+p0+"\r\n";
-      ass += "    mov    %r15, "+p2+"\r\n";
+      ass += "    mov    "+p1+", %rax\r\n";
+      ass += "    imul   "+p2+", %rax\r\n";
+      ass += "    mov    %rax, "+p0+"\r\n";
       break;
       
     case MNEMO_DIV :
-      ass += "    mov    "+p2+", %r15\r\n";
-      ass += "    idiv   "+p1+", "+p2+"\r\n";
-      ass += "    mov    "+p2+", "+p0+"\r\n";
-      ass += "    mov    %r15, "+p2+"\r\n";
+      ass += "    mov    "+p1+", %rax \r\n";
+      ass += "    cqto \r\n";
+      ass += "    idivq   "+p2+" \r\n";
+      ass += "    mov    %rax, "+p0+" \r\n";
       break;
       
   }

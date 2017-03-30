@@ -21,6 +21,7 @@ enum mnemotype {
     MNEMO_LECT = 510,
     MNEMO_ECR = 511,
     MNEMO_DIV = 512,
+    MNEMO_ECREG = 513
 };
 #endif
 #endif //PLD_COMP_IR_IRENUM_H

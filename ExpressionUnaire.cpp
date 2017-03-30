@@ -78,94 +78,52 @@ IRVar *ExpressionUnaire::getIR(BasicBlock *bb) {
   IRVar *ret = nullptr;
   IRVar *ope = this->expression1->getIR(bb);
   
-  if(this->prefixe == 1 && (this->symbole == DPLUS || this->symbole == DMOINS)) {
-      // INCREMENTATIONS PREFIXEES
+  if(this->symbole == DPLUS || this->symbole == DMOINS) {
       
       int tmpVar = bb->getCFG()->addTempVar(this->type);
       IRVar *one = bb->getCFG()->getVariable("!r"+to_string(tmpVar));
       
+      // Différentiation si PREFIXE ou SUFFIXE
+      if(this->prefixe) {
+          ret = ope;
+      } else {
+          
+          int tmpVar = bb->getCFG()->addTempVar(this->type);
+          ret = bb->getCFG()->getVariable("!r"+to_string(tmpVar));
+          
+          list<std::string> params;
+          params.push_back("@"+ret->getName());
+          params.push_back("@"+ope->getName());
+          IRInstr *instr = new IRInstr(bb->getCFG(),MNEMO_ECR,params);
+          bb->addInstr(instr);
+          
+      }
+      
+      // Mise en place de la constante 1
       list<std::string> params;
-      params.push_back("@!r"+to_string(tmpVar));
+      params.push_back("@"+one->getName());
       params.push_back("$1");
       IRInstr *instr = new IRInstr(bb->getCFG(),MNEMO_CONST,params);
       bb->addInstr(instr);
       
+      // Réalisation de l'opération
       list<std::string> params2;
-      params2.push_back("%rax");
-      params2.push_back("@!r"+to_string(tmpVar));
-      IRInstr *instr2 = new IRInstr(bb->getCFG(),MNEMO_ECR,params2);
-      bb->addInstr(instr2);
-      
-      list<std::string> params3;
-      params3.push_back("@"+ope->getName());
-      params3.push_back("%rax");
-      params3.push_back("@"+ope->getName());
-      IRInstr *instr3;
+      params2.push_back("@"+ope->getName());
+      params2.push_back("@"+ope->getName());
+      params2.push_back("@"+one->getName());
+      IRInstr *instr2;
       
       switch(this->symbole) {
         case DPLUS: 
-          instr3 = new IRInstr(bb->getCFG(),MNEMO_PLUS,params3);
+          instr2 = new IRInstr(bb->getCFG(),MNEMO_PLUS,params2);
           break;
           
         case DMOINS: 
-          instr3 = new IRInstr(bb->getCFG(),MNEMO_MOINS,params3);
+          instr2 = new IRInstr(bb->getCFG(),MNEMO_MOINS,params2);
           break;
       }
-      bb->addInstr(instr3);
       
-      ret = ope;
-      
-  } else if(this->prefixe == 0 && (this->symbole == DPLUS || this->symbole == DMOINS)) {
-    // INCREMENTATION SUFFIXEE
-    
-    int tmpVar = bb->getCFG()->addTempVar(this->type);
-    IRVar *one = bb->getCFG()->getVariable("!r"+to_string(tmpVar));
-    
-    int tmpVar2 = bb->getCFG()->addTempVar(this->type);
-    ret = bb->getCFG()->getVariable("!r"+to_string(tmpVar));
-    
-    list<std::string> params;
-    params.push_back("@"+one->getName());
-    params.push_back("$1");
-    IRInstr *instr = new IRInstr(bb->getCFG(),MNEMO_CONST,params);
-    bb->addInstr(instr);
-    
-    list<std::string> params2;
-    params2.push_back("%rax");
-    params2.push_back("@"+one->getName());
-    IRInstr *instr2 = new IRInstr(bb->getCFG(),MNEMO_ECR,params2);
-    bb->addInstr(instr2);
-    
-    list<std::string> params3;
-    params3.push_back("%rdx");
-    params3.push_back("@"+ope->getName());
-    IRInstr *instr3 = new IRInstr(bb->getCFG(),MNEMO_ECR,params3);
-    bb->addInstr(instr3);
-    
-    list<std::string> params4;
-    params4.push_back("@"+ret->getName());
-    params4.push_back("%rdx");
-    IRInstr *instr4 = new IRInstr(bb->getCFG(),MNEMO_ECR,params4);
-    bb->addInstr(instr4);
-    
-    list<std::string> params5;
-    params5.push_back("@"+ope->getName());
-    params5.push_back("%rax");
-    params5.push_back("%rdx");
-    IRInstr *instr5;
-    
-    switch(this->symbole) {
-      case DPLUS: 
-        instr5 = new IRInstr(bb->getCFG(),MNEMO_PLUS,params5);
-        break;
-        
-      case DMOINS: 
-        instr5 = new IRInstr(bb->getCFG(),MNEMO_MOINS,params5);
-        break;
-    }
-    bb->addInstr(instr5);
-    
+      bb->addInstr(instr2);
   }
-  
   return ret;
 }
