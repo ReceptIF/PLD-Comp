@@ -37,4 +37,4 @@ $(EXECNAME)-backtest : $(OBJS)
 
 .PHONY: clean
 clean:
-	$(DELETECMD) *.o *.exe
+	$(DELETECMD) *.o *.exe $(EXECNAME) $(EXECNAME)-fronttest $(EXECNAME)-backtest
