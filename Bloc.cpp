@@ -97,13 +97,16 @@ void Bloc::resoudrePortees(int *globalContext, std::list<std::string> *varStack,
         std::list<Clause *>::iterator j = c.begin() ;
         while ( j != c.end() ) {
           
-          //(*j)->getExpression()->resoudrePortees(varStack,varMap,fctStack);
+          (*j)->getExpression()->resoudrePortees(varStack,varMap,fctStack);
           (*j)->getBloc()->resoudrePortees(globalContext,varStack,varMap,fctStack);
           j++;
           
         }
         
-        s->getElse()->resoudrePortees(globalContext,varStack,varMap,fctStack);
+        Bloc *blocElse = s->getElse();
+        if(blocElse != nullptr) {
+          blocElse->resoudrePortees(globalContext,varStack,varMap,fctStack);
+        }
         
       } else if (dynamic_cast<Return *>(*i)) {
         

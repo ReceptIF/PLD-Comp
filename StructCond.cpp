@@ -4,7 +4,7 @@ using namespace std;
 
 StructCond::StructCond()
 {
-
+    blocElse = nullptr;
 }
 
 StructCond::StructCond(Clause* clause)
