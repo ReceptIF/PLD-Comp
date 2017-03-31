@@ -73,20 +73,20 @@ int yylexpression(void);
 %type <ival> type
 %type <decList> tpa
 
-%right EGAL PLUSEQ MULTEQ DIVEQ MOINSEQ MODEQ ANDEQ OREQ
-%left POPEN PCLOSE COPEN CCLOSE DPLUS DMOINS
-%right NOT NAME NVALUE CVALUE DPLUSAVANT DMOINSAVANT
-%left MULT DIV MOD
-%left PLUS MOINS
-%left DSUP DINF
-%left SUP INF SUPEQ INFEQ
-%left DEGAL DIFF
-%left AND
-%left XOR
-%left OR
-%left DAND
-%left DOR
 %left VIRG
+%right EGAL PLUSEQ MULTEQ DIVEQ MOINSEQ MODEQ ANDEQ OREQ
+%left DOR
+%left DAND
+%left OR
+%left XOR
+%left AND
+%left DEGAL DIFF
+%left SUP INF SUPEQ INFEQ
+%left DSUP DINF
+%left PLUS MOINS
+%left MULT DIV MOD
+%right NOT NAME NVALUE CVALUE DPLUSAVANT DMOINSAVANT
+%left POPEN PCLOSE COPEN CCLOSE DPLUS DMOINS
 
 %parse-param { Programme * prog }
 
@@ -152,9 +152,9 @@ el : ELSE CHEVOPEN bloc CHEVCLOSE                               { $$ = new Struc
 expression :  NAME { $$ = new ExpressionVariable($1); }
      | NVALUE { $$ = new ExpressionConstante(INT64,$1); }
      | CVALUE { $$ = new ExpressionConstante(CHAR,$1); }
-  	 | expression PLUS expression     { $$ = new ExpressionBinaire($1, $3, PLUS); }
      | expression MULT expression     { $$ = new ExpressionBinaire($1, $3, MULT); }
      | expression DIV expression      { $$ = new ExpressionBinaire($1, $3, DIV); }
+     | expression PLUS expression     { $$ = new ExpressionBinaire($1, $3, PLUS); }
      | expression MOINS expression    { $$ = new ExpressionBinaire($1, $3, MOINS); }
      | expression MOD expression      { $$ = new ExpressionBinaire($1, $3, MOD); }
      | POPEN expression PCLOSE        { $$ = $2;  }
