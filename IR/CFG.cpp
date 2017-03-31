@@ -26,7 +26,13 @@ CFG::CFG(Fonction *fct, IR *ir)
 
 CFG::~CFG()
 {
-
+    delete ast;
+    delete ir;
+    list<BasicBlock*>::iterator it;
+    for(it = basicBlocks.begin(); it!=basicBlocks.end(); ++it)
+    {
+        delete *it;
+    }
 }
 
 void CFG::addBB(BasicBlock *bb) {

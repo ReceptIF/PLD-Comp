@@ -5,6 +5,14 @@ using namespace std;
 
 BasicBlock::BasicBlock()
 {
+    delete inCondSucc;
+    delete condSucc;
+    delete cfg;
+    list<IRInstr*>::iterator it;
+    for(it = irInstrList.begin(); it!=irInstrList.end(); ++it)
+    {
+        delete *it;
+    }
 }
 
 BasicBlock::BasicBlock(Bloc *blc, CFG *cfg, std::string aLabel) {

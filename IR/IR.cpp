@@ -16,7 +16,11 @@ IR::IR(Programme *prog)
 
 IR::~IR()
 {
-
+  list<CFG*>::iterator it;
+  for(it = cfgs.begin(); it!=cfgs.end(); ++it)
+  {
+    delete *it;
+  }
 }
 
 void IR::addCFG(CFG *cfg) {
