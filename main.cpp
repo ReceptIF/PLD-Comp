@@ -29,7 +29,11 @@ int main(void) {
    std::cout << "Etude de la portée des variables" << std::endl;
    prog->resoudrePortees();
    std::cout << prog->toString() << std::endl;
-   
+#ifdef FRONTTEST
+    delete prog;
+    std::cout << "[Fin du programme]" << std::endl;
+    return 0;
+#endif
    std::cout << "Generation de l'IR" << std::endl;
    IR *ir = new IR(prog);
    

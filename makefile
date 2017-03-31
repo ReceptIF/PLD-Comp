@@ -1,8 +1,8 @@
 COMPIL = g++
-EXECNAME = ReceptifCalc_UNIX.exe
+EXECNAME = ReceptifCalc_UNIX
 COMPILFLAGS = -std=c++1y
 OPTIMISATIONFLAGS = -O1
-DELETECMD = rm
+DELETECMD = rm -f
 
 BISONCMD = bison
 FLEXCMD = flex
@@ -28,7 +28,12 @@ $(EXECNAME) : $(OBJS)
 %.o : %.c
 	$(COMPIL)  -o $@ $(COMPILFLAGS) $(OPTIMISATIONFLAGS) -c $<
 
+$(EXECNAME)-fronttest : $(OBJS)
+	$(COMPIL) -o $@ $(COMPILFLAGS) -DFRONTTEST $(OPTIMISATIONFLAGS) $^
 
+
+$(EXECNAME)-backtest : $(OBJS)
+	$(COMPIL) -o $@ $(COMPILFLAGS) -DFRONTTEST $(OPTIMISATIONFLAGS) $^
 
 .PHONY: clean
 clean:
