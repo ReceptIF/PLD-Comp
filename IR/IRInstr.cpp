@@ -78,6 +78,54 @@ std::string IRInstr::genererAssembleur() {
       ass += "    mov    %rax, "+p0+" \r\n";
       break;
       
+    case MNEMO_DEGAL :
+      ass += "    mov    "+p1+", %rax \r\n";
+      ass += "    cmp    "+p2+", %rax \r\n";
+      ass += "    sete   %al  \r\n";
+      ass += "    movzbl %al, %eax \r\n";
+      ass += "    mov    %rax, "+p0+" \r\n";
+      break;
+      
+    case MNEMO_NOTEQ :
+      ass += "    mov    "+p1+", %rax \r\n";
+      ass += "    cmp    "+p2+", %rax \r\n";
+      ass += "    setne  %al  \r\n";
+      ass += "    movzbl %al, %eax \r\n";
+      ass += "    mov    %rax, "+p0+" \r\n";
+      break;
+      
+    case MNEMO_INF :
+      ass += "    mov    "+p1+", %rax \r\n";
+      ass += "    cmp    "+p2+", %rax \r\n";
+      ass += "    setl   %al  \r\n";
+      ass += "    movzbl %al, %eax \r\n";
+      ass += "    mov    %rax, "+p0+" \r\n";
+      break;
+      
+    case MNEMO_INFEQ :
+      ass += "    mov    "+p1+", %rax \r\n";
+      ass += "    cmp    "+p2+", %rax \r\n";
+      ass += "    setle   %al  \r\n";
+      ass += "    movzbl %al, %eax \r\n";
+      ass += "    mov    %rax, "+p0+" \r\n";
+      break;
+      
+    case MNEMO_SUP :
+      ass += "    mov    "+p1+", %rax \r\n";
+      ass += "    cmp    "+p2+", %rax \r\n";
+      ass += "    setg   %al  \r\n";
+      ass += "    movzbl %al, %eax \r\n";
+      ass += "    mov    %rax, "+p0+" \r\n";
+      break;
+      
+    case MNEMO_SUPEQ :
+      ass += "    mov    "+p1+", %rax \r\n";
+      ass += "    cmp    "+p2+", %rax \r\n";
+      ass += "    setge  %al  \r\n";
+      ass += "    movzbl %al, %eax \r\n";
+      ass += "    mov    %rax, "+p0+" \r\n";
+      break;
+      
   }
   
   return ass;

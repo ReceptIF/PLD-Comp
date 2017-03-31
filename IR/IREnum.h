@@ -16,12 +16,13 @@ enum mnemotype {
     MNEMO_INFEQ = 505,
     MNEMO_SUP = 506,
     MNEMO_SUPEQ = 507,
-    MNEMO_EGAL = 508,
+    MNEMO_DEGAL = 508,
     MNEMO_CALL = 509,
     MNEMO_LECT = 510,
     MNEMO_ECR = 511,
     MNEMO_DIV = 512,
-    MNEMO_ECREG = 513
+    MNEMO_ECREG = 513,
+    MNEMO_NOTEQ = 514
 };
 #endif
 #endif //PLD_COMP_IR_IRENUM_H

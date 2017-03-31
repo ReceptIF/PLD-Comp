@@ -133,7 +133,9 @@ IRVar *ExpressionBinaire::getIR(BasicBlock *bb) {
       
     } else { std::cerr << "[ERROR] La partie gauche d'une affectation n'est pas une variable" << std::endl; }
   
-  } else if (this->symbole == PLUS || this->symbole == MOINS || this->symbole == MULT || this->symbole == DIV) {
+  } else if (this->symbole == PLUS || this->symbole == MOINS || this->symbole == MULT || this->symbole == DIV 
+                || this->symbole == DEGAL || this->symbole == DIFF || this->symbole == INF || this->symbole == INFEQ
+                || this->symbole == SUPEQ || this->symbole == SUP) {
     
       IRVar *left = this->expression1->getIR(bb);
       IRVar *right = this->expression2->getIR(bb);
@@ -162,6 +164,30 @@ IRVar *ExpressionBinaire::getIR(BasicBlock *bb) {
       
         case DIV:
           instr = new IRInstr(bb->getCFG(),MNEMO_DIV,params);
+          break;
+      
+        case DEGAL:
+          instr = new IRInstr(bb->getCFG(),MNEMO_DEGAL,params);
+          break;
+      
+        case DIFF:
+          instr = new IRInstr(bb->getCFG(),MNEMO_NOTEQ,params);
+          break;
+      
+        case INF:
+          instr = new IRInstr(bb->getCFG(),MNEMO_INF,params);
+          break;
+      
+        case INFEQ:
+          instr = new IRInstr(bb->getCFG(),MNEMO_INFEQ,params);
+          break;
+      
+        case SUP:
+          instr = new IRInstr(bb->getCFG(),MNEMO_SUP,params);
+          break;
+      
+        case SUPEQ:
+          instr = new IRInstr(bb->getCFG(),MNEMO_SUPEQ,params);
           break;
         
       }

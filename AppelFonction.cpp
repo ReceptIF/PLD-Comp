@@ -87,7 +87,7 @@ IRVar *AppelFonction::getIR(BasicBlock *bb) {
         list<std::string> params;
         params.push_back("%edi");
         params.push_back("@"+inputVar->getName());
-        IRInstr *instr = new IRInstr(bb->getCFG(),MNEMO_CALL,params);
+        IRInstr *instr = new IRInstr(bb->getCFG(),MNEMO_ECREG,params);
         bb->addInstr(instr);
         
         list<std::string> params2;
