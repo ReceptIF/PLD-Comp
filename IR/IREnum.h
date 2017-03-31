@@ -22,7 +22,8 @@ enum mnemotype {
     MNEMO_ECR = 511,
     MNEMO_DIV = 512,
     MNEMO_ECREG = 513,
-    MNEMO_NOTEQ = 514
+    MNEMO_NOTEQ = 514,
+    MNEMO_MOD = 515
 };
 #endif
 #endif //PLD_COMP_IR_IRENUM_H
