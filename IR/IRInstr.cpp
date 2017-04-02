@@ -145,6 +145,12 @@ std::string IRInstr::genererAssembleur() {
       ass += "    mov    %rax, "+p0+" \r\n";
       break;
       
+    case MNEMO_XOR :
+      ass += "    mov    "+p1+", %rax \r\n";
+      ass += "    xor    "+p2+", %rax\r\n";
+      ass += "    mov    %rax, "+p0+" \r\n";
+      break;
+      
   }
   
   return ass;

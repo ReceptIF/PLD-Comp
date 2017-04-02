@@ -25,7 +25,8 @@ enum mnemotype {
     MNEMO_NOTEQ = 514,
     MNEMO_MOD = 515,
     MNEMO_AND = 516,
-    MNEMO_OR = 517
+    MNEMO_OR = 517,
+    MNEMO_XOR = 518
 };
 #endif
 #endif //PLD_COMP_IR_IRENUM_H
