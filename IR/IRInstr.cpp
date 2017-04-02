@@ -139,6 +139,12 @@ std::string IRInstr::genererAssembleur() {
       ass += "    mov    %rax, "+p0+" \r\n";
       break;
       
+    case MNEMO_OR :
+      ass += "    mov    "+p1+", %rax \r\n";
+      ass += "    or     "+p2+", %rax\r\n";
+      ass += "    mov    %rax, "+p0+" \r\n";
+      break;
+      
   }
   
   return ass;
