@@ -136,7 +136,7 @@ IRVar *ExpressionBinaire::getIR(BasicBlock *bb) {
   } else if (this->symbole == PLUS || this->symbole == MOINS || this->symbole == MULT || this->symbole == DIV 
                 || this->symbole == DEGAL || this->symbole == DIFF || this->symbole == INF || this->symbole == INFEQ
                 || this->symbole == SUPEQ || this->symbole == SUP || this->symbole == MOD || this->symbole == AND
-                || this->symbole == OR || this->symbole == XOR) {
+                || this->symbole == OR || this->symbole == XOR || this->symbole == DINF) {
     
       IRVar *left = this->expression1->getIR(bb);
       IRVar *right = this->expression2->getIR(bb);
@@ -205,6 +205,10 @@ IRVar *ExpressionBinaire::getIR(BasicBlock *bb) {
       
         case XOR:
           instr = new IRInstr(bb->getCFG(),MNEMO_XOR,params);
+          break;
+      
+        case DINF:
+          instr = new IRInstr(bb->getCFG(),MNEMO_DINF,params);
           break;
         
       }

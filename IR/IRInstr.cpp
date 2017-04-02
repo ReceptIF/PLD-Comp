@@ -151,6 +151,15 @@ std::string IRInstr::genererAssembleur() {
       ass += "    mov    %rax, "+p0+" \r\n";
       break;
       
+    case MNEMO_DINF :
+      ass += "    mov    "+p2+", %rax \r\n";
+      ass += "    mov    %eax, %edx \r\n";
+      ass += "    mov    "+p1+", %rax \r\n";
+      ass += "    mov    %edx, %ecx \r\n";
+      ass += "    shl    %cl, %rax\r\n";
+      ass += "    mov    %rax, "+p0+" \r\n";
+      break;
+      
   }
   
   return ass;
