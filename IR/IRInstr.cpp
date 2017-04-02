@@ -133,6 +133,12 @@ std::string IRInstr::genererAssembleur() {
       ass += "    mov    %rdx, "+p0+" \r\n";
       break;
       
+    case MNEMO_AND :
+      ass += "    mov    "+p1+", %rax \r\n";
+      ass += "    and    "+p2+", %rax\r\n";
+      ass += "    mov    %rax, "+p0+" \r\n";
+      break;
+      
   }
   
   return ass;
