@@ -124,6 +124,26 @@ IRVar *ExpressionUnaire::getIR(BasicBlock *bb) {
       }
       
       bb->addInstr(instr2);
+  
+  } else if(this->symbole == NOT) {
+    
+    int tmpVar = bb->getCFG()->addTempVar(this->type);
+    ret = bb->getCFG()->getVariable("!r"+to_string(tmpVar));
+    
+    list<std::string> params;
+    params.push_back("@"+ret->getName());
+    params.push_back("@"+ope->getName());
+    IRInstr *instr;
+    
+    switch(this->symbole) {
+      case NOT:
+        instr = new IRInstr(bb->getCFG(),MNEMO_NOT,params);
+        break;
+    }
+    
+    bb->addInstr(instr);
+    
   }
+  
   return ret;
 }

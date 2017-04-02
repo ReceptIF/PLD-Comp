@@ -17,6 +17,8 @@ public:
     IRInstr(CFG *cfg, int mnemonique, list<string> parametres);
     ~IRInstr();
     
+    int getMnemo();
+    
     std::string genererAssembleur();
     
 protected:

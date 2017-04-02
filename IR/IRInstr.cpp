@@ -15,6 +15,10 @@ IRInstr::~IRInstr()
 
 }
 
+int IRInstr::getMnemo() {
+  return this->mnemo;
+}
+
 std::string IRInstr::genererAssembleur() {
   
   std::string ass;
@@ -28,7 +32,8 @@ std::string IRInstr::genererAssembleur() {
   if(nbParams >= 1) { p0 = *i; i++; }
   if(nbParams >= 2) { p1 = *i; i++; }
   if(nbParams >= 3) { p2 = *i; i++; }
-    
+  
+  
   p0 = transParam(p0);
   p1 = transParam(p1);
   p2 = transParam(p2);
@@ -169,6 +174,13 @@ std::string IRInstr::genererAssembleur() {
       ass += "    mov    %rax, "+p0+" \r\n";
       break;
       
+    case MNEMO_NOT :
+      ass += "    cmpq   $0, "+p1+" \r\n";
+      ass += "    sete   %al \r\n";
+      ass += "    movzbl %al, %eax \r\n";
+      ass += "    mov    %rax, "+p0+" \r\n";
+      break;
+      
   }
   
   return ass;
@@ -181,14 +193,8 @@ std::string IRInstr::transParam(std::string p) {
     IRVar *var = cfg->getVariable(nomVar);
     int varOffset = var->getOffset();
     
-    /*if(var->isTmp()) {
-      int regValue = stoi(var->getName().substr(1));
-      regValue %= 5;
-      regValue += 9;
-      p = "%r"+to_string(regValue);
-    } else {*/
-      p = to_string(varOffset)+"(%rbp)";
-    //}
+    p = to_string(varOffset)+"(%rbp)";
+    
   } 
   
   return p;

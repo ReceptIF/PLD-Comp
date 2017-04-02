@@ -28,7 +28,8 @@ enum mnemotype {
     MNEMO_OR = 517,
     MNEMO_XOR = 518,
     MNEMO_DINF = 519,
-    MNEMO_DSUP = 520
+    MNEMO_DSUP = 520,
+    MNEMO_NOT = 521
 };
 #endif
 #endif //PLD_COMP_IR_IRENUM_H
