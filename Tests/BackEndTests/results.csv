@@ -1,9 +1,0 @@
-Test ID;Return code validation;Out result;StdErr result;File creation result;Global result
-./Tests/Test1;0;2;2;2;0
-./Tests/Test2;0;2;2;2;0
-./Tests/Test3;0;2;2;2;0
-./Tests/Test4;0;2;2;2;0
-./Tests/Test5;0;2;2;2;0
-./Tests/Test6;0;2;2;2;0
-./Tests/Test7;0;2;2;2;0
-./Tests/Test8;0;2;2;2;0
