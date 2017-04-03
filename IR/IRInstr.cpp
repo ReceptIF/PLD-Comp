@@ -131,9 +131,9 @@ std::string IRInstr::genererAssembleur() {
       break;
       
     case MNEMO_MOD :
-      ass += "    mov    "+p2+", %rax \r\n";
+      ass += "    mov    "+p1+", %rax \r\n";
       ass += "    mov    $0, %rdx\r\n";
-      ass += "    divq   "+p1+"\r\n";
+      ass += "    idivw   "+p2+"\r\n";
       ass += "    mov    %rdx, "+p0+" \r\n";
       break;
       
