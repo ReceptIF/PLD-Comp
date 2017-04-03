@@ -32,7 +32,13 @@ std::string ExpressionConstante::toSmallString() {
   switch(this->type) {
     case INT32: print=std::to_string(valeur); break;
     case INT64: print=std::to_string(valeur); break;
-    case CHAR:  print=valeur; break;
+    case CHAR:
+      if(valeur == 10){ // case '\n'
+        print="\\n";
+      } else{
+        print=valeur;
+      }
+      break;
   }
   return print;
 }
