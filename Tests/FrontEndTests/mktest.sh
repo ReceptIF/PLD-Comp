@@ -5,11 +5,11 @@ nKo=0
 nTotal=0
 nMis=0
 
-for j in "./Tests/*"
+for j in "./Tests/FrontEndTests/Tests/*"
 do
     for i in ./$j/*
     do
-      ./test.sh "$i" results.csv
+      ./Tests/FrontEndTests/test.sh "$i" results.csv
       result=$?
       if [ $result -eq 0 ]
       then

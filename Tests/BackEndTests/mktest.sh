@@ -5,9 +5,9 @@ nKo=0
 nTotal=0
 nMis=0
 
-for i in ./Tests/*
+for i in ./Tests/BackEndTests/Tests/*
 do
-  ./test.sh "$i" results.csv
+  ./Tests/BackEndTests/test.sh "$i" results.csv
   result=$?
   if [ $result -eq 0 ]
   then
