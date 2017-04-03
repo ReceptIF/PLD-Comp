@@ -46,8 +46,8 @@ int main(void) {
 
    std::cout << "Supression des objets" << std::endl;
 
-   //delete prog;
-   //delete ir;
+   delete prog;
+   delete ir;
 
    int a;
    std::cout << "[Fin du programme]" << std::endl;

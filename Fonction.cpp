@@ -13,7 +13,7 @@ Fonction::~Fonction() {
     std::list<Declaration*>::iterator it;
     for(it = parametres.begin(); it!=parametres.end(); ++it)
     {
-        delete *it;
+       delete *it;
     }
     delete bloc;
 }

@@ -11,6 +11,7 @@ CFG::CFG(Fonction *fct, IR *ir)
   nbBloc = 0;
   
   // Ajout des paramètres dans les variables
+  std::cout << ast->toString() << std::endl;
   std::list<Declaration *> params = ast->getParametres();
   std::list<Declaration *>::iterator i = params.begin() ;
   while ( i != params.end() ) {
