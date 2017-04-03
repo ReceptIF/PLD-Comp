@@ -1,4 +1,6 @@
 #include "StructCond.h"
+#include "IR/BasicBlock.h"
+#include "IR/CFG.h"
 
 using namespace std;
 
@@ -57,4 +59,39 @@ std::string StructCond::toString() {
  
   print += "[S] === Fin de la structure IF/ELSE ===\r\n";
   return print;
+}
+
+void StructCond::getIR(BasicBlock *bb, list<Instruction *> endInstr) {
+  
+  std::list<Clause *>::iterator i = this->clauses.begin() ;
+  IRVar *condition = (*i)->getExpression()->getIR(bb);
+  
+  BasicBlock *bbIn = new BasicBlock((*i)->getBloc()->getInstructions(), bb->getCFG());
+  
+  std::cout << "BBEND SIZE " << to_string(endInstr.size()) << std::endl;
+  BasicBlock *bbEnd = new BasicBlock(endInstr, bb->getCFG());;
+  
+  bb->setOutCond(condition);
+  bb->setJumpCond(bbIn);
+  
+  bb->getCFG()->addBB(bbIn);
+  
+  if(this->blocElse != nullptr) {
+    
+    BasicBlock *bbNot = new BasicBlock(this->getElse()->getInstructions(), bb->getCFG());
+    bb->setJumpIncond(bbNot);
+    bbNot->setJumpIncond(bbEnd);
+    bbIn->setJumpIncond(bbEnd);
+    
+    bb->getCFG()->addBB(bbNot);
+    
+  } else {
+    
+    bb->setJumpIncond(bbEnd);
+    bbIn->setJumpIncond(bbEnd);
+    
+  }
+  
+  bb->getCFG()->addBB(bbEnd);
+    
 }

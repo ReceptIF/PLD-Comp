@@ -6,6 +6,7 @@
 #include "Structure.h"
 #include "Clause.h"
 #include "Bloc.h"
+#include "Instruction.h"
 
 class Structure;
 class StructCond : public Structure {
@@ -20,6 +21,8 @@ public:
     std::list<Clause *> GetClauses();
     Bloc *getElse();
     std::string toString();
+    
+    void getIR(BasicBlock *bb, list<Instruction *> endInstr);
 
 private:
     std::list<Clause*> clauses;

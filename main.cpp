@@ -29,21 +29,25 @@ int main(void) {
    std::cout << "Etude de la portée des variables" << std::endl;
    prog->resoudrePortees();
    std::cout << prog->toString() << std::endl;
+   
 #ifdef FRONTTEST
     delete prog;
     std::cout << "[Fin du programme]" << std::endl;
     return 0;
 #endif
+
    std::cout << "Generation de l'IR" << std::endl;
    IR *ir = new IR(prog);
    
    std::cout << "Generation de l'assembleur" << std::endl;
-    std::string assembleur = ir->genererAssembleur();
-    std::cout << assembleur << std::endl;
-    writeFile("generatedAss", "s", assembleur);
+   std::string assembleur = ir->genererAssembleur();
+   std::cout << assembleur << std::endl;
+   writeFile("generatedAss", "s", assembleur);
 
-   delete prog;
-   delete ir;
+   std::cout << "Supression des objets" << std::endl;
+
+   //delete prog;
+   //delete ir;
 
    int a;
    std::cout << "[Fin du programme]" << std::endl;

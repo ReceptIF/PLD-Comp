@@ -8,6 +8,7 @@ CFG::CFG(Fonction *fct, IR *ir)
   ast = fct;
   this->ir = ir;
   nbTemp = 0;
+  nbBloc = 0;
   
   // Ajout des paramètres dans les variables
   std::list<Declaration *> params = ast->getParametres();
@@ -20,8 +21,8 @@ CFG::CFG(Fonction *fct, IR *ir)
   }
   
   // Création des blocs
-  BasicBlock *b = new BasicBlock(fct->getBloc(), this, fct->getNom()+"_bp");
-  this->addBB(b);
+  BasicBlock *b = new BasicBlock(fct->getBloc()->getInstructions(), this, fct->getNom()+"_bp");
+  this->addBB(b,0);
   
 }
 
@@ -35,8 +36,13 @@ CFG::~CFG()
     }
 }
 
-void CFG::addBB(BasicBlock *bb) {
-  this->basicBlocks.push_back(bb);
+void CFG::addBB(BasicBlock *bb, int rank) {
+  if(rank != 0) {
+    this->basicBlocks.push_back(bb);
+  } else if(rank == 0) {
+    list<BasicBlock*>::iterator it = this->basicBlocks.begin();
+    this->basicBlocks.insert(it,bb);
+  }
 }
 
 void CFG::addVariable(IRVar var) {
@@ -60,6 +66,18 @@ IRVar *CFG::getVariable(std::string nom) {
     std::map<std::string,IRVar>::iterator varIte;
     varIte = variableMap.find(nom);
     return &(varIte->second);
+  
+}
+
+int *CFG::getNbBloc() {
+    
+    return &(nbBloc);
+  
+}
+
+Fonction *CFG::getAST() {
+    
+    return ast;
   
 }
 
@@ -101,10 +119,17 @@ std::string CFG::genererAssembleur() {
   
   std::list<BasicBlock *>::iterator i = basicBlocks.begin() ;
   while ( i != basicBlocks.end() ) {
+    
+        string blocId = to_string((*i)->getId());
+    
+        ass += this->ast->getNom()+".bloc"+blocId+":\r\n";
+        ass += "\r\n";
         ass += (*i)->genererAssembleur();
+        ass += "\r\n";
         i++;
   }
   
+  ass += this->ast->getNom()+".epilog:\r\n";
   ass += "\r\n";
   ass += "    leave\r\n";
   ass += "    ret\r\n";

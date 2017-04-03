@@ -17,11 +17,13 @@ public:
     CFG(Fonction *fonction, IR *ir);
     ~CFG();
     std::string genererAssembleur();
-    void addBB(BasicBlock *bb);
+    void addBB(BasicBlock *bb, int rank = -1);
     void addVariable(IRVar var);
     int addTempVar(int type);
     int giveOffsets();
     IRVar *getVariable(std::string name);
+    int *getNbBloc();
+    Fonction *getAST();
 
 private:
     std::map <std::string,IRVar> variableMap;
@@ -29,6 +31,7 @@ private:
     Fonction *ast;
     IR *ir;
     int nbTemp;
+    int nbBloc;
 
 };
 
