@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-echo "Test ID;Return code validation;Out result;StdErr result;File creation result;Global result" > results.csv
+echo "Test ID;Return code validation;Out result;StdErr result;File creation result;Global result" > ./Tests/BackEndTests/results.csv
 nOk=0
 nKo=0
 nTotal=0
@@ -7,7 +7,7 @@ nMis=0
 
 for i in ./Tests/BackEndTests/Tests/*
 do
-  ./Tests/BackEndTests/test.sh "$i" results.csv
+  ./Tests/BackEndTests/test.sh "$i" ./Tests/BackEndTests/results.csv
   result=$?
   if [ $result -eq 0 ]
   then
