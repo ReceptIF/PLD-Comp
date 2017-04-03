@@ -17,6 +17,7 @@ Assemblif/Assemblif
 EXE
 ReceptifCalc_UNIX
 ReceptifCalc_UNIX-fronttest
+ReceptifCalc_UNIX-backtest
 results.csv
 Tests/FrontEndTests/results.csv
 Tests/FrontEndTests/tests.out
