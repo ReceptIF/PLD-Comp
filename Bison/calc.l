@@ -29,15 +29,14 @@
 #include "calc.tab.h"
 %}
 %option noyywrap
-name      [a-zA-Z]+[a-zA-Z_0-9]*
-nValue     [0-9]+
-cValue     "'"."'"
-comment     \/\*(.|[\r\n])*?\*\/
-incl       ^\#.*\>
+name         [a-zA-Z]+[a-zA-Z_0-9]*
+nValue       [0-9]+
+cValue       "'"."'"
+comment      \/\*(.|[\r\n])*?\*\/
+incl         ^\#.*\>
+jmpline      "'"\\n"'"
 
 %%
-
-[ \n\t]      { /* ignore */ }
 
 "="          { return EGAL; }
 "+"          { return PLUS; }
@@ -76,7 +75,7 @@ incl       ^\#.*\>
 "int32_t"    { return INT32; }
 "int64_t"    { return INT64; }
 "void"       { return VOID; }
-","			     { return VIRG; }
+","			 { return VIRG; }
 ";"          { return POINTVIR; }
 "{"          { return CHEVOPEN; }
 "}"          { return CHEVCLOSE; }
@@ -92,4 +91,7 @@ incl       ^\#.*\>
 {cValue}     { yylval.ival = yytext[1]; return CVALUE; }
 {comment}    { /* ignore */ }
 {incl}       { return INCL; }
+{jmpline}    { yylval.ival = 10; return JMPLINE; }
+
+[ \n\t]      { /* ignore */ }
 %%

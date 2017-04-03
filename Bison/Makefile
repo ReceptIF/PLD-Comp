@@ -3,7 +3,7 @@ EXECNAME = ReceptifCalc
 INCLLIST= ../AppelFonction.cpp ../Bloc.cpp ../Break.cpp ../Clause.cpp ../Declaration.cpp ../Expression.cpp ../ExpressionBinaire.cpp ../ExpressionConstante.cpp ../ExpressionUnaire.cpp ../ExpressionVariable.cpp ../Fonction.cpp ../For.cpp ../Instruction.cpp ../Programme.cpp ../Return.cpp ../StructCond.cpp ../Structure.cpp ../Type.cpp ../Variable.cpp ../VariableSimple.cpp ../VariableTableau.cpp ../While.cpp
 COMPILFLAGS = -std=c++1y
 OPTIMISATIONFLAGS = -O1
-DELETECMD = rm
+DELETECMD = rm -f
 
 BISONCMD = bison
 FLEXCMD = flex

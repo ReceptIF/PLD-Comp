@@ -58,11 +58,12 @@ enum yytokentype {
     RETURN = 305,
     BREAK = 306,
     NAME = 307,
-    NVALUE = 308,
-    CVALUE = 309,
-    INCL = 310,
-    DMOINSAVANT = 311,
-    DPLUSAVANT = 312
+    JMPLINE = 308,
+    NVALUE = 309,
+    CVALUE = 310,
+    INCL = 311,
+    DPLUSAVANT = 312,
+    DMOINSAVANT = 313
 };
 #endif
 #endif //PLD_COMP_ENUM_H
