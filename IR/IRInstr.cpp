@@ -85,17 +85,16 @@ std::string IRInstr::genererAssembleur() {
       
     case MNEMO_DEGAL :
       ass += "    mov    "+p1+", %rax \r\n";
-      ass += "    cmp    "+p2+", %rax \r\n";
-      ass += "    sete   %al  \r\n";
+      ass += "    xor    "+p2+", %rax\r\n";
+      ass += "    cmpq   $0, %rax \r\n";
+      ass += "    sete   %al \r\n";
       ass += "    movzbl %al, %eax \r\n";
       ass += "    mov    %rax, "+p0+" \r\n";
       break;
       
     case MNEMO_NOTEQ :
       ass += "    mov    "+p1+", %rax \r\n";
-      ass += "    cmp    "+p2+", %rax \r\n";
-      ass += "    setne  %al  \r\n";
-      ass += "    movzbl %al, %eax \r\n";
+      ass += "    xor    "+p2+", %rax\r\n";
       ass += "    mov    %rax, "+p0+" \r\n";
       break;
       
