@@ -35,7 +35,7 @@ $(EXECNAME)-fronttest : $(OBJS)
 
 $(EXECNAME)-backtest : $(OBJS)
 	$(COMPIL) -o $@ $(COMPILFLAGS) $(OPTIMISATIONFLAGS) $^
-	sh ./Tests/BackEndTests/mktest.sh > ./Tests/FrontEndTests/tests.out
+	sh ./Tests/BackEndTests/mktest.sh > ./Tests/BackEndTests/tests.out
 
 .PHONY: clean
 clean:
