@@ -180,6 +180,11 @@ std::string IRInstr::genererAssembleur() {
       ass += "    mov    %rax, "+p0+" \r\n";
       break;
       
+    case MNEMO_RETURN :
+      ass += "    mov    "+p0+", %rax \r\n";
+      ass += "    jmp     "+this->cfg->getAST()->getNom()+".epilog \r\n";
+      break;
+      
   }
   
   return ass;

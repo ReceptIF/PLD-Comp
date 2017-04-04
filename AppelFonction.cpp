@@ -1,5 +1,6 @@
 #include "AppelFonction.h"
 #include "IR/BasicBlock.h"
+#include "IR/CFG.h"
 #include <stdlib.h>
 
 AppelFonction::AppelFonction(std::string nom)
@@ -77,6 +78,8 @@ void AppelFonction::resoudrePortees(std::list<std::string> *varStack, std::map<s
 
 IRVar *AppelFonction::getIR(BasicBlock *bb) {
   
+    IRVar *ret = nullptr;
+  
     // GESTION DE PUTCHAR
     if(nomFonction == "putchar") {
         
@@ -96,7 +99,25 @@ IRVar *AppelFonction::getIR(BasicBlock *bb) {
         IRInstr *instr2 = new IRInstr(bb->getCFG(),MNEMO_CALL,params2);
         bb->addInstr(instr2);
         
+    } else {
+      // AUTRES FONCTIONS
+      
+      int tmpVar = bb->getCFG()->addTempVar(this->type);
+      ret = bb->getCFG()->getVariable("!r"+to_string(tmpVar));
+      
+      list<std::string> params;
+      params.push_back("unused");
+      params.push_back(this->nomFonction);
+      IRInstr *instr = new IRInstr(bb->getCFG(),MNEMO_CALL,params);
+      bb->addInstr(instr);
+        
+      list<std::string> params2;
+      params2.push_back("@"+ret->getName());
+      params2.push_back("%rax");
+      IRInstr *instr2 = new IRInstr(bb->getCFG(),MNEMO_ECREG,params2);
+      bb->addInstr(instr2); 
+      
     }
   
-  return nullptr;
+  return ret;
 }

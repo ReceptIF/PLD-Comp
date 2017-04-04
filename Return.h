@@ -6,6 +6,7 @@
 #include <iostream>
 #include <string>
 
+class BasicBlock;
 class Instruction;
 class Return : public Instruction {
 
@@ -14,6 +15,7 @@ public:
     ~Return();
     std::string toString();
     Expression *getExpression();
+    void getIR(BasicBlock *bb);
 
 private:
     Expression *expression;

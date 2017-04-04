@@ -3,6 +3,7 @@
 #include "../AppelFonction.h"
 #include "../StructCond.h"
 #include "../While.h"
+#include "../Return.h"
 using namespace std;
 
 BasicBlock::BasicBlock()
@@ -75,6 +76,11 @@ BasicBlock::BasicBlock(list<Instruction *> instructions, CFG *cfg, std::string a
         s->getIR(this, endInstr);
         i = instructions.end();
         i--;
+        
+      }else if (dynamic_cast<Return *>(*i)) {
+        
+        Return *r = (Return *)*i;
+        r->getIR(this);
         
       }
       
