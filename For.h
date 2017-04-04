@@ -5,6 +5,7 @@
 #include "Bloc.h"
 #include "Expression.h"
 
+class BasicBlock;
 class For : public Structure {
 
 public:
@@ -29,6 +30,8 @@ public:
     Expression* GetIteration();
     
     std::string toString();
+    
+    void getIR(BasicBlock *bb, list<Instruction *> endInstr);
 
 private:
     Bloc* bloc;

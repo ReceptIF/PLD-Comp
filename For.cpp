@@ -1,4 +1,6 @@
 #include "For.h"
+#include "IR/BasicBlock.h"
+#include "IR/CFG.h"
 
 For::For(Expression* init, Expression* cond, Expression* ite, Bloc* blocos)
 {
@@ -65,6 +67,31 @@ Expression* For::GetInitialisation()
 Expression* For::GetIteration()
 {
     return iteration;
+}
+
+void For::getIR(BasicBlock *bb, list<Instruction *> endInstr) {
+  
+  // Initialisation
+  this->initialisation->getIR(bb);
+  
+  // Test conditionnel
+  IRVar *condition = this->condition->getIR(bb);
+  BasicBlock *bbIn = new BasicBlock(this->bloc->getInstructions(), bb->getCFG());
+  this->iteration->getIR(bbIn);
+  IRVar *conditionBis = this->condition->getIR(bbIn);
+  BasicBlock *bbEnd = new BasicBlock(endInstr, bb->getCFG());;
+  
+  bb->setOutCond(condition);
+  bb->setJumpCond(bbIn);
+  bb->setJumpIncond(bbEnd);
+  
+  bbIn->setOutCond(conditionBis);
+  bbIn->setJumpCond(bbIn);
+  bbIn->setJumpIncond(bbEnd);
+  
+  bb->getCFG()->addBB(bbIn);
+  bb->getCFG()->addBB(bbEnd);
+  
 }
 
 std::string For::toString() {

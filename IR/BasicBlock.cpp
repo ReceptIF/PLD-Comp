@@ -4,6 +4,7 @@
 #include "../StructCond.h"
 #include "../While.h"
 #include "../Return.h"
+#include "../For.h"
 using namespace std;
 
 BasicBlock::BasicBlock()
@@ -70,6 +71,17 @@ BasicBlock::BasicBlock(list<Instruction *> instructions, CFG *cfg, std::string a
       }else if (dynamic_cast<While *>(*i)) {
         
         While *s = (While *)*i;
+        
+        int itePos = std::distance(instructions.begin(), i)+1;
+        list<Instruction *> endInstr = this->CopyNotEntireList(instructions,itePos);
+        
+        s->getIR(this, endInstr);
+        i = instructions.end();
+        i--;
+        
+      }else if (dynamic_cast<For *>(*i)) {
+        
+        For *s = (For *)*i;
         
         int itePos = std::distance(instructions.begin(), i)+1;
         list<Instruction *> endInstr = this->CopyNotEntireList(instructions,itePos);
