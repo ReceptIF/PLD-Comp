@@ -30,6 +30,7 @@ BasicBlock::BasicBlock(list<Instruction *> instructions, CFG *cfg, std::string a
         
         Declaration *d = (Declaration *)*i;
         IRVar var(d->getType(), d->getNomVariable(), 0);
+        if(d->getTabSize() > 0) { var.setSize(d->getTabSize()); }
         cfg->addVariable(var);
         
       } else if (dynamic_cast<AppelFonction *>(*i)) {

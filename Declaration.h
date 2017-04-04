@@ -19,6 +19,7 @@ public:
     void setType(int t);
     int getType();
     void setInit(Expression *e);
+    int getTabSize();
     
     std::string stringifyType();
     std::string toSmallString();

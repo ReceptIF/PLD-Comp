@@ -71,7 +71,10 @@ void ExpressionVariable::resoudrePortees(std::list<std::string> *varStack, std::
 
 IRVar *ExpressionVariable::getIR(BasicBlock *bb) {
   
-  IRVar *var = bb->getCFG()->getVariable(this->getVariable()->getNom());
+  std::string nom;
+  nom += this->getVariable()->toSmallString();
+  
+  IRVar *var = bb->getCFG()->getVariable(nom);
   return var;
   
 }

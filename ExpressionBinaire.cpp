@@ -126,7 +126,7 @@ IRVar *ExpressionBinaire::getIR(BasicBlock *bb) {
       IRVar *right = this->expression2->getIR(bb);
         
       list<std::string> params;
-      params.push_back("@"+lvar->getVariable()->getNom());
+      params.push_back("@"+lvar->getVariable()->toSmallString());
       params.push_back("@"+right->getName());
       IRInstr *instr = new IRInstr(bb->getCFG(),MNEMO_ECR,params);
       bb->addInstr(instr);

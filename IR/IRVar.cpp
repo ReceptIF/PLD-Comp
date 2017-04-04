@@ -24,3 +24,12 @@ int IRVar::getOffset() {
 int IRVar::isTmp() {
   return this->tmp;
 }
+
+void IRVar::setSize(int aSize) {
+  this->size = aSize;
+}
+
+int IRVar::getSize() {
+  return this->size;
+}
+

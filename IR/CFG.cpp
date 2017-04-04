@@ -17,6 +17,7 @@ CFG::CFG(Fonction *fct, IR *ir)
   while ( i != params.end() ) {
         Declaration *d = (*i);
         IRVar var(d->getType(), d->getNomVariable(), 0);
+        if(d->getTabSize() > 0) { var.setSize(d->getTabSize()); }
         this->addVariable(var);
         i++;
   }
@@ -90,12 +91,13 @@ int CFG::giveOffsets() {
     std::map<std::string,IRVar>::iterator i = variableMap.begin() ;
     while ( i != variableMap.end() ) {
         i->second.setOffset(offset);
+        int tabSize = i->second.getSize();
         
         switch(i->second.getType()) {
-          case CHAR: offset -= 8; totalSize += 8; break;
-          case INT32: offset -= 8; totalSize += 8; break;
-          case INT64: offset -= 8; totalSize += 8; break;
-          default: offset -= 8; totalSize += 8; break;
+          case CHAR: offset -= 8*tabSize; totalSize += 8*tabSize; break;
+          case INT32: offset -= 8*tabSize; totalSize += 8*tabSize; break;
+          case INT64: offset -= 8*tabSize; totalSize += 8*tabSize; break;
+          default: offset -= 8*tabSize; totalSize += 8*tabSize; break;
         }
         
         i++;

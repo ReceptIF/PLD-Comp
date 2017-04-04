@@ -26,9 +26,14 @@ void Declaration::setType(int t)
 {
     type = t;
 }
+
 int Declaration::getType()
 {
     return type;
+}
+
+int Declaration::getTabSize() {
+    return this->tabSize;
 }
 
 void Declaration::setInit(Expression *e) {

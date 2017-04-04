@@ -191,13 +191,41 @@ std::string IRInstr::genererAssembleur() {
 }
 
 std::string IRInstr::transParam(std::string p) {
+  
   if(p[0] == '@') {
     
-    std::string nomVar = p.substr(1);
-    IRVar *var = cfg->getVariable(nomVar);
-    int varOffset = var->getOffset();
+    std::string nomVar;
+    int stringSize = p.size();
     
-    p = to_string(varOffset)+"(%rbp)";
+    if(p[stringSize-1] == ']') {
+      
+      int debIndice = p.find_first_of('[');
+      int nbSize = stringSize-debIndice-2;
+      nomVar = p.substr(1,stringSize-nbSize-3);
+      
+      int indice =  std::stoi(p.substr(debIndice+1,nbSize));
+      int unitSize;
+    
+      IRVar *var = cfg->getVariable(nomVar);
+      
+      switch(var->getType()) {
+        default: unitSize=8; break;
+      }
+    
+      int varOffset = var->getOffset()-(indice*unitSize);
+      
+      p = to_string(varOffset)+"(%rbp)";
+      
+    } else {
+      
+      nomVar = p.substr(1);
+    
+      IRVar *var = cfg->getVariable(nomVar);
+      int varOffset = var->getOffset();
+      
+      p = to_string(varOffset)+"(%rbp)";
+      
+    }
     
   } 
   
