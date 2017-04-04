@@ -108,6 +108,17 @@ IRVar *AppelFonction::getIR(BasicBlock *bb) {
       list<std::string> params;
       params.push_back("unused");
       params.push_back(this->nomFonction);
+      
+      // Ajout paramètres
+      std::list<Expression *>::iterator i = this->parametres.begin() ;
+       while ( i != this->parametres.end() ) {
+            
+            IRVar *varParam = (*i)->getIR(bb);
+            params.push_back("@"+varParam->getName());
+            i++;
+            
+      }
+      
       IRInstr *instr = new IRInstr(bb->getCFG(),MNEMO_CALL,params);
       bb->addInstr(instr);
         

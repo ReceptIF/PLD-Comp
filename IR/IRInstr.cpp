@@ -27,16 +27,30 @@ std::string IRInstr::genererAssembleur() {
   std::string p0 = "";
   std::string p1 = "";
   std::string p2 = "";
+  std::string p3 = "";
+  std::string p4 = "";
+  std::string p5 = "";
+  std::string p6 = "";
+  std::string p7 = "";
   
   std::list<std::string>::iterator i = parametres.begin();
   if(nbParams >= 1) { p0 = *i; i++; }
   if(nbParams >= 2) { p1 = *i; i++; }
   if(nbParams >= 3) { p2 = *i; i++; }
-  
+  if(nbParams >= 4) { p3 = *i; i++; }
+  if(nbParams >= 5) { p4 = *i; i++; }
+  if(nbParams >= 6) { p5 = *i; i++; }
+  if(nbParams >= 7) { p6 = *i; i++; }
+  if(nbParams >= 8) { p7 = *i; i++; }
   
   p0 = transParam(p0);
   p1 = transParam(p1);
   p2 = transParam(p2);
+  p3 = transParam(p3);
+  p4 = transParam(p4);
+  p5 = transParam(p5);
+  p6 = transParam(p6);
+  p7 = transParam(p7);
   
   switch(mnemo) {
     case MNEMO_CONST :
@@ -53,6 +67,14 @@ std::string IRInstr::genererAssembleur() {
       break;
       
     case MNEMO_CALL :
+    
+      if(p2 != "") { ass += "    mov    "+p2+", %rdi \r\n"; }
+      if(p3 != "") { ass += "    mov    "+p3+", %rsi \r\n"; }
+      if(p4 != "") { ass += "    mov    "+p4+", %rdx \r\n"; }
+      if(p5 != "") { ass += "    mov    "+p5+", %rcx \r\n"; }
+      if(p6 != "") { ass += "    mov    "+p6+", %r8 \r\n"; }
+      if(p7 != "") { ass += "    mov    "+p7+", %r9 \r\n"; }
+        
       ass += "    call   "+p1+"\r\n";
       break;
       

@@ -11,7 +11,8 @@ CFG::CFG(Fonction *fct, IR *ir)
   nbBloc = 0;
   
   // Ajout des paramètres dans les variables
-  std::cout << ast->toString() << std::endl;
+  //std::cout << ast->toString() << std::endl;
+  
   std::list<Declaration *> params = ast->getParametres();
   std::list<Declaration *>::iterator i = params.begin() ;
   while ( i != params.end() ) {
@@ -110,28 +111,52 @@ int CFG::giveOffsets() {
 std::string CFG::genererAssembleur() {
   
   int stackSize = this->giveOffsets();
-  //cout << "Size " << stackSize << endl;
   
+  // Mise en place du contexte
   std::string ass;
   ass += this->ast->getNom()+":\r\n";
   ass += "\r\n";
   ass += "    pushq   %rbp \r\n";
   ass += "    movq    %rsp, %rbp \r\n";
   ass += "    subq    $"+to_string(stackSize+8)+", %rsp \r\n";
-  ass += "\r\n";
   
-  std::list<BasicBlock *>::iterator i = basicBlocks.begin() ;
-  while ( i != basicBlocks.end() ) {
+  // Récupération des paramètres
+  std::list<Declaration *> params = ast->getParametres();
+  std::list<Declaration *>::iterator i = params.begin() ;
+  while ( i != params.end() ) {
     
-        string blocId = to_string((*i)->getId());
-    
-        ass += this->ast->getNom()+".bloc"+blocId+":\r\n";
-        ass += "\r\n";
-        ass += (*i)->genererAssembleur();
-        ass += "\r\n";
+        int indice = std::distance(params.begin(), i);
+        Declaration *d = (*i);
+        IRVar *var = this->getVariable(d->getNomVariable());
+        
+        switch(indice) {
+          case 0: ass += "    mov    %rdi, "+to_string(var->getOffset())+"(%rbp) \r\n"; break;
+          case 1: ass += "    mov    %rsi, "+to_string(var->getOffset())+"(%rbp) \r\n"; break;
+          case 2: ass += "    mov    %rdx, "+to_string(var->getOffset())+"(%rbp) \r\n"; break;
+          case 3: ass += "    mov    %rcx, "+to_string(var->getOffset())+"(%rbp) \r\n"; break;
+          case 4: ass += "    mov    %r8, "+to_string(var->getOffset())+"(%rbp) \r\n"; break;
+          case 5: ass += "    mov    %r9, "+to_string(var->getOffset())+"(%rbp) \r\n"; break;
+        }
+        
         i++;
   }
   
+  ass += "\r\n";
+  
+  // Génération des blocs
+  std::list<BasicBlock *>::iterator j = basicBlocks.begin() ;
+  while ( j != basicBlocks.end() ) {
+    
+        string blocId = to_string((*j)->getId());
+    
+        ass += this->ast->getNom()+".bloc"+blocId+":\r\n";
+        ass += "\r\n";
+        ass += (*j)->genererAssembleur();
+        ass += "\r\n";
+        j++;
+  }
+  
+  // Epilogue
   ass += this->ast->getNom()+".epilog:\r\n";
   ass += "\r\n";
   ass += "    leave\r\n";
