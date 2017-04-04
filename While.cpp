@@ -40,13 +40,14 @@ void While::getIR(BasicBlock *bb, list<Instruction *> endInstr) {
   
   IRVar *condition = this->clause->getExpression()->getIR(bb);
   BasicBlock *bbIn = new BasicBlock(this->clause->getBloc()->getInstructions(), bb->getCFG());
+  IRVar *conditionBis = this->clause->getExpression()->getIR(bbIn);
   BasicBlock *bbEnd = new BasicBlock(endInstr, bb->getCFG());;
   
   bb->setOutCond(condition);
   bb->setJumpCond(bbIn);
   bb->setJumpIncond(bbEnd);
   
-  bbIn->setOutCond(condition);
+  bbIn->setOutCond(conditionBis);
   bbIn->setJumpCond(bbIn);
   bbIn->setJumpIncond(bbEnd);
   
