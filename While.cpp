@@ -1,4 +1,6 @@
 #include "While.h"
+#include "IR/BasicBlock.h"
+#include "IR/CFG.h"
 
 While::While(Expression *expression, Bloc *bloc) {
   
@@ -32,4 +34,23 @@ std::string While::toString() {
   print += clause->getBloc()->toString();
   print += "[S] === Fin de la structure WHILE ===\r\n";
   return print;
+}
+
+void While::getIR(BasicBlock *bb, list<Instruction *> endInstr) {
+  
+  IRVar *condition = this->clause->getExpression()->getIR(bb);
+  BasicBlock *bbIn = new BasicBlock(this->clause->getBloc()->getInstructions(), bb->getCFG());
+  BasicBlock *bbEnd = new BasicBlock(endInstr, bb->getCFG());;
+  
+  bb->setOutCond(condition);
+  bb->setJumpCond(bbIn);
+  bb->setJumpIncond(bbEnd);
+  
+  bbIn->setOutCond(condition);
+  bbIn->setJumpCond(bbIn);
+  bbIn->setJumpIncond(bbEnd);
+  
+  bb->getCFG()->addBB(bbIn);
+  bb->getCFG()->addBB(bbEnd);
+    
 }

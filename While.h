@@ -14,6 +14,7 @@ public:
   ~While();
   Clause *getClause();
   std::string toString();
+  void getIR(BasicBlock *bb, list<Instruction *> endInstr);
 
 protected:
 	Clause* clause;

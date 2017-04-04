@@ -67,8 +67,6 @@ void StructCond::getIR(BasicBlock *bb, list<Instruction *> endInstr) {
   IRVar *condition = (*i)->getExpression()->getIR(bb);
   
   BasicBlock *bbIn = new BasicBlock((*i)->getBloc()->getInstructions(), bb->getCFG());
-  
-  std::cout << "BBEND SIZE " << to_string(endInstr.size()) << std::endl;
   BasicBlock *bbEnd = new BasicBlock(endInstr, bb->getCFG());;
   
   bb->setOutCond(condition);

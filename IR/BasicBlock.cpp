@@ -2,6 +2,7 @@
 #include "CFG.h"
 #include "../AppelFonction.h"
 #include "../StructCond.h"
+#include "../While.h"
 using namespace std;
 
 BasicBlock::BasicBlock()
@@ -56,6 +57,17 @@ BasicBlock::BasicBlock(list<Instruction *> instructions, CFG *cfg, std::string a
       }else if (dynamic_cast<StructCond *>(*i)) {
         
         StructCond *s = (StructCond *)*i;
+        
+        int itePos = std::distance(instructions.begin(), i)+1;
+        list<Instruction *> endInstr = this->CopyNotEntireList(instructions,itePos);
+        
+        s->getIR(this, endInstr);
+        i = instructions.end();
+        i--;
+        
+      }else if (dynamic_cast<While *>(*i)) {
+        
+        While *s = (While *)*i;
         
         int itePos = std::distance(instructions.begin(), i)+1;
         list<Instruction *> endInstr = this->CopyNotEntireList(instructions,itePos);
