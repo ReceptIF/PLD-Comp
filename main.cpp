@@ -38,6 +38,10 @@ int main(void) {
 
    std::cout << "Generation de l'IR" << std::endl;
    IR *ir = new IR(prog);
+
+#ifdef OPTIMISATION
+    ir->optimiser();
+#endif
    
    std::cout << "Generation de l'assembleur" << std::endl;
    std::string assembleur = ir->genererAssembleur();

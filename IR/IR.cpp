@@ -44,3 +44,7 @@ std::string IR::genererAssembleur() {
   
   return ass;
 }
+
+void IR::optimiser() {
+
+}

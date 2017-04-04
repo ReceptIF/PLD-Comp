@@ -32,10 +32,12 @@ $(EXECNAME)-fronttest : $(OBJS)
 	$(COMPIL) -o $@ $(COMPILFLAGS) -DFRONTTEST $(OPTIMISATIONFLAGS) $^
 	sh ./Tests/FrontEndTests/mktest.sh > ./Tests/FrontEndTests/tests.out
 
-
 $(EXECNAME)-backtest : $(OBJS)
 	$(COMPIL) -o $@ $(COMPILFLAGS) $(OPTIMISATIONFLAGS) $^
 	sh ./Tests/BackEndTests/mktest.sh > ./Tests/BackEndTests/tests.out
+
+$(EXECNAME)-optimise : $(OBJS)
+	$(COMPIL) -o $@ $(COMPILFLAGS) -DOPTIMISATION $(OPTIMISATIONFLAGS) $^
 
 .PHONY: clean
 clean:

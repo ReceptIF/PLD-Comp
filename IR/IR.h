@@ -15,7 +15,8 @@ public:
     void addCFG(CFG *cfg);
     
     std::string genererAssembleur();
-    
+    void optimiser();
+
 protected:
     list<CFG *> cfgs;
 };

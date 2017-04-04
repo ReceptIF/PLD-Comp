@@ -18,6 +18,7 @@ EXE
 ReceptifCalc_UNIX
 ReceptifCalc_UNIX-fronttest
 ReceptifCalc_UNIX-backtest
+ReceptifCalc_UNIX-optimise
 results.csv
 Tests/FrontEndTests/results.csv
 Tests/FrontEndTests/tests.out
