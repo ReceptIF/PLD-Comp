@@ -49,7 +49,7 @@ fi
 # stdout has been specified
 if [ -r "std.out" ]
 then
-  sRun="$sRun >temp.txt"
+  sRun="$sRun; ../../../../Assemblif/Assemblif generatedAss.s EXE; ./EXE > temp.txt"
 fi
 
 # stderr has been specified
@@ -98,6 +98,8 @@ then
   # clean temporary out file
   rm temp.txt
   rm temp2.txt
+  rm generatedAss.o
+  rm generatedAss.s
 fi
 
 # compare stderr if concerned
