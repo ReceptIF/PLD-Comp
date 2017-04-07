@@ -1,13 +1,13 @@
 #include<inttypes.h>
 void main(void){
-	char i;
-	i='A';
+	char i='A';
 	
-	while(i<'Z'+1)	{
+	while(i<='Z')	{
 			putchar(i);
-			i=i+1;
+			i++;
 		} 
 	putchar('\n');
 	putchar('A');
 	putchar('H');
+	putchar('!');
 }
