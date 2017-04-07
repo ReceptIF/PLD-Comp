@@ -6,6 +6,7 @@ Declaration::Declaration(std::string nomVar, int varType, int size)
     nomVariable = nomVar;
     type = varType;
     tabSize = size;
+    initiated = false;
 }
 
 Declaration::~Declaration()
@@ -38,6 +39,15 @@ int Declaration::getTabSize() {
 
 void Declaration::setInit(Expression *e) {
     init = e;
+    initiated = true;
+}
+    
+Expression *Declaration::getInit() {
+    return init;
+}
+    
+bool Declaration::isInit() {
+    return initiated;
 }
 
 std::string Declaration::stringifyType() {

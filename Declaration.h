@@ -24,12 +24,15 @@ public:
     std::string stringifyType();
     std::string toSmallString();
     std::string toString();
+    Expression *getInit();
+    bool isInit();
     
 private:
     std::string nomVariable;
     int type;
     int tabSize;
     Expression *init;
+    bool initiated;
 };
 
 #endif //PLD_COMP_DECLARATION_H

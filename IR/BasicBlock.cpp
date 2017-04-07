@@ -34,6 +34,17 @@ BasicBlock::BasicBlock(list<Instruction *> instructions, CFG *cfg, std::string a
         if(d->getTabSize() > 0) { var.setSize(d->getTabSize()); }
         cfg->addVariable(var);
         
+        if(d->isInit()) {
+              
+          IRVar *inVar = d->getInit()->getIR(this);
+      
+          list<std::string> params;
+          params.push_back("@"+var.getName());
+          params.push_back("@"+inVar->getName());
+          IRInstr *instr = new IRInstr(this->getCFG(),MNEMO_ECR,params);
+          this->addInstr(instr);
+        }
+        
       } else if (dynamic_cast<AppelFonction *>(*i)) {
         
         AppelFonction *a = (AppelFonction *)*i;
