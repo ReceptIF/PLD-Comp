@@ -7,4 +7,6 @@ void main(void){
       putchar('F');
     } 
   putchar('\n');
+  putchar('A');
+  putchar('H');
 }
