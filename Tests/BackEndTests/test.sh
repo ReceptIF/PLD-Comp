@@ -49,7 +49,8 @@ fi
 # stdout has been specified
 if [ -r "std.out" ]
 then
-  sRun="$sRun; ../../../../Assemblif/Assemblif generatedAss.s EXE; ./EXE > temp.txt"
+  sRun="$sRun"
+  outRun="../../../../Assemblif/Assemblif generatedAss.s EXE; ./EXE > temp.txt"
 fi
 
 # stderr has been specified
@@ -62,6 +63,12 @@ echo $sRun
 # execute the command line
 eval $sRun
 returnCode=$?
+
+if [ -r "std.out" ]
+then
+  echo $outRun
+  eval $outRun
+fi
 
 resultGlobal=1
 
