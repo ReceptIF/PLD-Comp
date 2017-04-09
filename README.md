@@ -1,7 +1,7 @@
 # PLD Compilateur - H4214
-  _____                     _   _ _  __ 
+  _____                     _   _ _  __
  |  __ \                   | | ( |_)/ _|
- | |__) |___  ___ ___ _ __ | |_|/ _| |_ 
+ | |__) |___  ___ ___ _ __ | |_|/ _| |_
  |  _  // _ \/ __/ _ \ '_ \| __| | |  _|
  | | \ \  __/ (_|  __/ |_) | |_  | | |  
  |_|  \_\___|\___\___| .__/ \__| |_|_|  
@@ -15,11 +15,11 @@ Arcel, Baux, Benrighi, Hammel, Sorin, Thibault, Vicente.
   __     _    _                 _______    
  /_ |   | |  | |               |__   __|   
   | |   | |__| | _____      __    | | ___  
-  | |   |  __  |/ _ \ \ /\ / /    | |/ _ \ 
+  | |   |  __  |/ _ \ \ /\ / /    | |/ _ \
   | |_  | |  | | (_) \ V  V /     | | (_) |
-  |_(_) |_|  |_|\___/ \_/\_/      |_|\___/ 
-                                           
-                                           
+  |_(_) |_|  |_|\___/ \_/\_/      |_|\___/
+
+
   <<1. How To>>
 
 Le PLD a été divisé en quatres "parties".
@@ -51,17 +51,20 @@ de l'assembler. Cependant le manque de temps a fait qu'Assemblif se contente de 
 ----
 
 ----
-La dernière partie concerne le framwork de test...............
+La dernière partie concerne le framwork de test. Deux commandes make vous permettent d'exécuter les tests de la partie frontend ou backend.
+    make ReceptifCalc_UNIX-fronttest
+    make ReceptifCalc_UNIX-backtest
+Ces commandes génèrent l'exécutable adéquat et lance automatiquement les scripts bash de tests associés au mode sélectionné. Le résultat de l'éxécution des tests est consultable dans le fichier tests.out contenue dans le dossier Tests/FrontEndTests ou Tests/BackEndTests.
 ----
 
 
   ___      _   _       _            
  |__ \    | \ | |     | |           
-    ) |   |  \| | ___ | |_ ___  ___ 
+    ) |   |  \| | ___ | |_ ___  ___
    / /    | . ` |/ _ \| __/ _ \/ __|
   / /_ _  | |\  | (_) | ||  __/\__ \
  |____(_) |_| \_|\___/ \__\___||___/
-                                    
+
 
 Le bison, le programme principal et Assemblif peuvent tout les trois être compilés sous Windows, Linux et Mac (en supposant que certains outils tels que make soient disponibles).
 Leurs makefiles sont facilement éditable pour Windows par exemple, pour pouvoir essayer d'utiliser un autre compilateur ou changer des options.
